@@ -1,6 +1,7 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "module name here": "core.html"
+    "module name here": "core.html",
+    "Pre-reqs": "train.html"
   }
 }
