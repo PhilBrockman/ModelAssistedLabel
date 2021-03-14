@@ -2,9 +2,10 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"FileUtilities": "01_train.ipynb",
+         "Generation": "01_train.ipynb"}
 
-modules = []
+modules = ["core.py"]
 
 doc_url = "https://PhilBrockman.github.io/ModelAssistedLabel/"
 

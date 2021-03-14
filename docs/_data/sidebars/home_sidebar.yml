@@ -10,10 +10,10 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: module name here
+      title: Title
       url: core.html
     - output: web,pdf
-      title: Pre-reqs
+      title: module name here
       url: train.html
     output: web
     title: ModelAssistedLabel

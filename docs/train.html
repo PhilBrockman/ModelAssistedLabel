@@ -1,13 +1,13 @@
 ---
 
-title: Pre-reqs
+title: module name here
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-
-
+summary: "API details."
+description: "API details."
 nb_path: "01_train.ipynb"
 ---
 <!--
@@ -29,14 +29,6 @@ nb_path: "01_train.ipynb"
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="module-name-here">module name here<a class="anchor-link" href="#module-name-here"> </a></h1><blockquote><p>API details.</p>
-</blockquote>
-
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -83,7 +75,7 @@ nb_path: "01_train.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
+<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla V100-SXM2-16GB&#39;, major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
 /content
 </pre>
 </div>
@@ -102,7 +94,10 @@ nb_path: "01_train.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resource_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="s2">&quot;.txt&quot;</span><span class="p">}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">images</span> <span class="o">=</span> <span class="s2">&quot;.jpg&quot;</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;.txt&quot;</span>
+
+<span class="n">resource_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">}</span>
 </pre></div>
 
     </div>
@@ -115,106 +110,6 @@ nb_path: "01_train.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
-
-<span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="n">walk_dir</span><span class="p">):</span>
-  <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
-  <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">resource_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">resource_generator</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="n">walk_dir</span> <span class="o">+</span> <span class="s1">&#39;/**/*&#39;</span> <span class="o">+</span> <span class="n">extension</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">res</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;pair_id&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">extension</span><span class="p">)],</span> <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">resource_generator</span><span class="p">]</span>
-  <span class="k">return</span> <span class="n">res</span>
-
-<span class="k">def</span> <span class="nf">matched</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
-  <span class="n">bn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">set</span><span class="p">([</span><span class="n">z</span><span class="p">[</span><span class="s2">&quot;pair_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
-  <span class="n">matched</span> <span class="o">=</span> <span class="p">(</span><span class="n">bn</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">bn</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">])))</span>
-  <span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">matched</span><span class="p">:</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">resource_map</span><span class="p">:</span>
-      <span class="n">tmp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">res</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;pair_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">resource</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-    
-  <span class="k">return</span> <span class="n">pairs</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">default_split_ratio</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">7</span><span class="p">,</span>
-   <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span>
-   <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">1</span> 
-<span class="p">}</span>
-
-<span class="n">split_ratio</span> <span class="o">=</span> <span class="n">default_split_ratio</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">random</span>
-
-<span class="n">files</span> <span class="o">=</span> <span class="n">matched</span><span class="p">(</span><span class="n">collect_files</span><span class="p">(</span><span class="n">repo</span><span class="p">))</span>
-<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
-
-<span class="n">train</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">*</span> <span class="n">split_ratio</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">])</span>
-<span class="n">valid</span> <span class="o">=</span> <span class="n">train</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">*</span> <span class="n">split_ratio</span><span class="p">[</span><span class="s2">&quot;valid&quot;</span><span class="p">])</span>
-
-<span class="n">split</span> <span class="o">=</span>  <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">files</span><span class="p">[:</span><span class="n">train</span><span class="p">],</span>
-<span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="n">files</span><span class="p">[</span><span class="n">train</span><span class="p">:</span> <span class="n">valid</span><span class="p">],</span>
-<span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">files</span><span class="p">[</span><span class="n">valid</span><span class="p">:]}</span>
-
-<span class="k">assert</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">split</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
-
-<span class="p">[{</span><span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="n">x</span><span class="p">])}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">split</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -222,9 +117,42 @@ nb_path: "01_train.ipynb"
 <div class="output_area">
 
 
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="FileUtilities" class="doc_header"><code>class</code> <code>FileUtilities</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/main/ModelAssistedLabel/core.py#L10" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FileUtilities</code>()</p>
+</blockquote>
 
-<div class="output_text output_subarea output_execute_result">
-<pre>[{&#39;train&#39;: 589}, {&#39;valid&#39;: 169}, {&#39;test&#39;: 83}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/main/ModelAssistedLabel/core.py#L63" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>)</p>
+</blockquote>
+<p>Container and organizer of photos for a given repository.</p>
+
 </div>
 
 </div>
@@ -238,20 +166,6 @@ nb_path: "01_train.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
-
-<span class="k">def</span> <span class="nf">mkdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
-  <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
-    <span class="o">!</span>mkdir <span class="s2">&quot;{dir}&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
     {% endraw %}
@@ -263,20 +177,18 @@ nb_path: "01_train.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_yaml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;train: ../train/images</span>
+<span class="s2">  val: ../valid/images</span>
 
-<span class="k">for</span> <span class="n">setname</span><span class="p">,</span> <span class="n">pairs</span> <span class="ow">in</span> <span class="n">split</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-  <span class="nb">dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s2">&quot;./&quot;</span><span class="p">,</span> <span class="n">setname</span><span class="p">)</span>
-  <span class="n">mkdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">pair</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-      <span class="n">subdir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
-      <span class="n">mkdir</span><span class="p">(</span><span class="n">subdir</span><span class="p">)</span>
-      <span class="n">target</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
-      <span class="n">dest_filename</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pair_id&quot;</span><span class="p">]</span><span class="o">+</span><span class="n">resource_map</span><span class="p">[</span><span class="n">resource</span><span class="p">]</span>
-      <span class="n">destination</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">subdir</span><span class="p">,</span> <span class="n">dest_filename</span><span class="p">)</span>
-      <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
-        <span class="err">!</span><span class="n">cp</span> <span class="s2">&quot;</span><span class="si">{target}</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="si">{destination}</span><span class="s2">&quot;</span>
+<span class="s2">  nc: 10</span>
+<span class="s2">  names: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;0&#39;]&quot;&quot;&quot;</span>
+
+<span class="n">out_dir</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/01_train&quot;</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">split_repo</span><span class="p">(</span><span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([{</span><span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">[</span><span class="n">x</span><span class="p">])}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -289,8 +201,7 @@ nb_path: "01_train.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 1.85 s, sys: 3.34 s, total: 5.2 s
-Wall time: 1min 27s
+<pre>[{&#39;train&#39;: 0}, {&#39;valid&#39;: 0}, {&#39;test&#39;: 0}]
 </pre>
 </div>
 </div>
@@ -308,12 +219,7 @@ Wall time: 1min 27s
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lens</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">split</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-  <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">resource_map</span><span class="p">:</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="o">!</span>ls <span class="s2">&quot;{x}/{r}&quot;</span>
-    <span class="n">lens</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
-<span class="n">lens</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls <span class="s2">&quot;{g.repo}&quot;</span>
 </pre></div>
 
     </div>
@@ -325,17 +231,10 @@ Wall time: 1min 27s
 
 <div class="output_area">
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;test-images&#39;: 161,
- &#39;test-labels&#39;: 161,
- &#39;train-images&#39;: 769,
- &#39;train-labels&#39;: 769,
- &#39;valid-images&#39;: 307,
- &#39;valid-labels&#39;: 307}</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ls: cannot access &#39;/content/drive/MyDrive/Coding/Roboflow Export (841)&#39;: No such file or directory
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -351,12 +250,7 @@ Wall time: 1min 27s
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%writefile</span> ./data.yaml
-<span class="n">train</span><span class="p">:</span> <span class="o">../</span><span class="n">train</span><span class="o">/</span><span class="n">images</span>
-<span class="n">val</span><span class="p">:</span> <span class="o">../</span><span class="n">valid</span><span class="o">/</span><span class="n">images</span>
-
-<span class="n">nc</span><span class="p">:</span> <span class="mi">10</span>
-<span class="n">names</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">drive</span><span class="o">/</span><span class="n">MyDrive</span><span class="o">/</span><span class="n">Coding</span>
 </pre></div>
 
     </div>
@@ -369,7 +263,214 @@ Wall time: 1min 27s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Overwriting ./data.yaml
+<pre>&#39;1st Period Resources.gsite&#39;
+&#39;2.1.3 agenda - Pie chart 1.gsheet&#39;
+&#39;2:30pm, 12 3 20.gdoc&#39;
+ 23_1.m4v
+&#39;3.1.3 shared workspace template.gslides&#39;
+ 4.1.1.gslides
+&#39;4.1.2 Resource Page.gdoc&#39;
+&#39;4-1 Template.gdoc&#39;
+&#39;6th (mgg-kydu-mwg - Oct 23, 2020).gjam&#39;
+&#39;Answer Key: 1-3 through 1-7 - Column chart 1.gsheet&#39;
+ Attendance.gsheet
+&#39;Attendance &amp; Participation.gsheet&#39;
+&#39;Blakeney Parent Emails.gsheet&#39;
+&#39;Brockman Parents 12 9.gsheet&#39;
+<span class="ansi-blue-intense-fg ansi-bold">&#34;Brockman&#39;s LIVE file uploader&#34;</span>/
+<span class="ansi-blue-intense-fg ansi-bold">&#39;calling parents&#39;</span>/
+ <span class="ansi-blue-intense-fg ansi-bold">Classroom</span>/
+&#39;Copy of 2:30pm, 12 3 20.gdoc&#39;
+&#39;Copy of Callahan EquatIO Mathspace Links - Texthelp Public Information (1).gdoc&#39;
+&#39;Copy of Callahan EquatIO Mathspace Links - Texthelp Public Information.gdoc&#39;
+&#39;Copy of Copy of Guide (DRAFT) for Teaching CPM’s PC3, Calculus, Statistics Remotely (1).gsheet&#39;
+&#39;Copy of Copy of Guide (DRAFT) for Teaching CPM’s PC3, Calculus, Statistics Remotely.gsheet&#39;
+&#39;Copy of Observation Conference-Brockman.gdoc&#39;
+&#39;Copy of Return Rosters.xlsx&#39;
+&#39;Copy of Test Corrections.gslides&#39;
+&#39;cyq-kvuk-dnv - Mar 8, 2021 (1).gjam&#39;
+&#39;cyq-kvuk-dnv - Mar 8, 2021.gjam&#39;
+<span class="ansi-blue-intense-fg ansi-bold">&#39;Department PD&#39;</span>/
+&#39;eb7uimtpx2 (osz-zwqz-yut - Dec 8, 2020).gjam&#39;
+&#39;FCHS Student Mental Wellness Training.webm&#39;
+&#39;Geometry (Brockman) (Aidan Powell) (eed-kdeb-cye - Oct 29, 2020).gjam&#39;
+&#39;Geometry (Brockman) (Isaiah Jones) (und-xiuf-orr - Nov 11, 2020).gjam&#39;
+&#39;Geometry (Brockman) (Jala Cothran) (ypz-qsyv-nmz - Oct 23, 2020).gjam&#39;
+&#39;Geometry (Brockman) (Kaseady Daugherty) (fmk-yacb-sjc - Oct 27, 2020).gjam&#39;
+&#39;Geometry (Brockman) (Matthew Mcdaniel) (few-yuza-qhd - Oct 7, 2020).gjam&#39;
+&#39;Geometry (Brockman) (melisa) (npu-wsee-upw - Oct 28, 2020).gjam&#39;
+&#39;Geometry (Brockman) (Phil Brockman) (wib-ekeu-gcp - Dec 16, 2020).gjam&#39;
+&#39;Geometry (Brockman) (Reyna Aguilera) (jsa-vwqc-jtg - Oct 23, 2020).gjam&#39;
+&#39;Goal: Graduation.gdoc&#39;
+ IMG_1689.JPG
+ IMG_1690.JPG
+<span class="ansi-blue-intense-fg ansi-bold">&#39;Meeting Reports&#39;</span>/
+<span class="ansi-blue-intense-fg ansi-bold">&#39;Meet Recordings&#39;</span>/
+&#39;mgg-kydu-mwg - Nov 13, 2020.gjam&#39;
+<span class="ansi-blue-intense-fg ansi-bold">&#39;NTI Newsletter&#39;</span>/
+<span class="ansi-blue-intense-fg ansi-bold">&#39;nti stats&#39;</span>/
+<span class="ansi-blue-intense-fg ansi-bold">&#39;overages 2020-21&#39;</span>/
+&#39;Participation Challenge.jpg&#39;
+<span class="ansi-blue-intense-fg ansi-bold">&#39;Pear Deck&#39;</span>/
+&#39;Race Times.gdraw&#39;
+ <span class="ansi-blue-intense-fg ansi-bold">Screencastify</span>/
+&#39;Screen Shot 2020-09-01 at 8.59.47 PM.png&#39;
+&#39;Screen Shot 2020-09-10 at 9.53.39 AM.png&#39;
+&#39;Screen Shot 2020-09-11 at 3.01.43 PM.png&#39;
+&#39;Screen Shot 2020-09-11 at 3.02.47 PM.png&#39;
+&#39;Screen Shot 2020-09-11 at 3.03.37 PM.png&#39;
+&#39;Screen Shot 2020-11-19 at 4.54.44 PM.png&#39;
+&#39;Sept 2 update.gdoc&#39;
+&#39;Team 1: 4-37.gdoc&#39;
+&#39;Team 2: 4-37.gdoc&#39;
+&#39;Team 4 - 3.2.3 Simulations of Probability.gjam&#39;
+&#39;Team 5 - 3.2.3 Simulations of Probability.gjam&#39;
+<span class="ansi-blue-intense-fg ansi-bold">&#39;Tech Projects&#39;</span>/
+&#39;title (1).gslides&#39;
+ title.gslides
+&#39;Unit 4: Quiz #1  modified.gsheet&#39;
+<span class="ansi-blue-intense-fg ansi-bold">&#39;unorganized mess&#39;</span>/
+&#39;Untitled document (1).gdoc&#39;
+&#39;Untitled document (2).gdoc&#39;
+&#39;Untitled document (3).gdoc&#39;
+&#39;Untitled document (4).gdoc&#39;
+&#39;Untitled document.gdoc&#39;
+&#39;Untitled drawing (1).gdraw&#39;
+&#39;Untitled drawing (2).gdraw&#39;
+&#39;Untitled drawing.gdraw&#39;
+&#39;Untitled form.gform&#39;
+&#39;Untitled Jam (1).gjam&#39;
+&#39;Untitled Jam (2).gjam&#39;
+&#39;Untitled Jam (3).gjam&#39;
+&#39;Untitled Jam (4).gjam&#39;
+&#39;Untitled Jam (5).gjam&#39;
+&#39;Untitled Jam (6).gjam&#39;
+&#39;Untitled Jam (7).gjam&#39;
+&#39;Untitled Jam.gjam&#39;
+&#39;Untitled presentation (1).gslides&#39;
+&#39;Untitled presentation.gslides&#39;
+&#39;Untitled spreadsheet (1).gsheet&#39;
+&#39;Untitled spreadsheet (2).gsheet&#39;
+&#39;Untitled spreadsheet.gsheet&#39;
+&#39;urg-htiq-vtv - Nov 9, 2020.gjam&#39;
+&#39;Vaccine Form filled out.pdf&#39;
+ Visors.gdraw
+&#39;vzc-qevf-khs - Dec 17, 2020.gjam&#39;
+&#39;vzc-qevf-khs - Oct 22, 2020.gjam&#39;
+&#39;vzc-qevf-khs - Oct 26, 2020.gjam&#39;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">folder_name</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">unified_dirname</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot; no augments&quot;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">zip_splits_to_destination</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cp <span class="s2">&quot;{d}&quot;</span> <span class="s2">&quot;./{folder_name}.zip&quot;</span>
+<span class="o">!</span>rm -f <span class="s2">&quot;{d}&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>unzip <span class="s2">&quot;{folder_name}.zip&quot;</span> -d <span class="s2">&quot;{folder_name}&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Archive:  Roboflow Export (841) no augments 21-03-14 18-19-19.zip
+   creating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/
+   creating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/
+   creating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/labels/
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/labels/digittake-23-jpg_jpg.rf.00548b600c00b9a0159307cccf3347f1.txt  
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/labels/save_dirrsave_dirr36a73c74ef0b76639e12488651f587fb06a9baab-jpg-jpg_jpg.rf.cd4c51c05581425f5ff10b194f12f1e0.txt  
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/labels/save_dirrtake-12_jpg_cropped-jpg_jpg.rf.52431525a8df960d1e777c49ac53bd81.txt  
+   creating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/images/
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/images/save_dirrsave_dirr36a73c74ef0b76639e12488651f587fb06a9baab-jpg-jpg_jpg.rf.cd4c51c05581425f5ff10b194f12f1e0.jpg  
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/images/digittake-23-jpg_jpg.rf.00548b600c00b9a0159307cccf3347f1.jpg  
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/train/images/save_dirrtake-12_jpg_cropped-jpg_jpg.rf.52431525a8df960d1e777c49ac53bd81.jpg  
+   creating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/test/
+   creating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/valid/
+  inflating: Roboflow Export (841) no augments 21-03-14 18-19-19/Roboflow Export (841) no augments 21-03-14 18-19-19/data.yaml  
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls <span class="s2">&quot;{folder_name}/{folder_name}/train/images&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>digittake-23-jpg_jpg.rf.00548b600c00b9a0159307cccf3347f1.jpg
+save_dirrsave_dirr36a73c74ef0b76639e12488651f587fb06a9baab-jpg-jpg_jpg.rf.cd4c51c05581425f5ff10b194f12f1e0.jpg
+save_dirrtake-12_jpg_cropped-jpg_jpg.rf.52431525a8df960d1e777c49ac53bd81.jpg
 </pre>
 </div>
 </div>
@@ -579,9 +680,9 @@ head:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># time its performance</span>
-<span class="o">%%time</span>
-<span class="o">%</span><span class="n">cd</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">yolov5</span><span class="o">/</span>
-<span class="err">!</span><span class="n">python</span> <span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">img</span> <span class="mi">416</span> <span class="o">--</span><span class="n">batch</span> <span class="mi">16</span> <span class="o">--</span><span class="n">epochs</span> <span class="mi">10</span> <span class="o">--</span><span class="n">data</span> <span class="s1">&#39;../data.yaml&#39;</span> <span class="o">--</span><span class="n">cfg</span> <span class="o">./</span><span class="n">models</span><span class="o">/</span><span class="n">custom_yolov5s</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">weights</span> <span class="s1">&#39;&#39;</span> <span class="o">--</span><span class="n">name</span> <span class="n">yolov5s_results</span>  <span class="o">--</span><span class="n">cache</span>
+<span class="o">%%</span><span class="k">time</span>
+%cd /content/yolov5/
+!python train.py --img 416 --batch 16 --epochs 10 --data &#39;../data.yaml&#39; --cfg ./models/custom_yolov5s.yaml --weights &#39;&#39; --name yolov5s_results  --cache
 </pre></div>
 
     </div>
@@ -721,105 +822,6 @@ Optimizer stripped from runs/train/yolov5s_results2/weights/best.pt, 14.8MB
 CPU times: user 676 ms, sys: 129 ms, total: 805 ms
 Wall time: 2min 26s
 </pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Zip">Zip<a class="anchor-link" href="#Zip"> </a></h4>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="c1"># current date and time</span>
-<span class="n">timestamp</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot; %y-%m-</span><span class="si">%d</span><span class="s2"> %H-%M-%S&quot;</span><span class="p">)</span>
-<span class="n">zipname</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">timestamp</span>
-<span class="n">zipname</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;Roboflow Export (841) 21-03-14 04-47-42&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mkdir</span><span class="p">(</span><span class="n">zipname</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;valid&quot;</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">]:</span>
-  <span class="o">!</span>mv <span class="s2">&quot;./{subdir}&quot;</span> <span class="s2">&quot;{zipname}/&quot;</span>
-
-<span class="n">results_folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s2">&quot;runs/train&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;runs/train&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="o">!</span>mv <span class="s2">&quot;./{results_folder}&quot;</span> <span class="s2">&quot;{zipname}/&quot;</span>
-
-<span class="o">!</span>zip <span class="s2">&quot;{zipname}.zip&quot;</span> <span class="s2">&quot;{zipname}&quot;</span>
-<span class="n">cp</span> <span class="s2">&quot;</span><span class="si">{zipname}</span><span class="s2">.zip&quot;</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/01_train&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>mv: cannot stat &#39;./valid&#39;: No such file or directory
-mv: cannot stat &#39;./train&#39;: No such file or directory
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-77-f912951b335a&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span>   get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>system<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;mv &#34;./{subdir}&#34; &#34;{zipname}/&#34;&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> 
-<span class="ansi-green-fg">----&gt; 5</span><span class="ansi-red-fg"> </span>results_folder <span class="ansi-blue-fg">=</span> join<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;runs/train&#34;</span><span class="ansi-blue-fg">,</span> os<span class="ansi-blue-fg">.</span>listdir<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;runs/train&#34;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">-</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span> get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>system<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;mv &#34;./{results_folder}&#34; &#34;{zipname}/&#34;&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">IndexError</span>: list index out of range</pre>
 </div>
 </div>
 
