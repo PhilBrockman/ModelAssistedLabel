@@ -12,13 +12,19 @@ This file will become your README and also the index of your documentation.
 
 Fill me in please! Don't forget code examples:
 
+```python
+1+1aoeu
 ```
-1+1
+
+
+      File "<ipython-input-1-14420525ed04>", line 1
+        1+1aoeu
+           ^
+    SyntaxError: invalid syntax
+
+
+
+```python
+3
+
 ```
-
-
-
-
-    2
-
-
