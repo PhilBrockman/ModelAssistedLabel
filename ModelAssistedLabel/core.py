@@ -12,14 +12,14 @@ class Defaults:
               "valid": .2,
               "test": .1
             }
-    self.data_yaml = """train: ../train/images
-val: ../valid/images
-
-nc: 10
-names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']"""
+    self.data_yaml = "\n".join(["train: ../train/images",
+    "val: ../valid/images",
+    "",
+    "nc: 10",
+    "names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']"])
 
     self.trainer_template = f"""# parameters
-    nc: {self.data_yaml.split(" ")[-1]}  # number of classes
+    nc: {10}  # number of classes
     depth_multiple: 0.33  # model depth multiple
     width_multiple: 0.50  # layer channel multiple
 
@@ -67,6 +67,21 @@ names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']"""
 
       [[17, 20, 23], 1, Detect, [nc, anchors]],  # Detect(P3, P4, P5)
       ]"""
+
+    calls = []
+    calls.append(["pip install nbdev"])
+    calls.append(["nbdev_build_docs", "nbdev_build_lib"])
+    self.calls = calls
+
+  def call_all(self, arr):
+    for x in arr:
+      os.system(x)
+
+  def full_nbdev(self):
+    call_all(self.calls)
+
+  def build_lib(self):
+    call_all(self.calls[1][1])
 
 # Cell
 
@@ -306,7 +321,7 @@ def clean_zip(zip):
   os.system(f'rm "{zip}"')
 
 # Cell
-import os
+import os, yaml
 
 class Trainer():
   "Write the backbone of the model to file and then run YOLOv5's train file."
@@ -326,14 +341,8 @@ class Trainer():
 
   def write_yaml(self):
     """
-    Reads the number of classes from `root`/data.yaml and sets up YOLOv5.
+    Records YOLOv5 architecture
     """
-    import yaml
-    with open("data.yaml", 'r') as stream:
-      self.num_classes = str(yaml.safe_load(stream)['nc'])
-    if os.path.exists(self.yaml_file):
-      os.remove(self.yaml_file)
-
     f = open(self.yaml_file,"w+")
     f.writelines(self.template)
     f.close()
@@ -346,7 +355,4 @@ class Trainer():
       epochs: number of iterations
     """
     self.write_yaml()
-    os.chdir("yolov5")
-    yaml_file = self.yaml_file.replace("yolov5/", "") #accounting for change in relative path
-    os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg {yaml_file} --weights '' --name {self.name}  --cache")
-    os.chdir("..")
+t
