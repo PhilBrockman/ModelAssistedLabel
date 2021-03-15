@@ -76,6 +76,75 @@ nb_path: "02_augment.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="n">split_ratio</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;test&#39;: 0.1, &#39;train&#39;: 0.7, &#39;valid&#39;: 0.2}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-123-358a03aae633&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: &#39;NoneType&#39; object is not callable</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.core</span> <span class="kn">import</span> <span class="n">Generation</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;</span><span class="p">,</span> 
@@ -98,21 +167,14 @@ nb_path: "02_augment.ipynb"
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-112-63f5efc5d097&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-118-2f2472538f8e&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      5</span>                data_yaml=data_yaml)
 <span class="ansi-green-intense-fg ansi-bold">      6</span> 
-<span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>split_repo<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">      8</span> print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> len<span class="ansi-blue-fg">(</span>g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">[</span>x<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span> <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/content/drive/My Drive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">split_repo</span><span class="ansi-blue-fg">(self, split_ratio, MAX_SIZE)</span>
-<span class="ansi-green-intense-fg ansi-bold">     98</span>       split_ratio <span class="ansi-blue-fg">=</span> Defaults<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>split_ratio
-<span class="ansi-green-intense-fg ansi-bold">     99</span> 
-<span class="ansi-green-fg">--&gt; 100</span><span class="ansi-red-fg">     </span>files <span class="ansi-blue-fg">=</span> FileUtilities<span class="ansi-blue-fg">.</span>match_files<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    101</span>     random<span class="ansi-blue-fg">.</span>shuffle<span class="ansi-blue-fg">(</span>files<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    102</span>     <span class="ansi-green-fg">if</span> MAX_SIZE<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">NameError</span>: name &#39;repo&#39; is not defined</pre>
+<span class="ansi-red-fg">TypeError</span>: &#39;NoneType&#39; object is not callable</pre>
 </div>
 </div>
 
