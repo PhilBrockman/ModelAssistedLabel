@@ -2,7 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"FileUtilities": "01_train.ipynb",
+index = {"Defaults": "00_core.ipynb",
+         "FileUtilities": "01_train.ipynb",
          "Generation": "01_train.ipynb"}
 
 modules = ["core.py"]

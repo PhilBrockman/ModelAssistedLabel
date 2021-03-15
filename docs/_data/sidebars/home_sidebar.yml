@@ -11,10 +11,13 @@ entries:
       url: /
     - output: web,pdf
       title: Title
-      url: core.html
+      url: Synch Colab to Github for ModelAssistedLabel.html
     - output: web,pdf
       title: module name here
       url: train.html
+    - output: web,pdf
+      title: Setup
+      url: tutorial.html
     output: web
     title: ModelAssistedLabel
   output: web

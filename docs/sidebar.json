@@ -1,7 +1,8 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "Title": "core.html",
-    "module name here": "train.html"
+    "Title": "Synch Colab to Github for ModelAssistedLabel.html",
+    "module name here": "train.html",
+    "Setup": "tutorial.html"
   }
 }
