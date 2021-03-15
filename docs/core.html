@@ -32,12 +32,43 @@ nb_path: "00_core.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="Defaults" class="doc_header"><code>class</code> <code>Defaults</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/main/ModelAssistedLabel/core.py#L6" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Defaults</code>()</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="o">!</span><span class="nb">cd</span> <span class="s2">&quot;{root}&quot;</span>
+<span class="o">!</span><span class="nb">cd</span> <span class="s2">&quot;{Defaults().root}&quot;</span>
 <span class="c1"># safety for re-executions</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;yolov5&quot;</span><span class="p">):</span>
   <span class="c1"># clone YOLOv5 and reset to a specific git checkpoint that has been verified working</span>
@@ -75,7 +106,7 @@ nb_path: "00_core.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla V100-SXM2-16GB&#39;, major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
+<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 /content
 </pre>
 </div>
@@ -90,42 +121,26 @@ nb_path: "00_core.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="Defaults" class="doc_header"><code>class</code> <code>Defaults</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/main/ModelAssistedLabel/core.py#L6" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Defaults</code>()</p>
-</blockquote>
-
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-blue-intense-fg ansi-bold">sample_data</span>/  <span class="ansi-blue-intense-fg ansi-bold">yolov5</span>/
+</pre>
 </div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;/content&#39;</pre>
-</div>
-
 </div>
 
 </div>
