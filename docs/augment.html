@@ -36,7 +36,51 @@ nb_path: "02_augment.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.core</span> <span class="kn">import</span> <span class="n">Defaults</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_yaml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;train: ../train/images</span>
+<span class="s2">  val: ../valid/images</span>
+
+<span class="s2">  nc: 10</span>
+<span class="s2">  names: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;0&#39;]&quot;&quot;&quot;</span>
+
+<span class="n">out_dir</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/01_train&quot;</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">split_repo</span><span class="p">(</span><span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([{</span><span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">[</span><span class="n">x</span><span class="p">])}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">])</span>
+<span class="n">folder_name</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">unified_dirname</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot; no augments&quot;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">zip_splits_to_destination</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[{&#39;train&#39;: 3}, {&#39;valid&#39;: 0}, {&#39;test&#39;: 0}]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cp <span class="s2">&quot;{d}&quot;</span> <span class="s2">&quot;./{folder_name}.zip&quot;</span>
 </pre></div>
 
     </div>
@@ -53,23 +97,7 @@ nb_path: "02_augment.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_yaml</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;train: ../train/images</span>
-<span class="s2">  val: ../valid/images</span>
-
-<span class="s2">  nc: 10</span>
-<span class="s2">  names: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;0&#39;]&quot;&quot;&quot;</span>
-
-<span class="n">out_dir</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/01_train&quot;</span>
-<span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;</span>
-
-<span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">split_repo</span><span class="p">(</span><span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">([{</span><span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">[</span><span class="n">x</span><span class="p">])}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">])</span>
-<span class="n">folder_name</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">unified_dirname</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot; no augments&quot;</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">zip_splits_to_destination</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
-<span class="o">!</span>cp <span class="s2">&quot;{d}&quot;</span> <span class="s2">&quot;./{folder_name}.zip&quot;</span>
-<span class="o">!</span>rm -f <span class="s2">&quot;{d}&quot;</span>
-<span class="o">!</span>unzip <span class="s2">&quot;{folder_name}.zip&quot;</span> -d <span class="s2">&quot;{folder_name}&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span>
 </pre></div>
 
     </div>
@@ -82,7 +110,15 @@ nb_path: "02_augment.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[{&#39;train&#39;: 0}, {&#39;valid&#39;: 0}, {&#39;test&#39;: 0}]
+<pre> 00_core.ipynb        MANIFEST.in
+ 01_split.ipynb       <span class="ansi-blue-intense-fg ansi-bold">ModelAssistedLabel</span>/
+ 02_augment.ipynb     README.md
+ CONTRIBUTING.md     &#39;Roboflow Export (841) no augments 21-03-15 02-34-50.zip&#39;
+ docker-compose.yml   settings.ini
+ <span class="ansi-blue-intense-fg ansi-bold">docs</span>/                setup.py
+ index.ipynb         &#39;Synch Colab to Github for ModelAssistedLabel.ipynb&#39;
+ LICENSE              test.txt
+ Makefile             <span class="ansi-blue-intense-fg ansi-bold">yolov5</span>/
 </pre>
 </div>
 </div>
