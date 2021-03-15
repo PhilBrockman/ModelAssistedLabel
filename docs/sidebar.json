@@ -1,10 +1,8 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "Title": "core.html",
+    "Title": "Synch Colab to Github for ModelAssistedLabel.html",
     "FileSystems": "split.html",
-    "augmenting and standardization": "augment.html",
-    "push to github": "Synch Colab to Github for ModelAssistedLabel.html",
-    "Setup": "tutorial.html"
+    "augmenting and standardization": "augment.html"
   }
 }

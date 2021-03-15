@@ -11,19 +11,13 @@ entries:
       url: /
     - output: web,pdf
       title: Title
-      url: core.html
+      url: Synch Colab to Github for ModelAssistedLabel.html
     - output: web,pdf
       title: FileSystems
       url: split.html
     - output: web,pdf
       title: augmenting and standardization
       url: augment.html
-    - output: web,pdf
-      title: push to github
-      url: Synch Colab to Github for ModelAssistedLabel.html
-    - output: web,pdf
-      title: Setup
-      url: tutorial.html
     output: web
     title: ModelAssistedLabel
   output: web
