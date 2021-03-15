@@ -2,8 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"Defaults": "00_core.ipynb",
-         "FileUtilities": "01_split.ipynb",
+index = {"FileUtilities": "01_split.ipynb",
          "Generation": "01_split.ipynb"}
 
 modules = ["core.py"]
