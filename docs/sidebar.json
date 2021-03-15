@@ -1,8 +1,8 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "YOLOv5 (ultralytics)": "ultralytics.html",
-    "FileSystems 01": "split.html",
+    "clone Ultralytics's YOLOv5": "ultralytics.html",
+    "Managing Files": "split.html",
     "augmenting and standardization": "augment.html"
   }
 }

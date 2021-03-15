@@ -10,10 +10,10 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: YOLOv5 (ultralytics)
+      title: clone Ultralytics's YOLOv5
       url: ultralytics.html
     - output: web,pdf
-      title: FileSystems 01
+      title: Managing Files
       url: split.html
     - output: web,pdf
       title: augmenting and standardization

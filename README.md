@@ -1,8 +1,6 @@
-# Project name here
-> Summary description here.
+# YOLOv5 Model Assisted Labeling
+> Work based on https://models.roboflow.com/object-detection/yolov5.
 
-
-This file will become your README and also the index of your documentation.
 
 ## Install
 
@@ -10,19 +8,7 @@ This file will become your README and also the index of your documentation.
 
 ## How to use
 
-Fill me in please! Don't forget code examples:
-
-```python
-1+1aoeu
-```
-
-
-      File "<ipython-input-1-14420525ed04>", line 1
-        1+1aoeu
-           ^
-    SyntaxError: invalid syntax
-
-
+### Vanilla image sets
 
 ```python
 3
