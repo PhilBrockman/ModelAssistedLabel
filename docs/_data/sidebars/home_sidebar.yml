@@ -15,9 +15,6 @@ entries:
     - output: web,pdf
       title: Managing Files
       url: split.html
-    - output: web,pdf
-      title: augmenting and standardization
-      url: augment.html
     output: web
     title: ModelAssistedLabel
   output: web
