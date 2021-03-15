@@ -99,21 +99,20 @@ nb_path: "02_augment.ipynb"
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-98-8f1bf13c2e47&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> 
-<span class="ansi-green-intense-fg ansi-bold">      3</span> g = Generation(repo = &#34;/content/drive/MyDrive/Coding/Roboflow Export (841)&#34;, 
-<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg">                out_dir = &#34;/content/drive/MyDrive/Coding/01_train&#34;)
-</span><span class="ansi-green-intense-fg ansi-bold">      5</span> 
-<span class="ansi-green-intense-fg ansi-bold">      6</span> g<span class="ansi-blue-fg">.</span>split_repo<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">&lt;ipython-input-104-63f5efc5d097&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>                data_yaml=data_yaml)
+<span class="ansi-green-intense-fg ansi-bold">      6</span> 
+<span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>split_repo<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span> print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> len<span class="ansi-blue-fg">(</span>g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">[</span>x<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span> <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/content/drive/My Drive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, repo, out_dir)</span>
-<span class="ansi-green-intense-fg ansi-bold">     85</span>     self<span class="ansi-blue-fg">.</span>repo <span class="ansi-blue-fg">=</span> repo
-<span class="ansi-green-intense-fg ansi-bold">     86</span>     self<span class="ansi-blue-fg">.</span>split <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
-<span class="ansi-green-fg">---&gt; 87</span><span class="ansi-red-fg">     </span>self<span class="ansi-blue-fg">.</span>data_yaml <span class="ansi-blue-fg">=</span> data_yaml
-<span class="ansi-green-intense-fg ansi-bold">     88</span>     self<span class="ansi-blue-fg">.</span>out_dir <span class="ansi-blue-fg">=</span> out_dir
-<span class="ansi-green-intense-fg ansi-bold">     89</span> 
+<span class="ansi-green-fg">/content/drive/My Drive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">split_repo</span><span class="ansi-blue-fg">(self, split_ratio, MAX_SIZE)</span>
+<span class="ansi-green-intense-fg ansi-bold">     96</span>     &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">     97</span>     <span class="ansi-green-fg">if</span> split_ratio <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 98</span><span class="ansi-red-fg">       </span>split_ratio <span class="ansi-blue-fg">=</span> ModelAssistedLabel<span class="ansi-blue-fg">.</span>core<span class="ansi-blue-fg">.</span>Default<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>split_ratio<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     99</span> 
+<span class="ansi-green-intense-fg ansi-bold">    100</span>     files <span class="ansi-blue-fg">=</span> FileUtilities<span class="ansi-blue-fg">.</span>match_files<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">)</span>
 
-<span class="ansi-red-fg">NameError</span>: name &#39;data_yaml&#39; is not defined</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;ModelAssistedLabel&#39; is not defined</pre>
 </div>
 </div>
 
