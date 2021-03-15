@@ -13,7 +13,7 @@ entries:
       title: Title
       url: Synch Colab to Github for ModelAssistedLabel.html
     - output: web,pdf
-      title: module name here
+      title: FileSystems
       url: split.html
     - output: web,pdf
       title: Setup
