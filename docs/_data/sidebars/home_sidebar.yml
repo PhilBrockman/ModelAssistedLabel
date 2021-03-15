@@ -10,9 +10,6 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Configuration
-      url: Synch.html
-    - output: web,pdf
       title: YOLOv5 (ultralytics)
       url: ultralytics.html
     - output: web,pdf

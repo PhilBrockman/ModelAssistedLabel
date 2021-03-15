@@ -1,7 +1,6 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "Configuration": "Synch.html",
     "YOLOv5 (ultralytics)": "ultralytics.html",
     "FileSystems 01": "split.html",
     "augmenting and standardization": "augment.html"
