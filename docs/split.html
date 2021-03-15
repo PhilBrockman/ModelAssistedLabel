@@ -36,6 +36,58 @@ nb_path: "01_split.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> &quot;_Synch.ipynb&quot;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>cleanup zip files
+Converted 00_ultralytics.ipynb.
+Converted 01_split.ipynb.
+Converted 02_augment.ipynb.
+Converted index.ipynb.
+converting: /content/drive/My Drive/Coding/ModelAssistedLabel/01_split.ipynb
+converting: /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb
+converting: /content/drive/My Drive/Coding/ModelAssistedLabel/00_ultralytics.ipynb
+converting: /content/drive/My Drive/Coding/ModelAssistedLabel/02_augment.ipynb
+converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
+Executing: git config --local include.path ../.gitconfig
+Success: hooks are installed and repo&#39;s .gitconfig is now trusted
+[master e3c553b] cleanup zip files
+ 12 files changed, 220 insertions(+), 486 deletions(-)
+Counting objects: 18, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (17/17), done.
+Writing objects: 100% (18/18), 4.57 KiB | 360.00 KiB/s, done.
+Total 18 (delta 11), reused 0 (delta 0)
+remote: Resolving deltas: 100% (11/11), completed with 11 local objects.
+To https://github.com/PhilBrockman/ModelAssistedLabel.git
+   9865394..e3c553b  master -&gt; master
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#@markdown Defaults filetypes are based on the pattern in Roboflow&#39;s export.</span>
 <span class="n">images</span> <span class="o">=</span> <span class="s2">&quot;.jpg&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;.txt&quot;</span> <span class="c1">#@param {type:&quot;string&quot;}</span>

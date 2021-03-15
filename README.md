@@ -9,8 +9,3 @@
 ## How to use
 
 ### Vanilla image sets
-
-```python
-3
-
-```
