@@ -1,13 +1,13 @@
 ---
 
-title: Title
+title: Configuration
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-
-
+summary: "Here I am connecting space on my google drive (for Colab conevience) to sync with github (for verson control)."
+description: "Here I am connecting space on my google drive (for Colab conevience) to sync with github (for verson control)."
 nb_path: "Synch Colab to Github for ModelAssistedLabel.ipynb"
 ---
 <!--
@@ -78,6 +78,13 @@ nb_path: "Synch Colab to Github for ModelAssistedLabel.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Define the root directory for this project.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -211,11 +218,8 @@ Converted 01_split.ipynb.
 Converted 02_augment.ipynb.
 Converted Synch Colab to Github for ModelAssistedLabel.ipynb.
 Converted index.ipynb.
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/00_fetch_analytics.ipynb
 converting: /content/drive/My Drive/Coding/ModelAssistedLabel/Synch Colab to Github for ModelAssistedLabel.ipynb
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/02_augment.ipynb
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/01_split.ipynb
-Warning: Some of your Notebooks use the same title ([&#39;Title&#39;, &#39;FileSystems&#39;, &#39;augmenting and standardization&#39;, &#39;Title&#39;, &#39;Setup&#39;]).
+Warning: Some of your Notebooks use the same title ([&#39;Title&#39;, &#39;FileSystems&#39;, &#39;augmenting and standardization&#39;, &#39;Title&#39;]).
 converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
 </pre>
 </div>
@@ -250,25 +254,10 @@ converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to READ
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[master 31a5056] updating docs
- 20 files changed, 1228 insertions(+), 34 deletions(-)
- rewrite 00_core.ipynb (100%)
- rewrite 01_split.ipynb (99%)
- rewrite 02_augment.ipynb (99%)
- create mode 100644 Roboflow Export (841) 21-03-15 03-54-44.zip
- create mode 100644 Roboflow Export (841) 21-03-15 03-54-44/data.yaml
- rewrite Synch Colab to Github for ModelAssistedLabel.ipynb (100%)
- create mode 100644 train/images/save_dirrsave_dirr15c41a2e99339f2698e386e1370ac1471ae430e3-jpg-jpg_jpg.rf.e24e96541f6f60fac9d00b380145bb69.jpg
- create mode 100644 train/images/save_dirrsave_dirr2f4e7043428941035e5fec2ae92e9b6b6b14ddd7-jpg-jpg_jpg.rf.fe3ce8592cc46cad4b970a7a82e6b930.jpg
- create mode 100644 train/images/save_dirrtake-109-jpg-cropped-jpg-jpg_jpg.rf.eac5ac2df7979522d60d2edf3590dbbb.jpg
- create mode 100644 train/images/screenytake-20-jpg-cropped-jpg_jpg.rf.e4c40b448378a0730f35f8b3748a34a7.jpg
- create mode 100644 train/labels/save_dirrsave_dirr15c41a2e99339f2698e386e1370ac1471ae430e3-jpg-jpg_jpg.rf.e24e96541f6f60fac9d00b380145bb69.txt
- create mode 100644 train/labels/save_dirrsave_dirr2f4e7043428941035e5fec2ae92e9b6b6b14ddd7-jpg-jpg_jpg.rf.fe3ce8592cc46cad4b970a7a82e6b930.txt
- create mode 100644 train/labels/save_dirrtake-109-jpg-cropped-jpg-jpg_jpg.rf.eac5ac2df7979522d60d2edf3590dbbb.txt
- create mode 100644 train/labels/screenytake-20-jpg-cropped-jpg_jpg.rf.e4c40b448378a0730f35f8b3748a34a7.txt
- create mode 100644 valid/images/screenytake-40-jpg-cropped-jpg_jpg.rf.7b9a3c1466753dc83305447922aabe86.jpg
- create mode 100644 valid/labels/digittake-131-jpg_jpg.rf.3dab3ea2d017aa47fa6a93f53376ce3b.txt
- create mode 100644 valid/labels/screenytake-40-jpg-cropped-jpg_jpg.rf.7b9a3c1466753dc83305447922aabe86.txt
+<pre>[master 93d0f39] updating docs
+ 10 files changed, 465 insertions(+), 143 deletions(-)
+ create mode 100644 00_fetch_analytics.ipynb
+ create mode 100644 docs/fetch_analytics.html
 </pre>
 </div>
 </div>
@@ -300,14 +289,14 @@ converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to READ
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Counting objects: 9, done.
+<pre>Counting objects: 44, done.
 Delta compression using up to 2 threads.
-Compressing objects: 100% (8/8), done.
-Writing objects: 100% (9/9), 1.78 KiB | 259.00 KiB/s, done.
-Total 9 (delta 6), reused 0 (delta 0)
-remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+Compressing objects: 100% (43/43), done.
+Writing objects: 100% (44/44), 61.04 KiB | 1.45 MiB/s, done.
+Total 44 (delta 20), reused 0 (delta 0)
+remote: Resolving deltas: 100% (20/20), completed with 12 local objects.
 To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   e341947..5baf789  master -&gt; master
+   869ab6a..93d0f39  master -&gt; master
 </pre>
 </div>
 </div>
