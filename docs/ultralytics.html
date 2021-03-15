@@ -1,13 +1,13 @@
 ---
 
-title: clone Ultralytics's YOLOv5
+title: Configure Default Values
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-
-
+summary: "These values will be accessable across this project"
+description: "These values will be accessable across this project"
 nb_path: "00_ultralytics.ipynb"
 ---
 <!--
@@ -77,59 +77,39 @@ nb_path: "00_ultralytics.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Clone-Ultralytics's-YOLOv5">Clone Ultralytics's YOLOv5<a class="anchor-link" href="#Clone-Ultralytics's-YOLOv5"> </a></h1>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="c1"># safety for re-executions</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;yolov5&quot;</span><span class="p">):</span>
-  <span class="c1"># clone YOLOv5 and reset to a specific git checkpoint that has been verified working</span>
-  <span class="o">!</span>git clone https://github.com/ultralytics/yolov5  # clone repo
-  <span class="o">!</span>git reset --hard 68211f72c99915a15855f7b99bf5d93f5631330f
-
-<span class="c1"># enter the yolov5 directory</span>
-<span class="o">%</span><span class="k">cd</span> yolov5
-
-<span class="c1"># install dependencies as necessary</span>
-<span class="o">!</span>pip install -qr requirements.txt  # install dependencies <span class="o">(</span>ignore errors<span class="o">)</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">clear_output</span>  <span class="c1"># to display images</span>
-<span class="c1"># from utils.google_utils import gdrive_download  # to download models/datasets</span>
-
-<span class="n">clear_output</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Setup complete. Using torch </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
-<span class="k">else</span><span class="p">:</span>
-  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You need to enable GPU in this runtime environment&quot;</span><span class="p">)</span>
-
-<span class="c1"># return to parent directory</span>
-<span class="o">%</span><span class="k">cd</span> ..
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
-/content
-</pre>
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="prepare_YOLOv5" class="doc_header"><code>prepare_YOLOv5</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L75" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>prepare_YOLOv5</code>()</p>
+</blockquote>
+
 </div>
+
 </div>
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

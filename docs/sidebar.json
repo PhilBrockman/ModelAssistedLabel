@@ -1,8 +1,8 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "clone Ultralytics's YOLOv5": "ultralytics.html",
+    "Configure Default Values": "ultralytics.html",
     "Managing Files": "split.html",
-    "augmenting and standardization": "augment.html"
+    "Trainer": "train.html"
   }
 }

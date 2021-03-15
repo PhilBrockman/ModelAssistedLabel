@@ -10,14 +10,14 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: clone Ultralytics's YOLOv5
+      title: Configure Default Values
       url: ultralytics.html
     - output: web,pdf
       title: Managing Files
       url: split.html
     - output: web,pdf
-      title: augmenting and standardization
-      url: augment.html
+      title: Trainer
+      url: train.html
     output: web
     title: ModelAssistedLabel
   output: web
