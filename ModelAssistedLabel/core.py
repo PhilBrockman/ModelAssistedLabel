@@ -95,7 +95,7 @@ class Generation:
       MAX_SIZE: The total number of images to be used in the image set
     """
     if split_ratio is None:
-      split_ratio = Defaults().split_ratio()
+      split_ratio = Defaults().split_ratio
 
     files = FileUtilities.match_files(repo)
     random.shuffle(files)

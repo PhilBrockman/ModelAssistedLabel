@@ -98,8 +98,8 @@ nb_path: "02_augment.ipynb"
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-104-63f5efc5d097&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-109-63f5efc5d097&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      5</span>                data_yaml=data_yaml)
 <span class="ansi-green-intense-fg ansi-bold">      6</span> 
 <span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>split_repo<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
@@ -108,11 +108,11 @@ nb_path: "02_augment.ipynb"
 <span class="ansi-green-fg">/content/drive/My Drive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">split_repo</span><span class="ansi-blue-fg">(self, split_ratio, MAX_SIZE)</span>
 <span class="ansi-green-intense-fg ansi-bold">     96</span>     &#34;&#34;&#34;
 <span class="ansi-green-intense-fg ansi-bold">     97</span>     <span class="ansi-green-fg">if</span> split_ratio <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 98</span><span class="ansi-red-fg">       </span>split_ratio <span class="ansi-blue-fg">=</span> ModelAssistedLabel<span class="ansi-blue-fg">.</span>core<span class="ansi-blue-fg">.</span>Default<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>split_ratio<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 98</span><span class="ansi-red-fg">       </span>split_ratio <span class="ansi-blue-fg">=</span> Defaults<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>split_ratio<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">     99</span> 
 <span class="ansi-green-intense-fg ansi-bold">    100</span>     files <span class="ansi-blue-fg">=</span> FileUtilities<span class="ansi-blue-fg">.</span>match_files<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">)</span>
 
-<span class="ansi-red-fg">NameError</span>: name &#39;ModelAssistedLabel&#39; is not defined</pre>
+<span class="ansi-red-fg">TypeError</span>: &#39;dict&#39; object is not callable</pre>
 </div>
 </div>
 
