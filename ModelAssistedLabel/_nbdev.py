@@ -10,6 +10,6 @@ modules = ["core.py"]
 
 doc_url = "https://PhilBrockman.github.io/ModelAssistedLabel/"
 
-git_url = "https://github.com/PhilBrockman/ModelAssistedLabel/tree/main/"
+git_url = "https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/"
 
 def custom_doc_links(name): return None
