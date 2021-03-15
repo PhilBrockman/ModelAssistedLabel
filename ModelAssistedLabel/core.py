@@ -77,7 +77,7 @@ class Generation:
               "test": .1
             }
 
-  def __init__(self, repo):
+  def __init__(self, repo, out_dir):
     """
       Args:
         repo: <string> path to the parent directory of the repository.
