@@ -1,9 +1,9 @@
 {
   "ModelAssistedLabel": {
     "Overview": "/",
-    "Title": "fetch_analytics.html",
-    "FileSystems": "split.html",
-    "augmenting and standardization": "augment.html",
-    "Configuration": "Synch Colab to Github for ModelAssistedLabel.html"
+    "Configuration": "Synch.html",
+    "YOLOv5 (ultralytics)": "ultralytics.html",
+    "FileSystems 01": "split.html",
+    "augmenting and standardization": "augment.html"
   }
 }

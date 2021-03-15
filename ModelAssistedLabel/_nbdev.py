@@ -2,7 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"Defaults": "00_fetch_analytics.ipynb",
+index = {"Defaults": "00_ultralytics.ipynb",
          "FileUtilities": "01_split.ipynb",
          "Generation": "01_split.ipynb"}
 

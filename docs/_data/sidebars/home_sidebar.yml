@@ -10,17 +10,17 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Title
-      url: fetch_analytics.html
+      title: Configuration
+      url: Synch.html
     - output: web,pdf
-      title: FileSystems
+      title: YOLOv5 (ultralytics)
+      url: ultralytics.html
+    - output: web,pdf
+      title: FileSystems 01
       url: split.html
     - output: web,pdf
       title: augmenting and standardization
       url: augment.html
-    - output: web,pdf
-      title: Configuration
-      url: Synch Colab to Github for ModelAssistedLabel.html
     output: web
     title: ModelAssistedLabel
   output: web
