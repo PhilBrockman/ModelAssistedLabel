@@ -85,7 +85,7 @@ class Generation:
     self.data_yaml = data_yaml
     self.out_dir = out_dir
 
-  def split_repo(self, split_ratio = None, MAX_SIZE=None):
+  def split(self, split_ratio = None, MAX_SIZE=None):
     """
     Sets the value of `self.split`
 
@@ -97,7 +97,7 @@ class Generation:
     if split_ratio is None:
       split_ratio = Defaults().split_ratio
 
-    files = FileUtilities.match_files(repo)
+    files = FileUtilities.match_files(self.repo)
     random.shuffle(files)
     if MAX_SIZE:
       files = files[:MAX_SIZE]

@@ -82,7 +82,7 @@ nb_path: "02_augment.ipynb"
                <span class="n">out_dir</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/01_train&quot;</span><span class="p">,</span>
                <span class="n">data_yaml</span><span class="o">=</span><span class="n">data_yaml</span><span class="p">)</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">split_repo</span><span class="p">(</span><span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">([{</span><span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">[</span><span class="n">x</span><span class="p">])}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">split</span><span class="p">])</span>
 </pre></div>
 
@@ -98,21 +98,21 @@ nb_path: "02_augment.ipynb"
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-109-63f5efc5d097&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-112-63f5efc5d097&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      5</span>                data_yaml=data_yaml)
 <span class="ansi-green-intense-fg ansi-bold">      6</span> 
 <span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>split_repo<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">      8</span> print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> len<span class="ansi-blue-fg">(</span>g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">[</span>x<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span> <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/content/drive/My Drive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">split_repo</span><span class="ansi-blue-fg">(self, split_ratio, MAX_SIZE)</span>
-<span class="ansi-green-intense-fg ansi-bold">     96</span>     &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">     97</span>     <span class="ansi-green-fg">if</span> split_ratio <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 98</span><span class="ansi-red-fg">       </span>split_ratio <span class="ansi-blue-fg">=</span> Defaults<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>split_ratio<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     98</span>       split_ratio <span class="ansi-blue-fg">=</span> Defaults<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>split_ratio
 <span class="ansi-green-intense-fg ansi-bold">     99</span> 
-<span class="ansi-green-intense-fg ansi-bold">    100</span>     files <span class="ansi-blue-fg">=</span> FileUtilities<span class="ansi-blue-fg">.</span>match_files<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 100</span><span class="ansi-red-fg">     </span>files <span class="ansi-blue-fg">=</span> FileUtilities<span class="ansi-blue-fg">.</span>match_files<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    101</span>     random<span class="ansi-blue-fg">.</span>shuffle<span class="ansi-blue-fg">(</span>files<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    102</span>     <span class="ansi-green-fg">if</span> MAX_SIZE<span class="ansi-blue-fg">:</span>
 
-<span class="ansi-red-fg">TypeError</span>: &#39;dict&#39; object is not callable</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;repo&#39; is not defined</pre>
 </div>
 </div>
 
