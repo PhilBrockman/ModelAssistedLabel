@@ -7,6 +7,11 @@ class Defaults:
   def __init__(self):
     self.root = "/content/drive/MyDrive/Coding/ModelAssistedLabel/"
     self.resource_folder = "/content/drive/MyDrive/Coding/Roboflow/try it out"
+    self.split_ratio = {
+              "train": .7,
+              "valid": .2,
+              "test": .1
+            }
 
 # Cell
 
@@ -70,14 +75,7 @@ class Generation:
     Container and organizer of photos for a given repository.
   """
 
-  def default_split_ratio(self):
-    return {
-              "train": .7,
-              "valid": .2,
-              "test": .1
-            }
-
-  def __init__(self, repo, out_dir):
+  def __init__(self, repo, out_dir, data_yaml):
     """
       Args:
         repo: <string> path to the parent directory of the repository.
@@ -97,7 +95,7 @@ class Generation:
       MAX_SIZE: The total number of images to be used in the image set
     """
     if split_ratio is None:
-      split_ratio = self.default_split_ratio()
+      split_ratio = ModelAssistedLabel.core.Default().split_ratio()
 
     files = FileUtilities.match_files(repo)
     random.shuffle(files)
