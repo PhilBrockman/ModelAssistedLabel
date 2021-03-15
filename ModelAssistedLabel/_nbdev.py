@@ -3,9 +3,11 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"Defaults": "00_ultralytics.ipynb",
+         "clone_YOLOv5": "00_ultralytics.ipynb",
          "FileUtilities": "01_split.ipynb",
          "Generation": "01_split.ipynb",
-         "clean_zip": "01_split.ipynb"}
+         "clean_zip": "01_split.ipynb",
+         "Trainer": "02_augment.ipynb"}
 
 modules = ["core.py"]
 
