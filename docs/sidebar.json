@@ -4,6 +4,6 @@
     "Configure Default Values": "ultralytics.html",
     "Managing Files": "split.html",
     "Trainer": "train.html",
-    "Title": "make_weights.html"
+    "AutoWeights": "make_weights.html"
   }
 }

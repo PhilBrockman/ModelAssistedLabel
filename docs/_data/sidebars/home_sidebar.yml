@@ -19,7 +19,7 @@ entries:
       title: Trainer
       url: train.html
     - output: web,pdf
-      title: Title
+      title: AutoWeights
       url: make_weights.html
     output: web
     title: ModelAssistedLabel
