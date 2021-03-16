@@ -344,8 +344,11 @@ class Generation:
     zipname = self.repo.split("/")[-1] + prefix + timestamp
     return zipname
 
-  def write_data_yaml(self, folder="./"):
-    f = open(join(folder, "data.yaml"),"w+")
+  def write_data_yaml(self, filename="./data.yaml"):
+    """
+    Write `self.data_yaml` to disk.
+    """
+    f = open(filename,"w+")
     f.writelines(self.data_yaml)
     f.close()
 

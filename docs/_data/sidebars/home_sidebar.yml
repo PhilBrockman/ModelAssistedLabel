@@ -13,7 +13,7 @@ entries:
       title: Configure Default Values
       url: ultralytics.html
     - output: web,pdf
-      title: FileUtilities
+      title: Abstracting File Management
       url: split.html
     - output: web,pdf
       title: Trainer
