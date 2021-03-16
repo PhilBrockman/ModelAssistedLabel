@@ -171,7 +171,8 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git push
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
+<span class="o">!</span>nbdev_build_docs
 </pre></div>
 
     </div>
@@ -184,7 +185,13 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Everything up-to-date
+<pre>Converted 00_ultralytics.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_make_weights.ipynb.
+Converted index.ipynb.
+No notebooks were modified
+converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
 </pre>
 </div>
 </div>
@@ -202,10 +209,88 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_d
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add -u
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git commit -m <span class="s2">&quot;updating site&quot;</span>
+<span class="o">!</span>git push
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[master c10854f] updating site
+ 39 files changed, 200 insertions(+), 275 deletions(-)
+ delete mode 100644 data.yaml
+ delete mode 100644 nospaces7-453169/confusion_matrix.png
+ delete mode 100644 nospaces7-453169/events.out.tfevents.1615898886.64fc78c672e1.1999.0
+ delete mode 100644 nospaces7-453169/hyp.yaml
+ delete mode 100644 nospaces7-453169/labels.jpg
+ delete mode 100644 nospaces7-453169/labels_correlogram.jpg
+ delete mode 100644 nospaces7-453169/opt.yaml
+ delete mode 100644 nospaces7-453169/results.png
+ delete mode 100644 nospaces7-453169/results.txt
+ delete mode 100644 nospaces7-453169/test_batch0_labels.jpg
+ delete mode 100644 nospaces7-453169/test_batch0_pred.jpg
+ delete mode 100644 nospaces7-453169/train_batch0.jpg
+ delete mode 100644 nospaces7-453169/weights/best.pt
+ delete mode 100644 nospaces7-453169/weights/last.pt
+ delete mode 100644 nospaces7-550063/confusion_matrix.png
+ delete mode 100644 nospaces7-550063/events.out.tfevents.1615898978.64fc78c672e1.2163.0
+ delete mode 100644 nospaces7-550063/hyp.yaml
+ delete mode 100644 nospaces7-550063/labels.jpg
+ delete mode 100644 nospaces7-550063/labels_correlogram.jpg
+ delete mode 100644 nospaces7-550063/opt.yaml
+ delete mode 100644 nospaces7-550063/results.png
+ delete mode 100644 nospaces7-550063/results.txt
+ delete mode 100644 nospaces7-550063/test_batch0_labels.jpg
+ delete mode 100644 nospaces7-550063/test_batch0_pred.jpg
+ delete mode 100644 nospaces7-550063/train_batch0.jpg
+ delete mode 100644 nospaces7-550063/weights/best.pt
+ delete mode 100644 nospaces7-550063/weights/last.pt
+ delete mode 100644 train/images/digittake-251-jpg_jpg.rf.8f97d8eb7943eeddb83ad1c2d19d6688.jpg
+ delete mode 100644 train/images/digittake-81-jpg_jpg.rf.94eed3cf9672c4656144aaaef92348bc.jpg
+ delete mode 100644 train/images/save_dirrtake-126-jpg-cropped-jpg-jpg_jpg.rf.a9a8696a243a5e99198c824897ac4b57.jpg
+ delete mode 100644 train/images/save_dirrtake-143-jpg-cropped-jpg-jpg_jpg.rf.780078f16506e28250bb6cb2e243d4b3.jpg
+ delete mode 100644 train/labels/digittake-251-jpg_jpg.rf.8f97d8eb7943eeddb83ad1c2d19d6688.txt
+ delete mode 100644 train/labels/digittake-81-jpg_jpg.rf.94eed3cf9672c4656144aaaef92348bc.txt
+ delete mode 100644 train/labels/save_dirrtake-126-jpg-cropped-jpg-jpg_jpg.rf.a9a8696a243a5e99198c824897ac4b57.txt
+ delete mode 100644 train/labels/save_dirrtake-143-jpg-cropped-jpg-jpg_jpg.rf.780078f16506e28250bb6cb2e243d4b3.txt
+ delete mode 100644 valid/images/screenytake-82-jpg-cropped-jpg_jpg.rf.575e316410cf9c7242912c5a6a5c2c7b.jpg
+ delete mode 100644 valid/labels/screenytake-82-jpg-cropped-jpg_jpg.rf.575e316410cf9c7242912c5a6a5c2c7b.txt
+Counting objects: 5, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 2.90 KiB | 185.00 KiB/s, done.
+Total 5 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/PhilBrockman/ModelAssistedLabel.git
+   6522419..c10854f  master -&gt; master
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
