@@ -45,8 +45,6 @@ nb_path: "00_ultralytics.ipynb"
 <p>Helps keep a DRY principle across this project. The split ratio was defined based
 on information found on Roboflow. <code>self.trainer_template</code> is pulled from the
 YOLOv5 tutorial.</p>
-<p>Any methods defined are there as a convenience for using ndbev in a Colab
-enivornment.</p>
 
 </div>
 
@@ -61,6 +59,42 @@ enivornment.</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;Define defaults:&quot;</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;  * </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Define defaults:
+  * root
+  * split_ratio
+  * data_yaml
+  * resource_map
+  * trainer_template
+</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -82,10 +116,9 @@ enivornment.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="prepare_YOLOv5" class="doc_header"><code>prepare_YOLOv5</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>prepare_YOLOv5</code>()</p>
+<h4 id="prepare_YOLOv5" class="doc_header"><code>prepare_YOLOv5</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L92" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>prepare_YOLOv5</code>()</p>
 </blockquote>
 <ul>
-<li>Enter the project's root directory.</li>
 <li>Clone repository if the YOLOv5 directory does not exist.</li>
 <li>Install requirements.txt</li>
 <li>Check that GPU is enabled.</li>

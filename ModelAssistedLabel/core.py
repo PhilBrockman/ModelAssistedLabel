@@ -8,9 +8,6 @@ class Defaults:
   Helps keep a DRY principle across this project. The split ratio was defined based
   on information found on Roboflow. `self.trainer_template` is pulled from the
   YOLOv5 tutorial.
-
-  Any methods defined are there as a convenience for using ndbev in a Colab
-  enivornment.
   """
   def __init__(self):
     self.root = "/content/drive/MyDrive/Coding/ModelAssistedLabel/"
@@ -76,30 +73,28 @@ class Defaults:
       [[17, 20, 23], 1, Detect, [nc, anchors]],  # Detect(P3, P4, P5)
       ]"""
 
-    calls = {}
-    calls["nbdev"] = (["pip install nbdev"])
-    calls["lib/docs"] = (["nbdev_build_lib", "nbdev_build_docs"])
-    self.calls = calls
+  #   calls = {}
+  #   calls["nbdev"] = (["pip install nbdev"])
+  #   calls["lib/docs"] = (["nbdev_build_lib", "nbdev_build_docs"])
+  #   self.calls = calls
 
-  def call_all(self, arr):
-    for x in arr:
-      os.system(x)
+  # def call_all(self, arr):
+  #   for x in arr:
+  #     os.system(x)
 
-  def nbdev(self):
-    for x in self.calls:
-      self.call_all(calls[x])
+  # def nbdev(self):
+  #   for x in self.calls:
+  #     self.call_all(calls[x])
 
 # Cell
 import os
 
 def prepare_YOLOv5():
   """
-  * Enter the project's root directory.
   * Clone repository if the YOLOv5 directory does not exist.
   * Install requirements.txt
   * Check that GPU is enabled.
   """
-  os.chdir("{Defaults().root}")
   # safety for re-executions
   if not os.path.exists("yolov5"):
     # clone YOLOv5 and reset to a specific git checkpoint that has been verified working
