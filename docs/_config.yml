@@ -1,7 +1,7 @@
 repository: PhilBrockman/ModelAssistedLabel
 output: web
-topnav_title: ModelAssistedLabel
-site_title: ModelAssistedLabel
+topnav_title: Model-assisted Labeling with YOLOv5
+site_title: Model-assisted Labeling with YOLOv5
 company_name: Phil Brockman
 description: A description of your project
 # Set to false to disable KaTeX math
