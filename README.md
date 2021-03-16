@@ -2,12 +2,15 @@
 
 
 
-> Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically:I want to track my workout stats).> >I was unable to find a suitable existing set of labeled LCD digits.
->
->After working through [a Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate  and store my images. Quickly, I resolved to use the model's outputs and labels for incoming images.
+## Background
 
+Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
 
-## Expectations
+I was unable to find a suitable existing set of labeled LCD digits.
+
+After working through [a Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate  and store my images. Quickly, I resolved to use the model's outputs and labels for incoming images.
+
+---
 
 ### Expected Inputs:
 * ***Labels***: Assuming use of the [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60).
@@ -21,7 +24,7 @@ Produce the predicted annotations for a new set of images.
 
 (I ended up building a [key-driven image labeler](https://github.com/PhilBrockman/autobbox) to modify my model's predictions, but that codebase is no longer being maintained. I personally used Roboflow to both store my images and subsequently annotate as I got started wit this project.)
 
-## Preparing Repository
+# Preparing Repository
 
 Start by cloning https://github.com/ultralytics/yolov5.
 

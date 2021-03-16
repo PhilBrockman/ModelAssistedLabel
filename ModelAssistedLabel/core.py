@@ -289,7 +289,7 @@ class Generation:
       the name of the zip file uniting the resources in `dirs`
     """
     FileUtilities.mkdir(folder)
-    self.write_data_yaml(folder)
+    self.__write_data_yaml__(folder)
     for subdir in self.split:
       os.system(f"mv './{subdir}' '{folder}/'")
 
@@ -339,9 +339,12 @@ class Generation:
     zipname = self.repo.split("/")[-1] + prefix + timestamp
     return zipname
 
-  def write_data_yaml(self, filename="./data.yaml"):
+  def __write_data_yaml__(self, filename="./data.yaml"):
     """
     Write `self.data_yaml` to disk.
+
+    Args:
+      filename: Location to write the yaml data.
     """
     f = open(filename,"w+")
     f.writelines(self.data_yaml)
@@ -349,7 +352,7 @@ class Generation:
 
 
 # Cell
-import os, yaml
+import os
 
 class Trainer():
   """

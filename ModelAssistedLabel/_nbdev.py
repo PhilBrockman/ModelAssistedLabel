@@ -2,8 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"Defaults": "00_ultralytics.ipynb",
-         "prepare_YOLOv5": "00_ultralytics.ipynb",
+index = {"Defaults": "00_config.ipynb",
+         "prepare_YOLOv5": "00_config.ipynb",
          "FileUtilities": "01_split.ipynb",
          "Generation": "01_split.ipynb",
          "Trainer": "02_train.ipynb",

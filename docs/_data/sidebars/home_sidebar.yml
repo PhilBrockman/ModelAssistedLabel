@@ -10,8 +10,8 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Configure Default Values
-      url: ultralytics.html
+      title: Configuration
+      url: config.html
     - output: web,pdf
       title: Abstracting File Management
       url: split.html
