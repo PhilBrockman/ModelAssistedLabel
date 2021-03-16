@@ -1,34 +1,8 @@
-# Model-asisted Labeling with YOLOv5
+# Preparing Repository
 
 
 
-```python
-!git add *
-```
-
-```python
-!git commit -m "wrong filename"
-```
-
-    [master 94635e6] wrong filename
-     3 files changed, 371 insertions(+), 1 deletion(-)
-     create mode 100644 00_config.ipynb
-     create mode 100644 docs/config.html
-
-
-```python
-!git push
-```
-
-    Counting objects: 6, done.
-    Delta compression using up to 2 threads.
-    Compressing objects: 100% (6/6), done.
-    Writing objects: 100% (6/6), 4.15 KiB | 850.00 KiB/s, done.
-    Total 6 (delta 3), reused 0 (delta 0)
-    remote: Resolving deltas: 100% (3/3), completed with 3 local objects.[K
-    To https://github.com/PhilBrockman/ModelAssistedLabel.git
-       fee5d8a..94635e6  master -> master
-
+## Model-asisted Labeling with YOLOv5
 
 ## Background
 
@@ -51,8 +25,6 @@ Note about file names: Pairs are based on sharing a base filename. For example `
 Produce the predicted annotations for a new set of images.
 
 (I ended up building a [key-driven image labeler](https://github.com/PhilBrockman/autobbox) to modify my model's predictions, but that codebase is no longer being maintained. I personally used Roboflow to both store my images and subsequently annotate as I got started wit this project.)
-
-# Preparing Repository
 
 Start by cloning https://github.com/ultralytics/yolov5.
 

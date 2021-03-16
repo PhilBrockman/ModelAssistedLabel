@@ -1,6 +1,6 @@
 ---
 
-title: Model-asisted Labeling with YOLOv5
+title: Preparing Repository
 
 
 keywords: fastai
@@ -29,95 +29,12 @@ nb_path: "index.ipynb"
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add *
-</pre></div>
-
-    </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Model-asisted-Labeling-with-YOLOv5">Model-asisted Labeling with YOLOv5<a class="anchor-link" href="#Model-asisted-Labeling-with-YOLOv5"> </a></h2>
 </div>
 </div>
-
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git commit -m <span class="s2">&quot;wrong filename&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[master 94635e6] wrong filename
- 3 files changed, 371 insertions(+), 1 deletion(-)
- create mode 100644 00_config.ipynb
- create mode 100644 docs/config.html
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git push
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Counting objects: 6, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (6/6), done.
-Writing objects: 100% (6/6), 4.15 KiB | 850.00 KiB/s, done.
-Total 6 (delta 3), reused 0 (delta 0)
-remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
-To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   fee5d8a..94635e6  master -&gt; master
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Background">Background<a class="anchor-link" href="#Background"> </a></h2><p>Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).</p>
@@ -132,12 +49,6 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 <h3 id="Expected-Use:">Expected Use:<a class="anchor-link" href="#Expected-Use:"> </a></h3><p>Produce the predicted annotations for a new set of images.</p>
 <p>(I ended up building a <a href="https://github.com/PhilBrockman/autobbox">key-driven image labeler</a> to modify my model's predictions, but that codebase is no longer being maintained. I personally used Roboflow to both store my images and subsequently annotate as I got started wit this project.)</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Preparing-Repository">Preparing Repository<a class="anchor-link" href="#Preparing-Repository"> </a></h1>
 </div>
 </div>
 </div>
