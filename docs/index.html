@@ -130,6 +130,111 @@ wm.generate_weights(10)
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>summary:  [{&#39;train&#39;: 4}, {&#39;valid&#39;: 1}, {&#39;test&#39;: 0}]
+checksum: 5
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-130-jpg_jpg.rf.ec2c59c5f95de888149f881f4f3732c8.jpg | ./train/images/digittake-130-jpg_jpg.rf.ec2c59c5f95de888149f881f4f3732c8.jpg
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-130-jpg_jpg.rf.ec2c59c5f95de888149f881f4f3732c8.txt | ./train/labels/digittake-130-jpg_jpg.rf.ec2c59c5f95de888149f881f4f3732c8.txt
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-116-jpg_jpg.rf.879baef3a241e202524ad57bfb8fca4c.jpg | ./train/images/digittake-116-jpg_jpg.rf.879baef3a241e202524ad57bfb8fca4c.jpg
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-116-jpg_jpg.rf.879baef3a241e202524ad57bfb8fca4c.txt | ./train/labels/digittake-116-jpg_jpg.rf.879baef3a241e202524ad57bfb8fca4c.txt
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrcropped-jpg_jpg.rf.340eb8ea3c457536f9ca160912bf907b.jpg | ./train/images/save_dirrcropped-jpg_jpg.rf.340eb8ea3c457536f9ca160912bf907b.jpg
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrcropped-jpg_jpg.rf.340eb8ea3c457536f9ca160912bf907b.txt | ./train/labels/save_dirrcropped-jpg_jpg.rf.340eb8ea3c457536f9ca160912bf907b.txt
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-93-jpg_jpg.rf.8f21c0ccb915fc3d6f29f8cb28ce7d51.jpg | ./train/images/digittake-93-jpg_jpg.rf.8f21c0ccb915fc3d6f29f8cb28ce7d51.jpg
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-93-jpg_jpg.rf.8f21c0ccb915fc3d6f29f8cb28ce7d51.txt | ./train/labels/digittake-93-jpg_jpg.rf.8f21c0ccb915fc3d6f29f8cb28ce7d51.txt
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-155-jpg_jpg.rf.990bb1b3db89338db4b4b08a8c17b151.jpg | ./valid/images/digittake-155-jpg_jpg.rf.990bb1b3db89338db4b4b08a8c17b151.jpg
+target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-155-jpg_jpg.rf.990bb1b3db89338db4b4b08a8c17b151.txt | ./valid/labels/digittake-155-jpg_jpg.rf.990bb1b3db89338db4b4b08a8c17b151.txt
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IsADirectoryError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-43-7f51d2053f8b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>run_cell_magic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;time&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;repo = &#34;/content/drive/MyDrive/Coding/Roboflow Export (841)&#34;\nname = &#34;nospaces&#34;\nwm = AutoWeights(repo, name)\nwm.generate_weights(10)&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">run_cell_magic</span><span class="ansi-blue-fg">(self, magic_name, line, cell)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2115</span>             magic_arg_s <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>var_expand<span class="ansi-blue-fg">(</span>line<span class="ansi-blue-fg">,</span> stack_depth<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2116</span>             <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>builtin_trap<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2117</span><span class="ansi-red-fg">                 </span>result <span class="ansi-blue-fg">=</span> fn<span class="ansi-blue-fg">(</span>magic_arg_s<span class="ansi-blue-fg">,</span> cell<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2118</span>             <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">   2119</span> 
+
+<span class="ansi-green-fg">&lt;decorator-gen-53&gt;</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magic.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(f, *a, **k)</span>
+<span class="ansi-green-intense-fg ansi-bold">    186</span>     <span class="ansi-red-fg"># but it&#39;s overkill for just that one bit of state.</span>
+<span class="ansi-green-intense-fg ansi-bold">    187</span>     <span class="ansi-green-fg">def</span> magic_deco<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 188</span><span class="ansi-red-fg">         </span>call <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    189</span> 
+<span class="ansi-green-intense-fg ansi-bold">    190</span>         <span class="ansi-green-fg">if</span> callable<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magics/execution.py</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1191</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1192</span>             st <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 1193</span><span class="ansi-red-fg">             </span>exec<span class="ansi-blue-fg">(</span>code<span class="ansi-blue-fg">,</span> glob<span class="ansi-blue-fg">,</span> local_ns<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1194</span>             end <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1195</span>             out <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
+
+<span class="ansi-green-fg">&lt;timed exec&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, resource_dir, name, out_dir, MAX_SIZE, custom_data_yaml, verbose, train_path)</span>
+<span class="ansi-green-intense-fg ansi-bold">    425</span>     self<span class="ansi-blue-fg">.</span>train_path <span class="ansi-blue-fg">=</span> train_path
+<span class="ansi-green-intense-fg ansi-bold">    426</span>     <span class="ansi-red-fg">#automatically build the resource paths and prepare for traniing</span>
+<span class="ansi-green-fg">--&gt; 427</span><span class="ansi-red-fg">     </span>self<span class="ansi-blue-fg">.</span>__prepare_split__<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span>MAX_SIZE<span class="ansi-blue-fg">,</span> data_yaml<span class="ansi-blue-fg">=</span>custom_data_yaml<span class="ansi-blue-fg">,</span> verbose<span class="ansi-blue-fg">=</span>verbose<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    428</span>     <span class="ansi-green-fg">assert</span> self<span class="ansi-blue-fg">.</span>g <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-green-intense-fg ansi-bold">    429</span> 
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__prepare_split__</span><span class="ansi-blue-fg">(self, MAX_SIZE, data_yaml, verbose)</span>
+<span class="ansi-green-intense-fg ansi-bold">    471</span>     self<span class="ansi-blue-fg">.</span>g <span class="ansi-blue-fg">=</span> Generation<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>resource_dir<span class="ansi-blue-fg">,</span> out_dir<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>out_dir<span class="ansi-blue-fg">,</span> data_yaml<span class="ansi-blue-fg">=</span>data_yaml<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    472</span>     self<span class="ansi-blue-fg">.</span>g<span class="ansi-blue-fg">.</span>set_split<span class="ansi-blue-fg">(</span>MAX_SIZE<span class="ansi-blue-fg">=</span>MAX_SIZE<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 473</span><span class="ansi-red-fg">     </span>self<span class="ansi-blue-fg">.</span>__split_and_organize_folders__<span class="ansi-blue-fg">(</span>verbose<span class="ansi-blue-fg">=</span>verbose<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    474</span> 
+<span class="ansi-green-intense-fg ansi-bold">    475</span>   <span class="ansi-green-fg">def</span> __split_and_organize_folders__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> verbose<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__split_and_organize_folders__</span><span class="ansi-blue-fg">(self, verbose)</span>
+<span class="ansi-green-intense-fg ansi-bold">    497</span>       print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;checksum:&#34;</span><span class="ansi-blue-fg">,</span> sumg<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>g<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    498</span> 
+<span class="ansi-green-fg">--&gt; 499</span><span class="ansi-red-fg">     </span>zipped <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>g<span class="ansi-blue-fg">.</span>write_split_to_disk<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>name<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg">#create a zip file in the ROOT directory</span>
+<span class="ansi-green-intense-fg ansi-bold">    500</span>     local <span class="ansi-blue-fg">=</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>basename<span class="ansi-blue-fg">(</span>zipped<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    501</span>     os<span class="ansi-blue-fg">.</span>system<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;unzip &#34;{local}&#34;&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg">#grab data</span>
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">write_split_to_disk</span><span class="ansi-blue-fg">(self, descriptor, autoname_output)</span>
+<span class="ansi-green-intense-fg ansi-bold">    270</span> 
+<span class="ansi-green-intense-fg ansi-bold">    271</span>     dirs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>__write_images__<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg">#write images</span>
+<span class="ansi-green-fg">--&gt; 272</span><span class="ansi-red-fg">     </span>zipped <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>__zip_dirs__<span class="ansi-blue-fg">(</span>out_folder<span class="ansi-blue-fg">,</span> dirs<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg">#zip folders</span>
+<span class="ansi-green-intense-fg ansi-bold">    273</span>     os<span class="ansi-blue-fg">.</span>system<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#34;mv &#39;{zipped}&#39; &#39;{self.out_dir}&#39;&#34;</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg">#move the output</span>
+<span class="ansi-green-intense-fg ansi-bold">    274</span>     <span class="ansi-green-fg">return</span> <span class="ansi-blue-fg">f&#34;{self.out_dir}/{zipped}&#34;</span>
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__zip_dirs__</span><span class="ansi-blue-fg">(self, folder, dirs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    288</span>     &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">    289</span>     FileUtilities<span class="ansi-blue-fg">.</span>mkdir<span class="ansi-blue-fg">(</span>folder<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 290</span><span class="ansi-red-fg">     </span>self<span class="ansi-blue-fg">.</span>__write_data_yaml__<span class="ansi-blue-fg">(</span>folder<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    291</span>     <span class="ansi-green-fg">for</span> subdir <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>split<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    292</span>       os<span class="ansi-blue-fg">.</span>system<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#34;mv &#39;./{subdir}&#39; &#39;{folder}/&#39;&#34;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__write_data_yaml__</span><span class="ansi-blue-fg">(self, filename)</span>
+<span class="ansi-green-intense-fg ansi-bold">    345</span>       filename<span class="ansi-blue-fg">:</span> Location to write the yaml data<span class="ansi-blue-fg">.</span>
+<span class="ansi-green-intense-fg ansi-bold">    346</span>     &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 347</span><span class="ansi-red-fg">     </span>f <span class="ansi-blue-fg">=</span> open<span class="ansi-blue-fg">(</span>filename<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">&#34;w+&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    348</span>     f<span class="ansi-blue-fg">.</span>writelines<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>data_yaml<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    349</span>     f<span class="ansi-blue-fg">.</span>close<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">IsADirectoryError</span>: [Errno 21] Is a directory: &#39;Roboflow Export (841)nospaces 21-03-16 21-34-54&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
