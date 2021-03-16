@@ -36,9 +36,27 @@ nb_path: "03_make_weights.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;test/&quot;</span><span class="p">,</span> <span class="s2">&quot;train/&quot;</span><span class="p">,</span> <span class="s2">&quot;valid/&quot;</span><span class="p">,</span> <span class="s2">&quot;data.yaml&quot;</span><span class="p">]:</span>
+  <span class="nb">print</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;nospaces&quot;</span>
-<span class="n">wm</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="c1"># wm = AutoWeights(repo, name)</span>
 </pre></div>
 
     </div>
@@ -63,7 +81,7 @@ checksum: 5
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-97-3c198987c792&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">&lt;ipython-input-101-3c198987c792&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> repo <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#34;/content/drive/MyDrive/Coding/Roboflow Export (841)&#34;</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> name <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#34;nospaces&#34;</span>
 <span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>wm <span class="ansi-blue-fg">=</span> AutoWeights<span class="ansi-blue-fg">(</span>repo<span class="ansi-blue-fg">,</span> name<span class="ansi-blue-fg">)</span>
@@ -93,6 +111,23 @@ checksum: 5
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wm</span><span class="o">.</span><span class="n">__cleanup__</span><span class="p">()</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 

@@ -20,7 +20,7 @@ entries:
       url: train.html
     - output: web,pdf
       title: Title
-      url: make_weights.html
+      url: augments.html
     output: web
     title: ModelAssistedLabel
   output: web
