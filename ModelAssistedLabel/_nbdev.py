@@ -13,7 +13,7 @@ index = {"Defaults": "00_ultralytics.ipynb",
          "tidy_weights": "index.ipynb"}
 
 modules = ["core.py",
-           "exmaples.py"]
+           "examples.py"]
 
 doc_url = "https://PhilBrockman.github.io/ModelAssistedLabel/"
 
