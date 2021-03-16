@@ -10,7 +10,7 @@ index = {"Defaults": "00_config.ipynb",
 
 modules = ["core.py"]
 
-doc_url = "https://PhilBrockman.github.io/ModelAssistedLabel/"
+doc_url = "https://PhilBrockman.github.io/#ModelAssistedLabel/"
 
 git_url = "https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/"
 

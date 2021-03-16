@@ -6,8 +6,8 @@ title: Abstracting File Management
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Each file has its own assumptions about file structure. I use these classes to organize images and labels into the appropriate location at the appropriate time."
-description: "Each file has its own assumptions about file structure. I use these classes to organize images and labels into the appropriate location at the appropriate time."
+
+
 nb_path: "01_split.ipynb"
 ---
 <!--
@@ -77,7 +77,7 @@ nb_path: "01_split.ipynb"
 <p>Container and organizer of photos for a given repository. This class "softly"
 organizes the files upon the setting of the <code>split</code> attribute via <code>set_split</code>.</p>
 <p>The split can then be written to disk by calling <code>write_split_to_disk</code>. The
-relevant data will be zipped in <code>self.out_dir</code></p>
+relevant data will be zipped in <code>out_dir</code></p>
 
 </div>
 

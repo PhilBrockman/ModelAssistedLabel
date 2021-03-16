@@ -18,9 +18,6 @@ entries:
     - output: web,pdf
       title: Training Models
       url: train.html
-    - output: web,pdf
-      title: Title
-      url: augments.html
     output: web
     title: ModelAssistedLabel
   output: web
