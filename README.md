@@ -2,6 +2,34 @@
 
 
 
+```python
+!git add *
+```
+
+```python
+!git commit -m "wrong filename"
+```
+
+    [master 94635e6] wrong filename
+     3 files changed, 371 insertions(+), 1 deletion(-)
+     create mode 100644 00_config.ipynb
+     create mode 100644 docs/config.html
+
+
+```python
+!git push
+```
+
+    Counting objects: 6, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (6/6), done.
+    Writing objects: 100% (6/6), 4.15 KiB | 850.00 KiB/s, done.
+    Total 6 (delta 3), reused 0 (delta 0)
+    remote: Resolving deltas: 100% (3/3), completed with 3 local objects.[K
+    To https://github.com/PhilBrockman/ModelAssistedLabel.git
+       fee5d8a..94635e6  master -> master
+
+
 ## Background
 
 Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).

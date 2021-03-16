@@ -352,6 +352,7 @@ class Generation:
 
 
 # Cell
+from .core import Defaults
 import os
 
 class Trainer():

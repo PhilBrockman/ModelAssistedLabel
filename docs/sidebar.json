@@ -3,7 +3,7 @@
     "Overview": "/",
     "Configuration": "config.html",
     "Abstracting File Management": "split.html",
-    "Trainer": "train.html",
+    "Training Models": "train.html",
     "Title": "make_weights.html"
   }
 }
