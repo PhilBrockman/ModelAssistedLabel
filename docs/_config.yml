@@ -64,9 +64,9 @@ plugins:
     
 remote_theme: fastai/nbdev-jekyll-theme
 <<<<<<< HEAD
-baseurl: /#ModelAssistedLabel/
+baseurl: //#ModelAssistedLabel/
 theme: jekyll-theme-slate
 =======
-baseurl: /#ModelAssistedLabel/
+baseurl: //#ModelAssistedLabel/
 theme: jekyll-theme-midnight
 >>>>>>> 42483d941c5966e74f9d63351b3f19da75aa31a1
