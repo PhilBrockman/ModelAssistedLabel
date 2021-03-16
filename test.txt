@@ -1,2 +1,0 @@
-
-sample file createde in colab
