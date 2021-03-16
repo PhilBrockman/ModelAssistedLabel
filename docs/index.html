@@ -38,7 +38,50 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="How-to-use">How to use<a class="anchor-link" href="#How-to-use"> </a></h2>
+<h2 id="Expected-Inputs:">Expected Inputs:<a class="anchor-link" href="#Expected-Inputs:"> </a></h2><ul>
+<li><strong><em>Labels</em></strong>: Assuming use of the <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60">YOLOv5 format</a>.</li>
+<li><strong><em>Images</em></strong>: Assuming jpgs</li>
+</ul>
+<p>Note about file names: Pairs are based on sharing a base filename. For example <code>image.jpg</code>/<code>image.txt</code> will be paired and <code>other_image5.jpg'/</code>other_image5.txt`.</p>
+<h2 id="Expected-Outputs:">Expected Outputs:<a class="anchor-link" href="#Expected-Outputs:"> </a></h2><p>A set of labeled predicted annotations for a new set of images.</p>
+<p>(I ended up building a <a href="https://github.com/PhilBrockman/autobbox">key-driven image labeler</a> to modify my model's predictions, but that codebase is no longer being maintained. I personally used Roboflow to both store my images and subsequently annotate as I got started wit this project.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Preparing-Repository">Preparing Repository<a class="anchor-link" href="#Preparing-Repository"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Start by cloning <a href="https://github.com/ultralytics/yolov5">https://github.com/ultralytics/yolov5</a></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ModelAssistedLabel</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">prepare_YOLOv5</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Image-Sets">Image Sets<a class="anchor-link" href="#Image-Sets"> </a></h1>
 </div>
 </div>
 </div>
@@ -90,114 +133,15 @@ wm.generate_weights(10)
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-5-7f51d2053f8b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>run_cell_magic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;time&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;repo = &#34;/content/drive/MyDrive/Coding/Roboflow Export (841)&#34;\nname = &#34;nospaces&#34;\nwm = AutoWeights(repo, name)\nwm.generate_weights(10)&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">run_cell_magic</span><span class="ansi-blue-fg">(self, magic_name, line, cell)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2115</span>             magic_arg_s <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>var_expand<span class="ansi-blue-fg">(</span>line<span class="ansi-blue-fg">,</span> stack_depth<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2116</span>             <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>builtin_trap<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 2117</span><span class="ansi-red-fg">                 </span>result <span class="ansi-blue-fg">=</span> fn<span class="ansi-blue-fg">(</span>magic_arg_s<span class="ansi-blue-fg">,</span> cell<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2118</span>             <span class="ansi-green-fg">return</span> result
-<span class="ansi-green-intense-fg ansi-bold">   2119</span> 
-
-<span class="ansi-green-fg">&lt;decorator-gen-53&gt;</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
-
-<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magic.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(f, *a, **k)</span>
-<span class="ansi-green-intense-fg ansi-bold">    186</span>     <span class="ansi-red-fg"># but it&#39;s overkill for just that one bit of state.</span>
-<span class="ansi-green-intense-fg ansi-bold">    187</span>     <span class="ansi-green-fg">def</span> magic_deco<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 188</span><span class="ansi-red-fg">         </span>call <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    189</span> 
-<span class="ansi-green-intense-fg ansi-bold">    190</span>         <span class="ansi-green-fg">if</span> callable<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magics/execution.py</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1191</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1192</span>             st <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">-&gt; 1193</span><span class="ansi-red-fg">             </span>exec<span class="ansi-blue-fg">(</span>code<span class="ansi-blue-fg">,</span> glob<span class="ansi-blue-fg">,</span> local_ns<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1194</span>             end <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1195</span>             out <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
-
-<span class="ansi-green-fg">&lt;timed exec&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-
-<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/core.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, resource_dir, name, out_dir, MAX_SIZE, custom_data_yaml, verbose, train_path)</span>
-<span class="ansi-green-intense-fg ansi-bold">    383</span>     self<span class="ansi-blue-fg">.</span>resource_paths <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;test/&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;train/&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;valid/&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;data.yaml&#34;</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">    384</span>     <span class="ansi-green-fg">for</span> r <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>resource_paths<span class="ansi-blue-fg">:</span> <span class="ansi-red-fg">#make sure none of these paths already exist</span>
-<span class="ansi-green-fg">--&gt; 385</span><span class="ansi-red-fg">       </span><span class="ansi-green-fg">assert</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>exists<span class="ansi-blue-fg">(</span>r<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">f&#34;{r} exists... You may be in the middle of an active project&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    386</span>     self<span class="ansi-blue-fg">.</span>out_dir <span class="ansi-blue-fg">=</span> out_dir
-<span class="ansi-green-intense-fg ansi-bold">    387</span>     self<span class="ansi-blue-fg">.</span>train_path <span class="ansi-blue-fg">=</span> train_path
-
-<span class="ansi-red-fg">AssertionError</span>: train/ exists... You may be in the middle of an active project</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> &quot;_Synch.ipynb&quot;
-</pre></div>
-
-    </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Augmenting-an-image-set">Augmenting an image set<a class="anchor-link" href="#Augmenting-an-image-set"> </a></h3>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/content/drive/MyDrive/Coding/ModelAssistedLabel
-install nbdev: 
-build resources: UPDATE
-Converted 00_ultralytics.ipynb.
-Converted 01_split.ipynb.
-Converted 02_train.ipynb.
-Converted index.ipynb.
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/01_split.ipynb
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/00_ultralytics.ipynb
-converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
-git commit -m: collapsing index into functions
-Executing: git config --local include.path ../.gitconfig
-Success: hooks are installed and repo&#39;s .gitconfig is now trusted
-[master 9ba08e1] &lt;function &lt;lambda&gt; at 0x7f87b2db4680&gt;
- 8 files changed, 174 insertions(+), 261 deletions(-)
-Counting objects: 12, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (12/12), done.
-Writing objects: 100% (12/12), 3.47 KiB | 592.00 KiB/s, done.
-Total 12 (delta 10), reused 0 (delta 0)
-remote: Resolving deltas: 100% (10/10), completed with 10 local objects.
-To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   27453bd..9ba08e1  master -&gt; master
-</pre>
 </div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 </div>
  
 

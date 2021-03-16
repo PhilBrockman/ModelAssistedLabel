@@ -2,8 +2,8 @@
   "ModelAssistedLabel": {
     "Overview": "/",
     "Configure Default Values": "ultralytics.html",
-    "Managing Files": "split.html",
+    "FileUtilities": "split.html",
     "Trainer": "train.html",
-    "AutoWeights": "make_weights.html"
+    "Title": "make_weights.html"
   }
 }

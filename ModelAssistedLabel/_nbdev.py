@@ -7,7 +7,7 @@ index = {"Defaults": "00_ultralytics.ipynb",
          "FileUtilities": "01_split.ipynb",
          "Generation": "01_split.ipynb",
          "Trainer": "02_train.ipynb",
-         "AutoWeights": "03_make_weights.ipynb"}
+         "AutoWeights": "02_train.ipynb"}
 
 modules = ["core.py"]
 

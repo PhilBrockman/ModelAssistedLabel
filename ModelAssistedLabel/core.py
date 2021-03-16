@@ -4,9 +4,16 @@ __all__ = ['Defaults', 'prepare_YOLOv5', 'FileUtilities', 'Generation', 'Trainer
 
 # Cell
 class Defaults:
+  """
+  Helps keep a DRY principle across this project. The split ratio was defined based
+  on information found on Roboflow. `self.trainer_template` is pulled from the
+  YOLOv5 tutorial.
+
+  Any methods defined are there as a convenience for using ndbev in a Colab
+  enivornment.
+  """
   def __init__(self):
     self.root = "/content/drive/MyDrive/Coding/ModelAssistedLabel/"
-    self.resource_folder = "/content/drive/MyDrive/Coding/Roboflow/try it out"
     self.split_ratio = {
               "train": .7,
               "valid": .2,
@@ -17,6 +24,7 @@ class Defaults:
     "",
     "nc: 10",
     "names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']"])
+    self.resource_map = {"images": ".jpg", "labels": ".txt"}
 
     self.trainer_template = f"""# parameters
     nc: {10}  # number of classes
@@ -68,26 +76,30 @@ class Defaults:
       [[17, 20, 23], 1, Detect, [nc, anchors]],  # Detect(P3, P4, P5)
       ]"""
 
-    calls = []
-    calls.append(["pip install nbdev"])
-    calls.append(["nbdev_build_docs", "nbdev_build_lib"])
+    calls = {}
+    calls["nbdev"] = (["pip install nbdev"])
+    calls["lib/docs"] = (["nbdev_build_lib", "nbdev_build_docs"])
     self.calls = calls
 
   def call_all(self, arr):
     for x in arr:
       os.system(x)
 
-  def full_nbdev(self):
-    call_all(self.calls)
-
-  def build_lib(self):
-    call_all(self.calls[1][1])
+  def nbdev(self):
+    for x in self.calls:
+      self.call_all(calls[x])
 
 # Cell
-
 import os
 
 def prepare_YOLOv5():
+  """
+  * Enter the project's root directory.
+  * Clone repository if the YOLOv5 directory does not exist.
+  * Install requirements.txt
+  * Check that GPU is enabled.
+  """
+  os.chdir("{Defaults().root}")
   # safety for re-executions
   if not os.path.exists("yolov5"):
     # clone YOLOv5 and reset to a specific git checkpoint that has been verified working
@@ -109,7 +121,7 @@ def prepare_YOLOv5():
   if torch.cuda.is_available():
     print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0)))
   else:
-    raise Exception("You need to enable GPU in this runtime environment")
+    raise Exception("You need to enable your GPU access to this runtime environment")
 
   # return to parent directory
   os.chdir("..")
@@ -121,8 +133,16 @@ from os.path import join
 import os
 
 class FileUtilities:
+  """
+  Set of utility functions for managing the requirements of the Ultralytics repo
+  """
+
   def resource_map():
-    return {"images": ".jpg", "labels": ".txt"}
+    """
+    Explicity define the extensions for images and labels. Check the `Default` class's
+    `resource_map` values
+    """
+    return Defaults().resource_map
 
   def collect_files(walk_dir, recursive):
     """
@@ -162,10 +182,21 @@ class FileUtilities:
     return pairs
 
   def match_files(walk_dir, recursive=True):
+    """
+    From a bag of resources, find the paired images and labels.
+
+    Args:
+      walk_dir: recursively search for images/labels within this folder
+
+    Returns:
+      matched pairs of images and text within the `walk_dir`
+    """
     return FileUtilities.matched(FileUtilities.collect_files(walk_dir, recursive=recursive))
 
   def mkdir(dir):
-
+    """
+    Don't overwrite an existing file when calling mkdir.
+    """
     import os
     if not os.path.exists(dir):
       os.mkdir(f"{dir}")
@@ -178,7 +209,11 @@ import math, random
 
 class Generation:
   """
-    Container and organizer of photos for a given repository.
+    Container and organizer of photos for a given repository. This class "softly"
+    organizes the files upon the setting of the `split` attribute via `set_split`.
+
+    The split can then be written to disk by calling `write_split_to_disk`. The
+    relevant data will be zipped in `self.out_dir`
   """
 
   def __init__(self, repo, out_dir, data_yaml):
@@ -219,7 +254,7 @@ class Generation:
     self.split = split
 
 
-  def process_split(self, descriptor = "", autoname_output=True):
+  def write_split_to_disk(self, descriptor = "", autoname_output=True):
     """
     Takes the given `self.split` and writes the split of the data to disk. Also
     writes a data.yaml file to retain class label information.
@@ -235,18 +270,18 @@ class Generation:
     assert self.split is not None
 
     if autoname_output:
-      out_folder = self.default_filename(descriptor)
+      out_folder = self.__default_filename__(descriptor)
     else:
       assert len(descriptor) > 0, "need to provide a filename with `descriptor` argument"
       out_folder = descriptor
 
-    dirs = self.write_images() #write images
-    zipped = self.zip_dirs(out_folder, dirs) #zip folders
+    dirs = self.__write_images__() #write images
+    zipped = self.__zip_dirs__(out_folder, dirs) #zip folders
     os.system(f"mv '{zipped}' '{self.out_dir}'") #move the output
     return f"{self.out_dir}/{zipped}"
 
 
-  def zip_dirs(self, folder, dirs):
+  def __zip_dirs__(self, folder, dirs):
     """
     Takes an array of resources and places them all as the children in a specified
     `folder`.
@@ -268,7 +303,7 @@ class Generation:
     return f"{folder}.zip"
 
 
-  def write_images(self):
+  def __write_images__(self):
     """
     If the dataset has already been split, then write the files to disk accordingly.
     All resources are present two levels deep. The top folders are named according
@@ -296,13 +331,13 @@ class Generation:
             os.system(f"cp '{target}' '{destination}'")
     return directories
 
-  def default_filename(self, prefix=""):
+  def __default_filename__(self, prefix=""):
     """
     Helper to ease the burden of continually generating unique names or accidentally
     overwriting important data.
 
     Args:
-      prefix:
+      prefix: zipfile identifier
     """
     now = datetime.now() # current date and time
     timestamp = now.strftime(" %y-%m-%d %H-%M-%S")
@@ -319,7 +354,10 @@ class Generation:
 import os, yaml
 
 class Trainer():
-  "Write the backbone of the model to file and then run YOLOv5's train file."
+  """
+  A wrapper for Ultralytic's `test.py`
+
+  Write the backbone of the model to file and then run YOLOv5's train file."""
 
   def __init__(self, name, yaml_file = "models/custom_yolov5s.yaml"):
     """
@@ -458,7 +496,7 @@ class AutoWeights():
       print("summary: ", tostr(self.g.split))
       print("checksum:", sumg(self.g.split))
 
-    zipped = self.g.process_split(self.name) #create a zip file in the ROOT directory
+    zipped = self.g.write_split_to_disk(self.name) #create a zip file in the ROOT directory
     local = os.path.basename(zipped)
     os.system(f'unzip "{local}"') #grab data
     #move the contents of the zip file into postion within the ROOT directory

@@ -1,6 +1,6 @@
 ---
 
-title: Managing Files
+title: FileUtilities
 
 
 keywords: fastai
@@ -40,8 +40,9 @@ nb_path: "01_split.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="FileUtilities" class="doc_header"><code>class</code> <code>FileUtilities</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L123" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FileUtilities</code>()</p>
+<h2 id="FileUtilities" class="doc_header"><code>class</code> <code>FileUtilities</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L135" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FileUtilities</code>()</p>
 </blockquote>
+<p>Set of utility functions for managing the requirements of the Ultralytics repo</p>
 
 </div>
 
@@ -60,6 +61,12 @@ nb_path: "01_split.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Generation">Generation<a class="anchor-link" href="#Generation"> </a></h1>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -71,9 +78,12 @@ nb_path: "01_split.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L179" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>, <strong><code>out_dir</code></strong>, <strong><code>data_yaml</code></strong>)</p>
+<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L210" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>, <strong><code>out_dir</code></strong>, <strong><code>data_yaml</code></strong>)</p>
 </blockquote>
-<p>Container and organizer of photos for a given repository.</p>
+<p>Container and organizer of photos for a given repository. This class "softly"
+organizes the files upon the setting of the <code>split</code> attribute via <code>set_split</code>.</p>
+<p>The split can then be written to disk by calling <code>write_split_to_disk</code>. The
+relevant data will be zipped in <code>self.out_dir</code></p>
 
 </div>
 
@@ -88,193 +98,6 @@ nb_path: "01_split.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Test a use case. Define the <code>repo</code> or the location of the images and their associated labels. <code>out_dir</code> is where the zipped and organized information is stored.</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">capture</span>
-g = Generation(repo = &quot;/content/drive/MyDrive/Coding/Roboflow Export (841)&quot;, 
-               out_dir = &quot;/content/drive/MyDrive/Coding/01_train&quot;,
-               data_yaml=Defaults().data_yaml)
-
-g.set_split(MAX_SIZE=4ß)
-out_dir = g.process_split(&quot; processor&quot;)
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/screenytake-89-jpg-cropped-jpg_jpg.rf.fddb40a647c590aeb2c2e68408ade165.jpg | ./train/images/screenytake-89-jpg-cropped-jpg_jpg.rf.fddb40a647c590aeb2c2e68408ade165.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/screenytake-89-jpg-cropped-jpg_jpg.rf.fddb40a647c590aeb2c2e68408ade165.txt | ./train/labels/screenytake-89-jpg-cropped-jpg_jpg.rf.fddb40a647c590aeb2c2e68408ade165.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrdigittake-81-jpg-cropped-jpg-jpg_jpg.rf.cf8ab96262f1fd76f49b4ecef63d28b9.jpg | ./train/images/save_dirrdigittake-81-jpg-cropped-jpg-jpg_jpg.rf.cf8ab96262f1fd76f49b4ecef63d28b9.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrdigittake-81-jpg-cropped-jpg-jpg_jpg.rf.cf8ab96262f1fd76f49b4ecef63d28b9.txt | ./train/labels/save_dirrdigittake-81-jpg-cropped-jpg-jpg_jpg.rf.cf8ab96262f1fd76f49b4ecef63d28b9.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-327-jpg_jpg.rf.51a6a64a1c8528eab30e68ab241cbab0.jpg | ./train/images/digittake-327-jpg_jpg.rf.51a6a64a1c8528eab30e68ab241cbab0.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-327-jpg_jpg.rf.51a6a64a1c8528eab30e68ab241cbab0.txt | ./train/labels/digittake-327-jpg_jpg.rf.51a6a64a1c8528eab30e68ab241cbab0.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrtake-144-jpg-cropped-jpg-jpg_jpg.rf.fd13cc583c84b0af10c32d02450b5d53.jpg | ./valid/images/save_dirrtake-144-jpg-cropped-jpg-jpg_jpg.rf.fd13cc583c84b0af10c32d02450b5d53.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrtake-144-jpg-cropped-jpg-jpg_jpg.rf.fd13cc583c84b0af10c32d02450b5d53.txt | ./valid/labels/save_dirrtake-144-jpg-cropped-jpg-jpg_jpg.rf.fd13cc583c84b0af10c32d02450b5d53.txt
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Make sure that no files will be overwritten</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_eq_type</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)),</span> <span class="kc">False</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
-<span class="o">!</span>mv <span class="s2">&quot;{out_dir}&quot;</span> . #help clean up
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Unzip and check if the number of files is as expected according to <code>g.split</code></p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">capture</span>
-!unzip &quot;./{z}&quot;
-ls = !ls &quot;{z[:-4]}/train/labels&quot;
-test_eq(len(ls), 3)
-ls = !ls &quot;{z[:-4]}/valid/labels&quot;
-test_eq(len(ls), 1)
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Archive:  ./Roboflow Export (841) processor 21-03-15 19-13-22.zip
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/train/
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/train/images/
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/train/images/screenytake-89-jpg-cropped-jpg_jpg.rf.fddb40a647c590aeb2c2e68408ade165.jpg  
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/train/images/save_dirrdigittake-81-jpg-cropped-jpg-jpg_jpg.rf.cf8ab96262f1fd76f49b4ecef63d28b9.jpg  
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/train/images/digittake-327-jpg_jpg.rf.51a6a64a1c8528eab30e68ab241cbab0.jpg  
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/train/labels/
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/train/labels/screenytake-89-jpg-cropped-jpg_jpg.rf.fddb40a647c590aeb2c2e68408ade165.txt  
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/train/labels/save_dirrdigittake-81-jpg-cropped-jpg-jpg_jpg.rf.cf8ab96262f1fd76f49b4ecef63d28b9.txt  
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/train/labels/digittake-327-jpg_jpg.rf.51a6a64a1c8528eab30e68ab241cbab0.txt  
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/valid/
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/valid/images/
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/valid/images/save_dirrtake-144-jpg-cropped-jpg-jpg_jpg.rf.fd13cc583c84b0af10c32d02450b5d53.jpg  
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/valid/labels/
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/valid/labels/save_dirrtake-144-jpg-cropped-jpg-jpg_jpg.rf.fd13cc583c84b0af10c32d02450b5d53.txt  
-   creating: Roboflow Export (841) processor 21-03-15 19-13-22/test/
-  inflating: Roboflow Export (841) processor 21-03-15 19-13-22/data.yaml  
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Remove the test zip file and zipped file.</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm -f -r &quot;</span><span class="si">{</span><span class="nb">zip</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rm &quot;</span><span class="si">{</span><span class="nb">zip</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Verify</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_eq_type</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)),</span> <span class="kc">False</span><span class="p">)</span>
-<span class="n">test_eq_type</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_dir</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 </div>
     {% endraw %}
