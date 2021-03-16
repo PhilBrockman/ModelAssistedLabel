@@ -326,7 +326,7 @@ import os, yaml
 class Trainer():
   "Write the backbone of the model to file and then run YOLOv5's train file."
 
-  def __init__(self, name, yaml_file = "./yolov5/models/custom_yolov5s.yaml"):
+  def __init__(self, name, yaml_file = "models/custom_yolov5s.yaml"):
     """
     sets the current directory to the project's root as defined in Defaults.
 
@@ -343,7 +343,7 @@ class Trainer():
     """
     Records YOLOv5 architecture
     """
-    f = open(self.yaml_file,"w+")
+    f = open(f"yolov5/{self.yaml_file}","w+")
     f.writelines(self.template)
     f.close()
 
@@ -355,3 +355,7 @@ class Trainer():
       epochs: number of iterations
     """
     self.write_yaml()
+    os.chdir("yolov5")
+    os.system("pip install -r requirements.txt")
+    os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg {self.yaml_file} --weights '' --name {self.name}  --cache")
+    os.chdir("..")
