@@ -3,6 +3,7 @@
     "Overview": "/",
     "Configure Default Values": "ultralytics.html",
     "Managing Files": "split.html",
-    "Trainer": "train.html"
+    "Trainer": "train.html",
+    "Title": "make_weights.html"
   }
 }

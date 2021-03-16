@@ -7,13 +7,14 @@ index = {"Defaults": "00_ultralytics.ipynb",
          "FileUtilities": "01_split.ipynb",
          "Generation": "01_split.ipynb",
          "Trainer": "02_train.ipynb",
+         "WeightMaker": "03_make_weights.ipynb",
          "prepare_split": "index.ipynb",
          "organize": "index.ipynb",
          "generate_weights": "index.ipynb",
          "tidy_weights": "index.ipynb"}
 
 modules = ["core.py",
-           "exmaples.py"]
+           "examples.py"]
 
 doc_url = "https://PhilBrockman.github.io/ModelAssistedLabel/"
 
