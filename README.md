@@ -36,6 +36,23 @@ I hated annotating my images by hand. Once my model began making reasonable gues
 
 
 
+```python
+!git add -u .
+!git commit -m "move down"
+!git push
+```
+
+    [master 69e0481] move down
+    Counting objects: 25, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (25/25), done.
+    Writing objects: 100% (25/25), 5.77 KiB | 328.00 KiB/s, done.
+    Total 25 (delta 20), reused 0 (delta 0)
+    remote: Resolving deltas: 100% (20/20), completed with 8 local objects.[K
+    To https://github.com/PhilBrockman/ModelAssistedLabel.git
+       53079b2..69e0481  master -> master
+
+
 # Preparing Repository
 
 Start by cloning https://github.com/ultralytics/yolov5.
@@ -117,7 +134,7 @@ PIL.Image.open(f"{wm.last_results_path}/confusion_matrix.png")
 
 
 
-![png](docs/images/output_11_0.png)
+![png](docs/images/output_12_0.png)
 
 
 
