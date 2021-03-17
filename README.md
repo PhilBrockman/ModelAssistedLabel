@@ -2,27 +2,39 @@
 
 
 
-# Background
+Background
+---
 
 Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
 
-I was unable to find a suitable existing set of labeled LCD digits.
+Unfortunately, I was unable to find a suitable existing set of labeled LCD digits.
 
-After working through [a Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate  and store my images. Quickly, I resolved to use the model's outputs and labels for incoming images.
+After working through [a Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate and store my images. 
+
+I hated annotating my images by hand. Once my model began making reasonable guesses, I resolved to enlist the model's help in labeling new images. (I ended up building a [key-driven image labeler](https://github.com/PhilBrockman/autobbox) to modify my model's predictions, but that codebase is no longer being maintained.)
 
 ---
 
 ## Expected Inputs:
-* ***Labels***: Assuming use of the [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60).
-* ***Images***: Assuming jpgs
+* **Labeled data** (for the model):
+  - All of the images and labels must be in a common folder (subfolders allowed).
+  - labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60).
+* **Unlabeled Data**:
+  - Hopefully similar enough to the labeled data that the model will be of assistance in labeling.
+> Note about file names:Pairs are based on sharing a base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.
 
-Note about file names: Pairs are based on sharing a base filename. For example `image.jpg`/`image.txt` will be paired and `other_image5.jpg'/`other_image5.txt`.
 
-## Expected Use:
+## Expected Output:
 
-Produce the predicted annotations for a new set of images.
+* ***ZIP file*** that contains: 
+    - `images/`
+      + a copy of every image in **Unlabeled Data**
+    - `labels/` (folder
+      + result of running object detection on each image
+    - a results folder produced by Ultralytic's `train.p` on the **Labeled Data**
+    - `classmap.yaml` to preserve the identity of the classes
 
-(I ended up building a [key-driven image labeler](https://github.com/PhilBrockman/autobbox) to modify my model's predictions, but that codebase is no longer being maintained. I personally used Roboflow to both store my images and subsequently annotate as I got started wit this project.)
+
 
 # Preparing Repository
 
@@ -105,7 +117,7 @@ PIL.Image.open(f"{wm.last_results_path}/confusion_matrix.png")
 
 
 
-![png](docs/images/output_12_0.png)
+![png](docs/images/output_11_0.png)
 
 
 

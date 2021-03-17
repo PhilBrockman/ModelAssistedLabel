@@ -31,23 +31,39 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Background">Background<a class="anchor-link" href="#Background"> </a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).</p>
-<p>I was unable to find a suitable existing set of labeled LCD digits.</p>
-<p>After working through <a href="https://models.roboflow.com/object-detection/yolov5">a Roboflow tutorial</a>, I started to use Roboflow to annotate  and store my images. Quickly, I resolved to use the model's outputs and labels for incoming images.</p>
+<h2 id="Background">Background<a class="anchor-link" href="#Background"> </a></h2><p>Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).</p>
+<p>Unfortunately, I was unable to find a suitable existing set of labeled LCD digits.</p>
+<p>After working through <a href="https://models.roboflow.com/object-detection/yolov5">a Roboflow tutorial</a>, I started to use Roboflow to annotate and store my images.</p>
+<p>I hated annotating my images by hand. Once my model began making reasonable guesses, I resolved to enlist the model's help in labeling new images. (I ended up building a <a href="https://github.com/PhilBrockman/autobbox">key-driven image labeler</a> to modify my model's predictions, but that codebase is no longer being maintained.)</p>
 <hr>
 <h2 id="Expected-Inputs:">Expected Inputs:<a class="anchor-link" href="#Expected-Inputs:"> </a></h2><ul>
-<li><strong><em>Labels</em></strong>: Assuming use of the <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60">YOLOv5 format</a>.</li>
-<li><strong><em>Images</em></strong>: Assuming jpgs</li>
+<li><strong>Labeled data</strong> (for the model):<ul>
+<li>All of the images and labels must be in a common folder (subfolders allowed).</li>
+<li>labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60">YOLOv5 format</a>.</li>
 </ul>
-<p>Note about file names: Pairs are based on sharing a base filename. For example <code>image.jpg</code>/<code>image.txt</code> will be paired and <code>other_image5.jpg'/</code>other_image5.txt`.</p>
-<h2 id="Expected-Use:">Expected Use:<a class="anchor-link" href="#Expected-Use:"> </a></h2><p>Produce the predicted annotations for a new set of images.</p>
-<p>(I ended up building a <a href="https://github.com/PhilBrockman/autobbox">key-driven image labeler</a> to modify my model's predictions, but that codebase is no longer being maintained. I personally used Roboflow to both store my images and subsequently annotate as I got started wit this project.)</p>
+</li>
+<li><strong>Unlabeled Data</strong>:<ul>
+<li>Hopefully similar enough to the labeled data that the model will be of assistance in labeling.<blockquote><p>Note about file names:Pairs are based on sharing a base filename. For example <code>image.jpg/image.txt</code> would be paired as would <code>other_image5.jpg/other_image5.txt</code>.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Expected-Output:">Expected Output:<a class="anchor-link" href="#Expected-Output:"> </a></h2><ul>
+<li><strong><em>ZIP file</em></strong> that contains: <ul>
+<li><code>images/</code><ul>
+<li>a copy of every image in <strong>Unlabeled Data</strong></li>
+</ul>
+</li>
+<li><code>labels/</code> (folder<ul>
+<li>result of running object detection on each image</li>
+</ul>
+</li>
+<li>a results folder produced by Ultralytic's <code>train.p</code> on the <strong>Labeled Data</strong></li>
+<li><code>classmap.yaml</code> to preserve the identity of the classes</li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
