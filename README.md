@@ -1,10 +1,8 @@
 # Model-asisted Labeling with YOLOv5
+> bootstrapping image annotation
 
 
-
-Background
----
-
+# Background
 Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
 
 Unfortunately, I was unable to find a suitable existing set of labeled LCD digits.
@@ -37,20 +35,14 @@ I hated annotating my images by hand. Once my model began making reasonable gues
 
 
 ```python
-!git add -u .
-!git commit -m "move down"
-!git push
+1+1
 ```
 
-    [master 69e0481] move down
-    Counting objects: 25, done.
-    Delta compression using up to 2 threads.
-    Compressing objects: 100% (25/25), done.
-    Writing objects: 100% (25/25), 5.77 KiB | 328.00 KiB/s, done.
-    Total 25 (delta 20), reused 0 (delta 0)
-    remote: Resolving deltas: 100% (20/20), completed with 8 local objects.[K
-    To https://github.com/PhilBrockman/ModelAssistedLabel.git
-       53079b2..69e0481  master -> master
+
+
+
+    2
+
 
 
 # Preparing Repository
@@ -59,8 +51,13 @@ Start by cloning https://github.com/ultralytics/yolov5.
 
 ```python
 from ModelAssistedLabel.core import Defaults
+import os
 
+# enter root directory
 os.chdir(Defaults().root)
+
+# clone yolov5 repo and install requirements
+# ensure GPU is enabled
 Defaults.prepare_YOLOv5()
 ```
 
