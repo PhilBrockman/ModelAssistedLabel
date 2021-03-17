@@ -11,8 +11,6 @@ After working through [a Roboflow tutorial]( https://models.roboflow.com/object-
 
 I hated annotating my images by hand. Once my model began making reasonable guesses, I resolved to enlist the model's help in labeling new images. (I ended up building a [key-driven image labeler](https://github.com/PhilBrockman/autobbox) to modify my model's predictions, but that codebase is no longer being maintained.)
 
----
-
 ## Expected Inputs:
 * **Labeled data** (for the model):
   - All of the images and labels must be in a common folder (subfolders allowed).
@@ -55,18 +53,16 @@ Defaults.prepare_YOLOv5()
 
 # Image Sets
 
+Many options
+
 ### Vanilla image sets
 
 Recursively search a folder (`repo`) that contains images and labels.
 
 ```python
-wm.__cleanup__()
-```
-
-```python
-repo = "/content/drive/MyDrive/Coding/Roboflow Export (841)"
-name = "nospaces"
-wm = AutoWeights(repo, name)
+# repo = "/content/drive/MyDrive/Coding/Roboflow Export (841)"
+# name = "nospaces"
+# wm = AutoWeights(repo, name)
 ```
 
     summary:  [{'train': 4}, {'valid': 1}, {'test': 0}]
@@ -84,8 +80,8 @@ wm = AutoWeights(repo, name)
 
 
 ```python
-%%time
-wm.generate_weights(10)
+# %%time
+# wm.generate_weights(10)
 ```
 
     CPU times: user 2.02 ms, sys: 23.9 ms, total: 25.9 ms
@@ -98,47 +94,3 @@ wm.generate_weights(10)
     './nospaces4-025678'
 
 
-
-```python
-  !ls "{wm.last_results_path}"
-```
-
-    confusion_matrix.png				    results.txt
-    events.out.tfevents.1615931373.99e938482867.3591.0  test_batch0_labels.jpg
-    hyp.yaml					    test_batch0_pred.jpg
-    labels_correlogram.jpg				    train_batch0.jpg
-    labels.jpg					    train_batch1.jpg
-    opt.yaml					    train_batch2.jpg
-    results.png					    weights
-
-
-```python
-import PIL
-PIL.Image.open(f"{wm.last_results_path}/confusion_matrix.png")
-```
-
-
-
-
-![png](docs/images/output_11_0.png)
-
-
-
-```python
-ls
-```
-
-     00_config.ipynb         [0m[01;34mModelAssistedLabel[0m/
-     01_split.ipynb          [01;34mnospaces4-025678[0m/
-     02_train.ipynb          README.md
-     03_make_weights.ipynb  [01;34m'Roboflow Export (841)nospaces 21-03-16 21-34-54'[0m/
-     CONTRIBUTING.md         settings.ini
-     docker-compose.yml      setup.py
-     [01;34mdocs[0m/                   _Synch.ipynb
-     index.ipynb            [01;34m'train (1)'[0m/
-     LICENSE                [01;34m'train (2)'[0m/
-     Makefile                [01;34myolov5[0m/
-     MANIFEST.in
-
-
-### Augmenting an image set
