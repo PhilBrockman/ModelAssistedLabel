@@ -34,17 +34,6 @@ I hated annotating my images by hand. Once my model began making reasonable gues
 
 
 
-```python
-1+1
-```
-
-
-
-
-    2
-
-
-
 # Preparing Repository
 
 Start by cloning https://github.com/ultralytics/yolov5.
@@ -131,7 +120,7 @@ PIL.Image.open(f"{wm.last_results_path}/confusion_matrix.png")
 
 
 
-![png](docs/images/output_12_0.png)
+![png](docs/images/output_11_0.png)
 
 
 
