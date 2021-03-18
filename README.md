@@ -37,15 +37,15 @@ I hated annotating my images by hand. Once my model began making reasonable gues
 Start by cloning https://github.com/ultralytics/yolov5.
 
 ```python
-from ModelAssistedLabel.core import Defaults
-import os
+# from ModelAssistedLabel.core import Defaults
+# import os
 
-# enter root directory
-os.chdir(Defaults().root)
+# # enter root directory
+# os.chdir(Defaults().root)
 
-# clone yolov5 repo and install requirements
-# ensure GPU is enabled
-Defaults.prepare_YOLOv5()
+# # clone yolov5 repo and install requirements
+# # ensure GPU is enabled
+# Defaults.prepare_YOLOv5()
 ```
 
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla V100-SXM2-16GB', major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
