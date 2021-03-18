@@ -18,6 +18,9 @@ entries:
     - output: web,pdf
       title: Training Models
       url: train.html
+    - output: web,pdf
+      title: Detecting Objects
+      url: detect.html
     output: web
     title: ModelAssistedLabel
   output: web

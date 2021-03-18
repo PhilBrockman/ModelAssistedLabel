@@ -536,6 +536,8 @@ class AutoWeights():
     return outfolder
 
 # Cell
+import os
+os.chdir("yolov5")
 from pathlib import Path
 from utils.plots import plot_one_box
 
@@ -545,6 +547,7 @@ from utils.general import scale_coords, xyxy2xywh
 from utils.torch_utils import select_device
 from models.experimental import attempt_load
 import cv2, os, base64, json
+os.chdir("..")
 
 os.system("pip install colour")
 os.system("pip install pillow")
