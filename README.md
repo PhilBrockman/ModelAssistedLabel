@@ -14,14 +14,14 @@ I hated annotating my images by hand. Once my model began making reasonable gues
 I found the files responsible for training and employing models and wrote wrappers around the relevant calls
 
 ## Expected Inputs:
-* **Labeled data** (for the model):
-  - All of the images and labels must be in a common folder (subfolders allowed).
-  - labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60).
-* **Unlabeled Data**:
-  - Hopefully similar enough to the labeled data that the model will be of assistance in labeling.
-> Note about file names:Pairs are based on sharing a base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.
-
-
+* Either:
+  - **weight** file OR
+  - **labeled images**
+      + All of the images and labels must be in a common folder (subfolders allowed).
+      + labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60).
+* And:
+  - **unlabeled images**
+{% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
 ## Expected Output:
 
 * ***ZIP file*** that contains: 

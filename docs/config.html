@@ -32,92 +32,6 @@ nb_path: "00_config.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>wget --no-check-certificate -r <span class="s2">&quot;https://drive.google.com/drive/folders/1UOBNLkAaiwHMN67yBXpOrqCP9IlsMDFa?usp=sharing&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>--2021-03-17 23:13:28--  https://drive.google.com/drive/folders/1UOBNLkAaiwHMN67yBXpOrqCP9IlsMDFa?usp=sharing
-Resolving drive.google.com (drive.google.com)... 74.125.137.113, 74.125.137.100, 74.125.137.101, ...
-Connecting to drive.google.com (drive.google.com)|74.125.137.113|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/html]
-Saving to: ‘drive.google.com/drive/folders/1UOBNLkAaiwHMN67yBXpOrqCP9IlsMDFa?usp=sharing’
-
-drive.google.com/dr     [ &lt;=&gt;                ] 224.59K  1.30MB/s    in 0.2s    
-
-2021-03-17 23:13:29 (1.30 MB/s) - ‘drive.google.com/drive/folders/1UOBNLkAaiwHMN67yBXpOrqCP9IlsMDFa?usp=sharing’ saved [229980]
-
-Loading robots.txt; please ignore errors.
---2021-03-17 23:13:29--  https://drive.google.com/robots.txt
-Reusing existing connection to drive.google.com:443.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/plain]
-Saving to: ‘drive.google.com/robots.txt’
-
-drive.google.com/ro     [ &lt;=&gt;                ]     570  --.-KB/s    in 0s      
-
-2021-03-17 23:13:29 (31.2 MB/s) - ‘drive.google.com/robots.txt’ saved [570]
-
-FINISHED --2021-03-17 23:13:29--
-Total wall clock time: 0.3s
-Downloaded: 2 files, 225K in 0.2s (1.31 MB/s)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cd</span> <span class="n">drive</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">/</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/content/drive.google.com
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -126,11 +40,11 @@ Downloaded: 2 files, 225K in 0.2s (1.31 MB/s)
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Defaults" class="doc_header"><code>class</code> <code>Defaults</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/core.py#L6" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Defaults</code>()</p>
+<h2 id="Defaults" class="doc_header"><code>class</code> <code>Defaults</code><a href="ModelAssistedLabel/config.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Defaults</code>(<strong><code>config_file</code></strong>=<em><code>'ModelAssistedLabel config.json'</code></em>)</p>
 </blockquote>
-<p>Helps keep a DRY principle across this project. The split ratio was defined based
-on information found on Roboflow. <code>self.trainer_template</code> is pulled from the
-YOLOv5 tutorial, as is the code within <code>prepare_YOLOv5</code></p>
+<p>Makes certain variables are very accessible across the repository. The names
+of the variables and their respective values are stored in JSON format in the
+<code>config_file</code></p>
 
 </div>
 
@@ -151,20 +65,23 @@ YOLOv5 tutorial, as is the code within <code>prepare_YOLOv5</code></p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Default Values</strong></p>
+<p><strong>Default Values</strong> are stored in "ModelAssistedLabel config.json"</p>
+<p>Every time the class is called, the config file is re-read for changes.</p>
+<p>Currently, the following attributes are then dynamically assigned to the newly-created <code>Default</code> object.</p>
+<ul>
+<li>root <em>(parent folder of YOLOv5 repo)</em></li>
+<li>resource_map <em>(defines images as ".jpg" and labels as ".txt")</em></li>
+<li>split_ratio <em>(by default, 70/20/10 split of train/valid/test.)</em></li>
+<li>data_yaml <em>(from YOLOv5 repo)</em></li>
+<li>trainer template <em>(from YOLOv5 repo)</em></li>
+</ul>
 
-<pre><code>* root 
-  --&gt; parent folder of YOLOv5 repo
-
-* resource_map
-  --&gt; defines images as ".jpg" and labels as ".txt"
-* split_ratio 
-  --&gt; by default, 70/20/10 split of train/valid/test.
-
-* data_yaml 
-  --&gt; from YOLOv5 repo
-* trainer template 
-  --&gt; YOLOv5 repo</code></pre>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Proof of Concept:</p>
 
 </div>
 </div>
@@ -176,7 +93,7 @@ YOLOv5 tutorial, as is the code within <code>prepare_YOLOv5</code></p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;Defined defaults:&quot;</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;  * </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;  * </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
 </pre></div>
 
     </div>
@@ -189,8 +106,7 @@ YOLOv5 tutorial, as is the code within <code>prepare_YOLOv5</code></p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Defined defaults:
-  * root
+<pre>  * root
   * split_ratio
   * data_yaml
   * resource_map
