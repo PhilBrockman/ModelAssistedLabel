@@ -3,13 +3,15 @@
 
 
 # Background
-Object Detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
+Object detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
 
 Unfortunately, I was unable to find a suitable existing set of labeled LCD digits.
 
 After working through [a Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate and store my images. 
 
 I hated annotating my images by hand. Once my model began making reasonable guesses, I resolved to enlist the model's help in labeling new images. (I ended up building a [key-driven image labeler](https://github.com/PhilBrockman/autobbox) to modify my model's predictions, but that codebase is no longer being maintained.)
+
+I found the files responsible for training and employing models and wrote wrappers around the relevant calls
 
 ## Expected Inputs:
 * **Labeled data** (for the model):
