@@ -36,7 +36,7 @@ nb_path: "03_detect.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> &quot;_Synch.ipynb&quot;
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git status
 </pre></div>
 
     </div>
@@ -49,261 +49,213 @@ nb_path: "03_detect.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&#34;/content/drive&#34;, force_remount=True).
-/content/drive/MyDrive/Coding/ModelAssistedLabel
-install nbdev: 
-git commit -m: Rebuilding libs
-Converted 00_config.ipynb.
-Converted 01_split.ipynb.
-Converted 02_train.ipynb.
-Converted 03_detect.ipynb.
-Converted index.ipynb.
-No notebooks were modified
-converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
-Executing: git config --local include.path ../.gitconfig
-Success: hooks are installed and repo&#39;s .gitconfig is now trusted
+<pre>On branch master
+Your branch is up to date with &#39;origin/master&#39;.
 
-[master 6366c9b] Rebuilding libs
- 221 files changed, 2022 insertions(+), 3815 deletions(-)
- rewrite 03_detect.ipynb (98%)
- rewrite ModelAssistedLabel/core.py (87%)
- create mode 100644 ModelAssistedLabel/detect.py
- create mode 100644 ModelAssistedLabel/file_management.py
- create mode 100644 ModelAssistedLabel/train.py
- rewrite docs/detect.html (98%)
- delete mode 100644 save_dir/labeled-0.jpg
- delete mode 100644 save_dir/labeled-1.jpg
- delete mode 100644 save_dir/labeled-10.jpg
- delete mode 100644 save_dir/labeled-100.jpg
- delete mode 100644 save_dir/labeled-101.jpg
- delete mode 100644 save_dir/labeled-102.jpg
- delete mode 100644 save_dir/labeled-103.jpg
- delete mode 100644 save_dir/labeled-104.jpg
- delete mode 100644 save_dir/labeled-105.jpg
- delete mode 100644 save_dir/labeled-106.jpg
- delete mode 100644 save_dir/labeled-107.jpg
- delete mode 100644 save_dir/labeled-108.jpg
- delete mode 100644 save_dir/labeled-109.jpg
- delete mode 100644 save_dir/labeled-11.jpg
- delete mode 100644 save_dir/labeled-110.jpg
- delete mode 100644 save_dir/labeled-111.jpg
- delete mode 100644 save_dir/labeled-112.jpg
- delete mode 100644 save_dir/labeled-113.jpg
- delete mode 100644 save_dir/labeled-114.jpg
- delete mode 100644 save_dir/labeled-115.jpg
- delete mode 100644 save_dir/labeled-116.jpg
- delete mode 100644 save_dir/labeled-117.jpg
- delete mode 100644 save_dir/labeled-118.jpg
- delete mode 100644 save_dir/labeled-119.jpg
- delete mode 100644 save_dir/labeled-12.jpg
- delete mode 100644 save_dir/labeled-120.jpg
- delete mode 100644 save_dir/labeled-121.jpg
- delete mode 100644 save_dir/labeled-122.jpg
- delete mode 100644 save_dir/labeled-123.jpg
- delete mode 100644 save_dir/labeled-124.jpg
- delete mode 100644 save_dir/labeled-125.jpg
- delete mode 100644 save_dir/labeled-126.jpg
- delete mode 100644 save_dir/labeled-127.jpg
- delete mode 100644 save_dir/labeled-128.jpg
- delete mode 100644 save_dir/labeled-129.jpg
- delete mode 100644 save_dir/labeled-13.jpg
- delete mode 100644 save_dir/labeled-130.jpg
- delete mode 100644 save_dir/labeled-131.jpg
- delete mode 100644 save_dir/labeled-132.jpg
- delete mode 100644 save_dir/labeled-133.jpg
- delete mode 100644 save_dir/labeled-134.jpg
- delete mode 100644 save_dir/labeled-135.jpg
- delete mode 100644 save_dir/labeled-136.jpg
- delete mode 100644 save_dir/labeled-137.jpg
- delete mode 100644 save_dir/labeled-138.jpg
- delete mode 100644 save_dir/labeled-139.jpg
- delete mode 100644 save_dir/labeled-14.jpg
- delete mode 100644 save_dir/labeled-140.jpg
- delete mode 100644 save_dir/labeled-141.jpg
- delete mode 100644 save_dir/labeled-142.jpg
- delete mode 100644 save_dir/labeled-143.jpg
- delete mode 100644 save_dir/labeled-144.jpg
- delete mode 100644 save_dir/labeled-145.jpg
- delete mode 100644 save_dir/labeled-146.jpg
- delete mode 100644 save_dir/labeled-147.jpg
- delete mode 100644 save_dir/labeled-148.jpg
- delete mode 100644 save_dir/labeled-149.jpg
- delete mode 100644 save_dir/labeled-15.jpg
- delete mode 100644 save_dir/labeled-150.jpg
- delete mode 100644 save_dir/labeled-151.jpg
- delete mode 100644 save_dir/labeled-152.jpg
- delete mode 100644 save_dir/labeled-153.jpg
- delete mode 100644 save_dir/labeled-154.jpg
- delete mode 100644 save_dir/labeled-155.jpg
- delete mode 100644 save_dir/labeled-156.jpg
- delete mode 100644 save_dir/labeled-157.jpg
- delete mode 100644 save_dir/labeled-158.jpg
- delete mode 100644 save_dir/labeled-159.jpg
- delete mode 100644 save_dir/labeled-16.jpg
- delete mode 100644 save_dir/labeled-160.jpg
- delete mode 100644 save_dir/labeled-161.jpg
- delete mode 100644 save_dir/labeled-162.jpg
- delete mode 100644 save_dir/labeled-163.jpg
- delete mode 100644 save_dir/labeled-164.jpg
- delete mode 100644 save_dir/labeled-165.jpg
- delete mode 100644 save_dir/labeled-166.jpg
- delete mode 100644 save_dir/labeled-167.jpg
- delete mode 100644 save_dir/labeled-168.jpg
- delete mode 100644 save_dir/labeled-169.jpg
- delete mode 100644 save_dir/labeled-17.jpg
- delete mode 100644 save_dir/labeled-170.jpg
- delete mode 100644 save_dir/labeled-171.jpg
- delete mode 100644 save_dir/labeled-172.jpg
- delete mode 100644 save_dir/labeled-173.jpg
- delete mode 100644 save_dir/labeled-174.jpg
- delete mode 100644 save_dir/labeled-175.jpg
- delete mode 100644 save_dir/labeled-176.jpg
- delete mode 100644 save_dir/labeled-177.jpg
- delete mode 100644 save_dir/labeled-178.jpg
- delete mode 100644 save_dir/labeled-179.jpg
- delete mode 100644 save_dir/labeled-18.jpg
- delete mode 100644 save_dir/labeled-180.jpg
- delete mode 100644 save_dir/labeled-181.jpg
- delete mode 100644 save_dir/labeled-182.jpg
- delete mode 100644 save_dir/labeled-183.jpg
- delete mode 100644 save_dir/labeled-184.jpg
- delete mode 100644 save_dir/labeled-185.jpg
- delete mode 100644 save_dir/labeled-186.jpg
- delete mode 100644 save_dir/labeled-187.jpg
- delete mode 100644 save_dir/labeled-188.jpg
- delete mode 100644 save_dir/labeled-189.jpg
- delete mode 100644 save_dir/labeled-19.jpg
- delete mode 100644 save_dir/labeled-190.jpg
- delete mode 100644 save_dir/labeled-191.jpg
- delete mode 100644 save_dir/labeled-192.jpg
- delete mode 100644 save_dir/labeled-193.jpg
- delete mode 100644 save_dir/labeled-194.jpg
- delete mode 100644 save_dir/labeled-195.jpg
- delete mode 100644 save_dir/labeled-196.jpg
- delete mode 100644 save_dir/labeled-197.jpg
- delete mode 100644 save_dir/labeled-198.jpg
- delete mode 100644 save_dir/labeled-199.jpg
- delete mode 100644 save_dir/labeled-2.jpg
- delete mode 100644 save_dir/labeled-20.jpg
- delete mode 100644 save_dir/labeled-21.jpg
- delete mode 100644 save_dir/labeled-22.jpg
- delete mode 100644 save_dir/labeled-23.jpg
- delete mode 100644 save_dir/labeled-24.jpg
- delete mode 100644 save_dir/labeled-25.jpg
- delete mode 100644 save_dir/labeled-26.jpg
- delete mode 100644 save_dir/labeled-27.jpg
- delete mode 100644 save_dir/labeled-28.jpg
- delete mode 100644 save_dir/labeled-29.jpg
- delete mode 100644 save_dir/labeled-3.jpg
- delete mode 100644 save_dir/labeled-30.jpg
- delete mode 100644 save_dir/labeled-31.jpg
- delete mode 100644 save_dir/labeled-32.jpg
- delete mode 100644 save_dir/labeled-33.jpg
- delete mode 100644 save_dir/labeled-34.jpg
- delete mode 100644 save_dir/labeled-35.jpg
- delete mode 100644 save_dir/labeled-36.jpg
- delete mode 100644 save_dir/labeled-37.jpg
- delete mode 100644 save_dir/labeled-38.jpg
- delete mode 100644 save_dir/labeled-39.jpg
- delete mode 100644 save_dir/labeled-4.jpg
- delete mode 100644 save_dir/labeled-40.jpg
- delete mode 100644 save_dir/labeled-41.jpg
- delete mode 100644 save_dir/labeled-42.jpg
- delete mode 100644 save_dir/labeled-43.jpg
- delete mode 100644 save_dir/labeled-44.jpg
- delete mode 100644 save_dir/labeled-45.jpg
- delete mode 100644 save_dir/labeled-46.jpg
- delete mode 100644 save_dir/labeled-47.jpg
- delete mode 100644 save_dir/labeled-48.jpg
- delete mode 100644 save_dir/labeled-49.jpg
- delete mode 100644 save_dir/labeled-5.jpg
- delete mode 100644 save_dir/labeled-50.jpg
- delete mode 100644 save_dir/labeled-51.jpg
- delete mode 100644 save_dir/labeled-52.jpg
- delete mode 100644 save_dir/labeled-53.jpg
- delete mode 100644 save_dir/labeled-54.jpg
- delete mode 100644 save_dir/labeled-55.jpg
- delete mode 100644 save_dir/labeled-56.jpg
- delete mode 100644 save_dir/labeled-57.jpg
- delete mode 100644 save_dir/labeled-58.jpg
- delete mode 100644 save_dir/labeled-59.jpg
- delete mode 100644 save_dir/labeled-6.jpg
- delete mode 100644 save_dir/labeled-60.jpg
- delete mode 100644 save_dir/labeled-61.jpg
- delete mode 100644 save_dir/labeled-62.jpg
- delete mode 100644 save_dir/labeled-63.jpg
- delete mode 100644 save_dir/labeled-64.jpg
- delete mode 100644 save_dir/labeled-65.jpg
- delete mode 100644 save_dir/labeled-66.jpg
- delete mode 100644 save_dir/labeled-67.jpg
- delete mode 100644 save_dir/labeled-68.jpg
- delete mode 100644 save_dir/labeled-69.jpg
- delete mode 100644 save_dir/labeled-7.jpg
- delete mode 100644 save_dir/labeled-70.jpg
- delete mode 100644 save_dir/labeled-71.jpg
- delete mode 100644 save_dir/labeled-72.jpg
- delete mode 100644 save_dir/labeled-73.jpg
- delete mode 100644 save_dir/labeled-74.jpg
- delete mode 100644 save_dir/labeled-75.jpg
- delete mode 100644 save_dir/labeled-76.jpg
- delete mode 100644 save_dir/labeled-77.jpg
- delete mode 100644 save_dir/labeled-78.jpg
- delete mode 100644 save_dir/labeled-79.jpg
- delete mode 100644 save_dir/labeled-8.jpg
- delete mode 100644 save_dir/labeled-80.jpg
- delete mode 100644 save_dir/labeled-81.jpg
- delete mode 100644 save_dir/labeled-82.jpg
- delete mode 100644 save_dir/labeled-83.jpg
- delete mode 100644 save_dir/labeled-84.jpg
- delete mode 100644 save_dir/labeled-85.jpg
- delete mode 100644 save_dir/labeled-86.jpg
- delete mode 100644 save_dir/labeled-87.jpg
- delete mode 100644 save_dir/labeled-88.jpg
- delete mode 100644 save_dir/labeled-89.jpg
- delete mode 100644 save_dir/labeled-9.jpg
- delete mode 100644 save_dir/labeled-90.jpg
- delete mode 100644 save_dir/labeled-91.jpg
- delete mode 100644 save_dir/labeled-92.jpg
- delete mode 100644 save_dir/labeled-93.jpg
- delete mode 100644 save_dir/labeled-94.jpg
- delete mode 100644 save_dir/labeled-95.jpg
- delete mode 100644 save_dir/labeled-96.jpg
- delete mode 100644 save_dir/labeled-97.jpg
- delete mode 100644 save_dir/labeled-98.jpg
- delete mode 100644 save_dir/labeled-99.jpg
- delete mode 100644 save_dir/labeled-digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1.jpg
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-0.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-1.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-2.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-3.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-4.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-5.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-6.txt
- delete mode 100644 save_dir/labels/digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1-7.txt
- delete mode 100644 save_dir/unscuffed-digittake-11-jpg_jpg.rf.35b398c6cd3bbcf368b2ac33fecf4ba1.jpg
-Counting objects: 15, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (15/15), done.
-Writing objects: 100% (15/15), 20.45 KiB | 2.04 MiB/s, done.
-Total 15 (delta 8), reused 0 (delta 0)
-remote: Resolving deltas: 100% (8/8), completed with 8 local objects.
-To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   171cf80..6366c9b  master -&gt; master
-Branch &#39;master&#39; set up to track remote branch &#39;master&#39; from &#39;origin&#39;.
-[master f866387] script to modify link addressess
- 1 file changed, 3 insertions(+), 3 deletions(-)
-Counting objects: 3, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 361 bytes | 90.00 KiB/s, done.
-Total 3 (delta 2), reused 0 (delta 0)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   6366c9b..f866387  master -&gt; master
+Changes to be committed:
+  (use &#34;git reset HEAD &lt;file&gt;...&#34; to unstage)
+
+	<span class="ansi-green-fg">modified:   03_detect.ipynb</span>
+
+Changes not staged for commit:
+  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+  (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+
+	<span class="ansi-red-fg">modified:   yolov5</span> (modified content, untracked content)
+
 </pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
+<span class="o">!</span>nbdev_build_docs
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Converted 00_config.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_detect.ipynb.
+Converted index.ipynb.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">dirty_clean</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&lt;a href=</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;ModelAssistedLabel&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s2">&quot;https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel&quot;</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">prefix</span><span class="o">+</span><span class="n">repo</span><span class="p">,</span> <span class="n">prefix</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;docs&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">)]:</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;docs/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+  <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+  <span class="n">content</span> <span class="o">=</span> <span class="n">dirty_clean</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+  <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;docs/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;w+&quot;</span><span class="p">)</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add .
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git status
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>On branch master
+Your branch is up to date with &#39;origin/master&#39;.
+
+Changes to be committed:
+  (use &#34;git reset HEAD &lt;file&gt;...&#34; to unstage)
+
+	<span class="ansi-green-fg">modified:   03_detect.ipynb</span>
+	<span class="ansi-green-fg">modified:   docs/config.html</span>
+	<span class="ansi-green-fg">modified:   docs/detect.html</span>
+
+Changes not staged for commit:
+  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+  (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+
+	<span class="ansi-red-fg">modified:   yolov5</span> (modified content, untracked content)
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git commit -m <span class="s2">&quot;regen links&quot;</span>
+<span class="o">!</span>git push
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[master b128748] regen links
+ 3 files changed, 81 insertions(+), 255 deletions(-)
+Counting objects: 6, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 1.18 KiB | 200.00 KiB/s, done.
+Total 6 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/PhilBrockman/ModelAssistedLabel.git
+   01e31f2..b128748  master -&gt; master
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> &quot;_Synch.ipynb&quot;
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -321,7 +273,7 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>save_labeled_img</code></strong>=<em><code>True</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>True</code></em>)</p>
+<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="ModelAssistedLabel/detect.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>save_labeled_img</code></strong>=<em><code>True</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 <p>A wrapper for training loading saved YOLOv5 weights</p>
 <p>requirements:
@@ -355,7 +307,7 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ImageProcessor" class="doc_header"><code>class</code> <code>ImageProcessor</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L157" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ImageProcessor</code>(<strong><code>with_weights</code></strong>, <strong><code>save_labeled_img</code></strong>=<em><code>False</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>False</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>)</p>
+<h2 id="ImageProcessor" class="doc_header"><code>class</code> <code>ImageProcessor</code><a href="ModelAssistedLabel/detect.py#L157" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ImageProcessor</code>(<strong><code>with_weights</code></strong>, <strong><code>save_labeled_img</code></strong>=<em><code>False</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>False</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -468,7 +420,7 @@ Wall time: 8.39 s
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="yoloBox_to_standard" class="doc_header"><code>yoloBox_to_standard</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L188" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>yoloBox_to_standard</code>(<strong><code>result</code></strong>)</p>
+<h4 id="yoloBox_to_standard" class="doc_header"><code>yoloBox_to_standard</code><a href="ModelAssistedLabel/detect.py#L188" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>yoloBox_to_standard</code>(<strong><code>result</code></strong>)</p>
 </blockquote>
 <p>The standard YOLOv5 coordinate format is normed to 1. Need to extract the
 original's image width and height to convert to a standard cartesian plane.</p>
@@ -511,7 +463,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="bb_intersection_over_union" class="doc_header"><code>bb_intersection_over_union</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L223" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>bb_intersection_over_union</code>(<strong><code>boxA</code></strong>, <strong><code>boxB</code></strong>)</p>
+<h4 id="bb_intersection_over_union" class="doc_header"><code>bb_intersection_over_union</code><a href="ModelAssistedLabel/detect.py#L223" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>bb_intersection_over_union</code>(<strong><code>boxA</code></strong>, <strong><code>boxB</code></strong>)</p>
 </blockquote>
 <p>Source: <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/</a></p>
 
@@ -543,7 +495,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="sorted_api" class="doc_header"><code>sorted_api</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L248" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sorted_api</code>(<strong><code>predictions</code></strong>)</p>
+<h4 id="sorted_api" class="doc_header"><code>sorted_api</code><a href="ModelAssistedLabel/detect.py#L248" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sorted_api</code>(<strong><code>predictions</code></strong>)</p>
 </blockquote>
 <p>sorts a list of prediction in ascending x order</p>
 <p>Args:
@@ -572,7 +524,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="digit_arr_to_string" class="doc_header"><code>digit_arr_to_string</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L258" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>digit_arr_to_string</code>(<strong><code>predictions</code></strong>)</p>
+<h4 id="digit_arr_to_string" class="doc_header"><code>digit_arr_to_string</code><a href="ModelAssistedLabel/detect.py#L258" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>digit_arr_to_string</code>(<strong><code>predictions</code></strong>)</p>
 </blockquote>
 <p>"Human-friendly interpretation of predictions</p>
 
@@ -597,7 +549,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="corners" class="doc_header"><code>corners</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L263" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>corners</code>(<strong><code>r</code></strong>)</p>
+<h4 id="corners" class="doc_header"><code>corners</code><a href="ModelAssistedLabel/detect.py#L263" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>corners</code>(<strong><code>r</code></strong>)</p>
 </blockquote>
 <p>Defines the relevante coordinate information</p>
 <p>Args:
@@ -626,7 +578,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="calculate_iou" class="doc_header"><code>calculate_iou</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L275" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>calculate_iou</code>(<strong><code>frame</code></strong>, <strong><code>threshold</code></strong>=<em><code>0.4</code></em>)</p>
+<h4 id="calculate_iou" class="doc_header"><code>calculate_iou</code><a href="ModelAssistedLabel/detect.py#L275" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>calculate_iou</code>(<strong><code>frame</code></strong>, <strong><code>threshold</code></strong>=<em><code>0.4</code></em>)</p>
 </blockquote>
 <p>Determines the pair of bounding boxes that has the highest IoU over the :threshold:</p>
 <p>Args:
@@ -716,7 +668,7 @@ removed</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="raw_parse_from_json" class="doc_header"><code>raw_parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>raw_parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
+<h4 id="raw_parse_from_json" class="doc_header"><code>raw_parse_from_json</code><a href="ModelAssistedLabel/detect.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>raw_parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
 </blockquote>
 <p>Helper to interpret raw base 64 images. Creates a new JPG file from the base64
 data and feeds the image to the Detector</p>
@@ -748,7 +700,7 @@ data and feeds the image to the Detector</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_from_json" class="doc_header"><code>parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L333" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
+<h4 id="parse_from_json" class="doc_header"><code>parse_from_json</code><a href="ModelAssistedLabel/detect.py#L333" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
 </blockquote>
 <p>Gets a JSON file containing the base64 images of data to label pushed through
 a Detector. Post-processing automatically de-norms the YOLOv5 bounding boxes
