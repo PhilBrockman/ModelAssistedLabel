@@ -52,6 +52,450 @@ nb_path: "03_detect.ipynb"
 <pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&#34;/content/drive&#34;, force_remount=True).
 /content/drive/MyDrive/Coding/ModelAssistedLabel
 install nbdev: aoue
+git commit -m: running the images through detector
+Converted 00_config.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_detect.ipynb.
+Converted index.ipynb.
+converting: /content/drive/My Drive/Coding/ModelAssistedLabel/01_split.ipynb
+converting: /content/drive/My Drive/Coding/ModelAssistedLabel/03_detect.ipynb
+Requirement already satisfied: colour in /usr/local/lib/python3.7/dist-packages (0.1.5)
+Requirement already satisfied: colour in /usr/local/lib/python3.7/dist-packages (0.1.5)
+Requirement already satisfied: pillow in /usr/local/lib/python3.7/dist-packages (7.0.0)
+Requirement already satisfied: pillow in /usr/local/lib/python3.7/dist-packages (7.0.0)
+Requirement already satisfied: colour in /usr/local/lib/python3.7/dist-packages (0.1.5)
+Requirement already satisfied: pillow in /usr/local/lib/python3.7/dist-packages (7.0.0)
+converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
+Executing: git config --local include.path ../.gitconfig
+Success: hooks are installed and repo&#39;s .gitconfig is now trusted
+
+[master 9b484df] running the images through detector
+ 404 files changed, 386 insertions(+), 52 deletions(-)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/0.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/1.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/10.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/100.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/101.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/102.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/103.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/104.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/105.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/106.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/107.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/108.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/109.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/11.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/110.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/111.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/112.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/113.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/114.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/115.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/116.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/117.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/118.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/119.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/12.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/120.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/121.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/122.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/123.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/124.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/125.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/126.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/127.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/128.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/129.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/13.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/130.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/131.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/132.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/133.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/134.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/135.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/136.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/137.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/138.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/139.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/14.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/140.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/141.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/142.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/143.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/144.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/145.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/146.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/147.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/148.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/149.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/15.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/150.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/151.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/152.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/153.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/154.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/155.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/156.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/157.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/158.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/159.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/16.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/160.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/161.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/162.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/163.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/164.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/165.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/166.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/167.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/168.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/169.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/17.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/170.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/171.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/172.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/173.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/174.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/175.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/176.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/177.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/178.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/179.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/18.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/180.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/181.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/182.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/183.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/184.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/185.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/186.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/187.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/188.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/189.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/19.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/190.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/191.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/192.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/193.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/194.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/195.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/196.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/197.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/198.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/199.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/2.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/20.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/21.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/22.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/23.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/24.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/25.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/26.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/27.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/28.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/29.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/3.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/30.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/31.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/32.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/33.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/34.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/35.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/36.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/37.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/38.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/39.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/4.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/40.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/41.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/42.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/43.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/44.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/45.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/46.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/47.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/48.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/49.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/5.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/50.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/51.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/52.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/53.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/54.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/55.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/56.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/57.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/58.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/59.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/6.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/60.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/61.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/62.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/63.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/64.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/65.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/66.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/67.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/68.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/69.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/7.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/70.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/71.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/72.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/73.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/74.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/75.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/76.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/77.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/78.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/79.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/8.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/80.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/81.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/82.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/83.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/84.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/85.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/86.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/87.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/88.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/89.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/9.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/90.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/91.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/92.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/93.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/94.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/95.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/96.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/97.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/98.jpg (100%)
+ rename {21-3-18 rowing 8-12  =&gt; Image Repo/unlabeled/21-3-18 rowing 8-12 }/99.jpg (100%)
+ create mode 100644 save_dir/labeled-0.jpg
+ create mode 100644 save_dir/labeled-1.jpg
+ create mode 100644 save_dir/labeled-10.jpg
+ create mode 100644 save_dir/labeled-100.jpg
+ create mode 100644 save_dir/labeled-101.jpg
+ create mode 100644 save_dir/labeled-102.jpg
+ create mode 100644 save_dir/labeled-103.jpg
+ create mode 100644 save_dir/labeled-104.jpg
+ create mode 100644 save_dir/labeled-105.jpg
+ create mode 100644 save_dir/labeled-106.jpg
+ create mode 100644 save_dir/labeled-107.jpg
+ create mode 100644 save_dir/labeled-108.jpg
+ create mode 100644 save_dir/labeled-109.jpg
+ create mode 100644 save_dir/labeled-11.jpg
+ create mode 100644 save_dir/labeled-110.jpg
+ create mode 100644 save_dir/labeled-111.jpg
+ create mode 100644 save_dir/labeled-112.jpg
+ create mode 100644 save_dir/labeled-113.jpg
+ create mode 100644 save_dir/labeled-114.jpg
+ create mode 100644 save_dir/labeled-115.jpg
+ create mode 100644 save_dir/labeled-116.jpg
+ create mode 100644 save_dir/labeled-117.jpg
+ create mode 100644 save_dir/labeled-118.jpg
+ create mode 100644 save_dir/labeled-119.jpg
+ create mode 100644 save_dir/labeled-12.jpg
+ create mode 100644 save_dir/labeled-120.jpg
+ create mode 100644 save_dir/labeled-121.jpg
+ create mode 100644 save_dir/labeled-122.jpg
+ create mode 100644 save_dir/labeled-123.jpg
+ create mode 100644 save_dir/labeled-124.jpg
+ create mode 100644 save_dir/labeled-125.jpg
+ create mode 100644 save_dir/labeled-126.jpg
+ create mode 100644 save_dir/labeled-127.jpg
+ create mode 100644 save_dir/labeled-128.jpg
+ create mode 100644 save_dir/labeled-129.jpg
+ create mode 100644 save_dir/labeled-13.jpg
+ create mode 100644 save_dir/labeled-130.jpg
+ create mode 100644 save_dir/labeled-131.jpg
+ create mode 100644 save_dir/labeled-132.jpg
+ create mode 100644 save_dir/labeled-133.jpg
+ create mode 100644 save_dir/labeled-134.jpg
+ create mode 100644 save_dir/labeled-135.jpg
+ create mode 100644 save_dir/labeled-136.jpg
+ create mode 100644 save_dir/labeled-137.jpg
+ create mode 100644 save_dir/labeled-138.jpg
+ create mode 100644 save_dir/labeled-139.jpg
+ create mode 100644 save_dir/labeled-14.jpg
+ create mode 100644 save_dir/labeled-140.jpg
+ create mode 100644 save_dir/labeled-141.jpg
+ create mode 100644 save_dir/labeled-142.jpg
+ create mode 100644 save_dir/labeled-143.jpg
+ create mode 100644 save_dir/labeled-144.jpg
+ create mode 100644 save_dir/labeled-145.jpg
+ create mode 100644 save_dir/labeled-146.jpg
+ create mode 100644 save_dir/labeled-147.jpg
+ create mode 100644 save_dir/labeled-148.jpg
+ create mode 100644 save_dir/labeled-149.jpg
+ create mode 100644 save_dir/labeled-15.jpg
+ create mode 100644 save_dir/labeled-150.jpg
+ create mode 100644 save_dir/labeled-151.jpg
+ create mode 100644 save_dir/labeled-152.jpg
+ create mode 100644 save_dir/labeled-153.jpg
+ create mode 100644 save_dir/labeled-154.jpg
+ create mode 100644 save_dir/labeled-155.jpg
+ create mode 100644 save_dir/labeled-156.jpg
+ create mode 100644 save_dir/labeled-157.jpg
+ create mode 100644 save_dir/labeled-158.jpg
+ create mode 100644 save_dir/labeled-159.jpg
+ create mode 100644 save_dir/labeled-16.jpg
+ create mode 100644 save_dir/labeled-160.jpg
+ create mode 100644 save_dir/labeled-161.jpg
+ create mode 100644 save_dir/labeled-162.jpg
+ create mode 100644 save_dir/labeled-163.jpg
+ create mode 100644 save_dir/labeled-164.jpg
+ create mode 100644 save_dir/labeled-165.jpg
+ create mode 100644 save_dir/labeled-166.jpg
+ create mode 100644 save_dir/labeled-167.jpg
+ create mode 100644 save_dir/labeled-168.jpg
+ create mode 100644 save_dir/labeled-169.jpg
+ create mode 100644 save_dir/labeled-17.jpg
+ create mode 100644 save_dir/labeled-170.jpg
+ create mode 100644 save_dir/labeled-171.jpg
+ create mode 100644 save_dir/labeled-172.jpg
+ create mode 100644 save_dir/labeled-173.jpg
+ create mode 100644 save_dir/labeled-174.jpg
+ create mode 100644 save_dir/labeled-175.jpg
+ create mode 100644 save_dir/labeled-176.jpg
+ create mode 100644 save_dir/labeled-177.jpg
+ create mode 100644 save_dir/labeled-178.jpg
+ create mode 100644 save_dir/labeled-179.jpg
+ create mode 100644 save_dir/labeled-18.jpg
+ create mode 100644 save_dir/labeled-180.jpg
+ create mode 100644 save_dir/labeled-181.jpg
+ create mode 100644 save_dir/labeled-182.jpg
+ create mode 100644 save_dir/labeled-183.jpg
+ create mode 100644 save_dir/labeled-184.jpg
+ create mode 100644 save_dir/labeled-185.jpg
+ create mode 100644 save_dir/labeled-186.jpg
+ create mode 100644 save_dir/labeled-187.jpg
+ create mode 100644 save_dir/labeled-188.jpg
+ create mode 100644 save_dir/labeled-189.jpg
+ create mode 100644 save_dir/labeled-19.jpg
+ create mode 100644 save_dir/labeled-190.jpg
+ create mode 100644 save_dir/labeled-191.jpg
+ create mode 100644 save_dir/labeled-192.jpg
+ create mode 100644 save_dir/labeled-193.jpg
+ create mode 100644 save_dir/labeled-194.jpg
+ create mode 100644 save_dir/labeled-195.jpg
+ create mode 100644 save_dir/labeled-196.jpg
+ create mode 100644 save_dir/labeled-197.jpg
+ create mode 100644 save_dir/labeled-198.jpg
+ create mode 100644 save_dir/labeled-199.jpg
+ create mode 100644 save_dir/labeled-2.jpg
+ create mode 100644 save_dir/labeled-20.jpg
+ create mode 100644 save_dir/labeled-21.jpg
+ create mode 100644 save_dir/labeled-22.jpg
+ create mode 100644 save_dir/labeled-23.jpg
+ create mode 100644 save_dir/labeled-24.jpg
+ create mode 100644 save_dir/labeled-25.jpg
+ create mode 100644 save_dir/labeled-26.jpg
+ create mode 100644 save_dir/labeled-27.jpg
+ create mode 100644 save_dir/labeled-28.jpg
+ create mode 100644 save_dir/labeled-29.jpg
+ create mode 100644 save_dir/labeled-3.jpg
+ create mode 100644 save_dir/labeled-30.jpg
+ create mode 100644 save_dir/labeled-31.jpg
+ create mode 100644 save_dir/labeled-32.jpg
+ create mode 100644 save_dir/labeled-33.jpg
+ create mode 100644 save_dir/labeled-34.jpg
+ create mode 100644 save_dir/labeled-35.jpg
+ create mode 100644 save_dir/labeled-36.jpg
+ create mode 100644 save_dir/labeled-37.jpg
+ create mode 100644 save_dir/labeled-38.jpg
+ create mode 100644 save_dir/labeled-39.jpg
+ create mode 100644 save_dir/labeled-4.jpg
+ create mode 100644 save_dir/labeled-40.jpg
+ create mode 100644 save_dir/labeled-41.jpg
+ create mode 100644 save_dir/labeled-42.jpg
+ create mode 100644 save_dir/labeled-43.jpg
+ create mode 100644 save_dir/labeled-44.jpg
+ create mode 100644 save_dir/labeled-45.jpg
+ create mode 100644 save_dir/labeled-46.jpg
+ create mode 100644 save_dir/labeled-47.jpg
+ create mode 100644 save_dir/labeled-48.jpg
+ create mode 100644 save_dir/labeled-49.jpg
+ create mode 100644 save_dir/labeled-5.jpg
+ create mode 100644 save_dir/labeled-50.jpg
+ create mode 100644 save_dir/labeled-51.jpg
+ create mode 100644 save_dir/labeled-52.jpg
+ create mode 100644 save_dir/labeled-53.jpg
+ create mode 100644 save_dir/labeled-54.jpg
+ create mode 100644 save_dir/labeled-55.jpg
+ create mode 100644 save_dir/labeled-56.jpg
+ create mode 100644 save_dir/labeled-57.jpg
+ create mode 100644 save_dir/labeled-58.jpg
+ create mode 100644 save_dir/labeled-59.jpg
+ create mode 100644 save_dir/labeled-6.jpg
+ create mode 100644 save_dir/labeled-60.jpg
+ create mode 100644 save_dir/labeled-61.jpg
+ create mode 100644 save_dir/labeled-62.jpg
+ create mode 100644 save_dir/labeled-63.jpg
+ create mode 100644 save_dir/labeled-64.jpg
+ create mode 100644 save_dir/labeled-65.jpg
+ create mode 100644 save_dir/labeled-66.jpg
+ create mode 100644 save_dir/labeled-67.jpg
+ create mode 100644 save_dir/labeled-68.jpg
+ create mode 100644 save_dir/labeled-69.jpg
+ create mode 100644 save_dir/labeled-7.jpg
+ create mode 100644 save_dir/labeled-70.jpg
+ create mode 100644 save_dir/labeled-71.jpg
+ create mode 100644 save_dir/labeled-72.jpg
+ create mode 100644 save_dir/labeled-73.jpg
+ create mode 100644 save_dir/labeled-74.jpg
+ create mode 100644 save_dir/labeled-75.jpg
+ create mode 100644 save_dir/labeled-76.jpg
+ create mode 100644 save_dir/labeled-77.jpg
+ create mode 100644 save_dir/labeled-78.jpg
+ create mode 100644 save_dir/labeled-79.jpg
+ create mode 100644 save_dir/labeled-8.jpg
+ create mode 100644 save_dir/labeled-80.jpg
+ create mode 100644 save_dir/labeled-81.jpg
+ create mode 100644 save_dir/labeled-82.jpg
+ create mode 100644 save_dir/labeled-83.jpg
+ create mode 100644 save_dir/labeled-84.jpg
+ create mode 100644 save_dir/labeled-85.jpg
+ create mode 100644 save_dir/labeled-86.jpg
+ create mode 100644 save_dir/labeled-87.jpg
+ create mode 100644 save_dir/labeled-88.jpg
+ create mode 100644 save_dir/labeled-89.jpg
+ create mode 100644 save_dir/labeled-9.jpg
+ create mode 100644 save_dir/labeled-90.jpg
+ create mode 100644 save_dir/labeled-91.jpg
+ create mode 100644 save_dir/labeled-92.jpg
+ create mode 100644 save_dir/labeled-93.jpg
+ create mode 100644 save_dir/labeled-94.jpg
+ create mode 100644 save_dir/labeled-95.jpg
+ create mode 100644 save_dir/labeled-96.jpg
+ create mode 100644 save_dir/labeled-97.jpg
+ create mode 100644 save_dir/labeled-98.jpg
+ create mode 100644 save_dir/labeled-99.jpg
+To https://github.com/PhilBrockman/ModelAssistedLabel.git
+ ! [rejected]        master -&gt; master (fetch first)
+error: failed to push some refs to &#39;https://PhilBrockman:47c8ec80a42de84aed445ce5f2e0db742a308235@github.com/PhilBrockman/ModelAssistedLabel.git&#39;
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., &#39;git pull ...&#39;) before pushing again.
+hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
+On branch master
+Your branch is ahead of &#39;origin/master&#39; by 1 commit.
+  (use &#34;git push&#34; to publish your local commits)
+
+Changes not staged for commit:
+	<span class="ansi-red-fg">modified:   yolov5</span> (modified content, untracked content)
+
+no changes added to commit
+To https://github.com/PhilBrockman/ModelAssistedLabel.git
+ ! [rejected]        master -&gt; master (fetch first)
+error: failed to push some refs to &#39;https://PhilBrockman:47c8ec80a42de84aed445ce5f2e0db742a308235@github.com/PhilBrockman/ModelAssistedLabel.git&#39;
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., &#39;git pull ...&#39;) before pushing again.
+hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
 </pre>
 </div>
 </div>
