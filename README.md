@@ -29,7 +29,7 @@ I found the files responsible for training and employing models and wrote wrappe
       + a copy of every image in **Unlabeled Data**
     - `labels/` (folder
       + result of running object detection on each image
-    - a results folder produced by Ultralytic's `train.p` on the **Labeled Data**
+    - a results folder produced by Ultralytic's `train.py` on the **Labeled Data**
     - `classmap.yaml` to preserve the identity of the classes
 
 
@@ -57,7 +57,7 @@ Start by cloning https://github.com/ultralytics/yolov5.
 
 Many options
 
-### Vanilla image sets
+## Vanilla image sets
 
 Recursively search a folder (`repo`) that contains images and labels.
 

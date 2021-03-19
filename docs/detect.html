@@ -36,226 +36,27 @@ nb_path: "03_detect.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git status
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>On branch master
-Your branch is up to date with &#39;origin/master&#39;.
-
-Changes to be committed:
-  (use &#34;git reset HEAD &lt;file&gt;...&#34; to unstage)
-
-	<span class="ansi-green-fg">modified:   03_detect.ipynb</span>
-
-Changes not staged for commit:
-  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
-  (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
-  (commit or discard the untracked or modified content in submodules)
-
-	<span class="ansi-red-fg">modified:   yolov5</span> (modified content, untracked content)
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
-<span class="o">!</span>nbdev_build_docs
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_config.ipynb.
-Converted 01_split.ipynb.
-Converted 02_train.ipynb.
-Converted 03_detect.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="k">def</span> <span class="nf">dirty_clean</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&lt;a href=</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;ModelAssistedLabel&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s2">&quot;https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel&quot;</span><span class="p">):</span>
-  <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">prefix</span><span class="o">+</span><span class="n">repo</span><span class="p">,</span> <span class="n">prefix</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;docs&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">)]:</span>
-  <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;docs/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
-
-  <span class="n">content</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
-  <span class="n">content</span> <span class="o">=</span> <span class="n">dirty_clean</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-
-  <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;docs/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="s2">&quot;w+&quot;</span><span class="p">)</span>
-  <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-  <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add .
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git status
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>On branch master
-Your branch is up to date with &#39;origin/master&#39;.
-
-Changes to be committed:
-  (use &#34;git reset HEAD &lt;file&gt;...&#34; to unstage)
-
-	<span class="ansi-green-fg">modified:   03_detect.ipynb</span>
-	<span class="ansi-green-fg">modified:   docs/config.html</span>
-	<span class="ansi-green-fg">modified:   docs/detect.html</span>
-
-Changes not staged for commit:
-  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
-  (use &#34;git checkout -- &lt;file&gt;...&#34; to discard changes in working directory)
-  (commit or discard the untracked or modified content in submodules)
-
-	<span class="ansi-red-fg">modified:   yolov5</span> (modified content, untracked content)
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git commit -m <span class="s2">&quot;regen links&quot;</span>
-<span class="o">!</span>git push
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[master b128748] regen links
- 3 files changed, 81 insertions(+), 255 deletions(-)
-Counting objects: 6, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (6/6), done.
-Writing objects: 100% (6/6), 1.18 KiB | 200.00 KiB/s, done.
-Total 6 (delta 5), reused 0 (delta 0)
-remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
-To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   01e31f2..b128748  master -&gt; master
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> &quot;_Synch.ipynb&quot;
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&#34;/content/drive&#34;, force_remount=True).
+/content/drive/MyDrive/Coding/ModelAssistedLabel
+install nbdev: 
+git commit -m: ### -&gt; ##
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
