@@ -22,6 +22,7 @@ I found the files responsible for training and employing models and wrote wrappe
 * And:
   - **unlabeled images**
 {% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
+
 ## Expected Output:
 
 * ***ZIP file*** that contains: 
@@ -31,7 +32,6 @@ I found the files responsible for training and employing models and wrote wrappe
       + result of running object detection on each image
     - a results folder produced by Ultralytic's `train.py` on the **Labeled Data**
     - `classmap.yaml` to preserve the identity of the classes
-
 
 
 # Preparing Repository
