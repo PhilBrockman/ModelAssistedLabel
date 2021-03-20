@@ -6,8 +6,8 @@ title: Detecting Objects
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "wrapping `detect.py`"
-description: "wrapping `detect.py`"
+summary: "wrapping `yolov5/detect.py`"
+description: "wrapping `yolov5/detect.py`"
 nb_path: "03_detect.ipynb"
 ---
 <!--
@@ -216,30 +216,28 @@ To https://github.com/PhilBrockman/ModelAssistedLabel.git
 <pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&#34;/content/drive&#34;, force_remount=True).
 /content/drive/MyDrive/Coding/ModelAssistedLabel
 install nbdev: 
-git commit -m: links to githubs
+git commit -m: rebuilding links
 Converted 00_config.ipynb.
 Converted 01_split.ipynb.
 Converted 02_train.ipynb.
 Converted 03_detect.ipynb.
 Converted index.ipynb.
-converting: /content/drive/My Drive/Coding/ModelAssistedLabel/03_detect.ipynb
+converting: /content/drive/MyDrive/Coding/ModelAssistedLabel/03_detect.ipynb
+converting: /content/drive/MyDrive/Coding/ModelAssistedLabel/01_split.ipynb
 Requirement already satisfied: pillow in /usr/local/lib/python3.7/dist-packages (7.0.0)
 Requirement already satisfied: pillow in /usr/local/lib/python3.7/dist-packages (7.0.0)
-converting /content/drive/My Drive/Coding/ModelAssistedLabel/index.ipynb to README.md
-hooks &amp; diffnbssure
-Executing: git config --local include.path ../.gitconfig
-Success: hooks are installed and repo&#39;s .gitconfig is now trusted
-
-[master 1e995e9] links to githubs
- 1 file changed, 11 insertions(+), 1 deletion(-)
-Counting objects: 3, done.
+converting /content/drive/MyDrive/Coding/ModelAssistedLabel/index.ipynb to README.md
+hooks &amp; diffnbs
+[master 38435d6] rebuilding links
+ 3 files changed, 226 insertions(+), 11 deletions(-)
+Counting objects: 6, done.
 Delta compression using up to 2 threads.
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 559 bytes | 186.00 KiB/s, done.
-Total 3 (delta 2), reused 0 (delta 0)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 2.10 KiB | 430.00 KiB/s, done.
+Total 6 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
 To https://github.com/PhilBrockman/ModelAssistedLabel.git
-   4ee6cad..1e995e9  master -&gt; master
+   b878f57..38435d6  master -&gt; master
 Branch &#39;master&#39; set up to track remote branch &#39;master&#39; from &#39;origin&#39;.
 </pre>
 </div>
@@ -262,7 +260,7 @@ Branch &#39;master&#39; set up to track remote branch &#39;master&#39; from &#39
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>save_labeled_img</code></strong>=<em><code>True</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>True</code></em>)</p>
+<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>write_annotated_images_to_disk</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>A wrapper for training loading saved YOLOv5 weights</p>
 <p>requirements:
@@ -285,6 +283,144 @@ Branch &#39;master&#39; set up to track remote branch &#39;master&#39; from &#39
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include note.html content='' %}</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="n">weight_path</span><span class="o">=</span><span class="s2">&quot;pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fusing layers... 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="s2">&quot;Image Repo/labeled/images/Final Roboflow Export (841)/images/&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Converted 00_config.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_detect.ipynb.
+Converted index.ipynb.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span> <span class="n">test</span><span class="o">/</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls <span class="s2">&quot;train/images&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ls: cannot access &#39;train/images&#39;: No such file or directory
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -296,7 +432,7 @@ Branch &#39;master&#39; set up to track remote branch &#39;master&#39; from &#39
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ImageProcessor" class="doc_header"><code>class</code> <code>ImageProcessor</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L157" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ImageProcessor</code>(<strong><code>with_weights</code></strong>, <strong><code>save_labeled_img</code></strong>=<em><code>False</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>False</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>)</p>
+<h2 id="ImageProcessor" class="doc_header"><code>class</code> <code>ImageProcessor</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L149" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ImageProcessor</code>(<strong><code>with_weights</code></strong>, <strong><code>save_labeled_img</code></strong>=<em><code>False</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>False</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -409,7 +545,7 @@ Wall time: 8.39 s
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="yoloBox_to_standard" class="doc_header"><code>yoloBox_to_standard</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L188" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>yoloBox_to_standard</code>(<strong><code>result</code></strong>)</p>
+<h4 id="yoloBox_to_standard" class="doc_header"><code>yoloBox_to_standard</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L180" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>yoloBox_to_standard</code>(<strong><code>result</code></strong>)</p>
 </blockquote>
 <p>The standard YOLOv5 coordinate format is normed to 1. Need to extract the
 original's image width and height to convert to a standard cartesian plane.</p>
@@ -452,7 +588,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="bb_intersection_over_union" class="doc_header"><code>bb_intersection_over_union</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L223" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>bb_intersection_over_union</code>(<strong><code>boxA</code></strong>, <strong><code>boxB</code></strong>)</p>
+<h4 id="bb_intersection_over_union" class="doc_header"><code>bb_intersection_over_union</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L215" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>bb_intersection_over_union</code>(<strong><code>boxA</code></strong>, <strong><code>boxB</code></strong>)</p>
 </blockquote>
 <p>Source: <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/</a></p>
 
@@ -484,7 +620,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="sorted_api" class="doc_header"><code>sorted_api</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L248" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sorted_api</code>(<strong><code>predictions</code></strong>)</p>
+<h4 id="sorted_api" class="doc_header"><code>sorted_api</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L240" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sorted_api</code>(<strong><code>predictions</code></strong>)</p>
 </blockquote>
 <p>sorts a list of prediction in ascending x order</p>
 <p>Args:
@@ -513,7 +649,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="digit_arr_to_string" class="doc_header"><code>digit_arr_to_string</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L258" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>digit_arr_to_string</code>(<strong><code>predictions</code></strong>)</p>
+<h4 id="digit_arr_to_string" class="doc_header"><code>digit_arr_to_string</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L250" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>digit_arr_to_string</code>(<strong><code>predictions</code></strong>)</p>
 </blockquote>
 <p>"Human-friendly interpretation of predictions</p>
 
@@ -538,7 +674,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="corners" class="doc_header"><code>corners</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L263" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>corners</code>(<strong><code>r</code></strong>)</p>
+<h4 id="corners" class="doc_header"><code>corners</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L255" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>corners</code>(<strong><code>r</code></strong>)</p>
 </blockquote>
 <p>Defines the relevante coordinate information</p>
 <p>Args:
@@ -567,7 +703,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="calculate_iou" class="doc_header"><code>calculate_iou</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L275" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>calculate_iou</code>(<strong><code>frame</code></strong>, <strong><code>threshold</code></strong>=<em><code>0.4</code></em>)</p>
+<h4 id="calculate_iou" class="doc_header"><code>calculate_iou</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L267" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>calculate_iou</code>(<strong><code>frame</code></strong>, <strong><code>threshold</code></strong>=<em><code>0.4</code></em>)</p>
 </blockquote>
 <p>Determines the pair of bounding boxes that has the highest IoU over the :threshold:</p>
 <p>Args:
@@ -657,7 +793,7 @@ removed</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="raw_parse_from_json" class="doc_header"><code>raw_parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>raw_parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
+<h4 id="raw_parse_from_json" class="doc_header"><code>raw_parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L300" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>raw_parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
 </blockquote>
 <p>Helper to interpret raw base 64 images. Creates a new JPG file from the base64
 data and feeds the image to the Detector</p>
@@ -689,7 +825,7 @@ data and feeds the image to the Detector</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_from_json" class="doc_header"><code>parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L333" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
+<h4 id="parse_from_json" class="doc_header"><code>parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L325" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
 </blockquote>
 <p>Gets a JSON file containing the base64 images of data to label pushed through
 a Detector. Post-processing automatically de-norms the YOLOv5 bounding boxes

@@ -39,18 +39,29 @@ I found the files responsible for training and employing models and wrote wrappe
 Start by cloning https://github.com/ultralytics/yolov5.
 
 ```python
-# from ModelAssistedLabel.core import Defaults
-# import os
-
-# # enter root directory
-# os.chdir(Defaults().root)
-
-# # clone yolov5 repo and install requirements
-# # ensure GPU is enabled
-# Defaults.prepare_YOLOv5()
+!nbdev_build_lib
 ```
 
-    Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla V100-SXM2-16GB', major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
+    Converted 00_config.ipynb.
+    Converted 01_split.ipynb.
+    Converted 02_train.ipynb.
+    Converted 03_detect.ipynb.
+    Converted index.ipynb.
+
+
+```python
+from ModelAssistedLabel.config import Defaults
+import os
+
+# enter root directory
+os.chdir(Defaults().root)
+
+# clone yolov5 repo and install requirements
+# ensure GPU is enabled
+Defaults.prepare_YOLOv5()
+```
+
+    Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 
 
 # Image Sets
@@ -62,37 +73,46 @@ Many options
 Recursively search a folder (`repo`) that contains images and labels.
 
 ```python
-# repo = "/content/drive/MyDrive/Coding/Roboflow Export (841)"
-# name = "nospaces"
-# wm = AutoWeights(repo, name)
+repo = "./Image Repo/labeled/Final Roboflow Export (841)"
+name = "nospaces"
 ```
 
-    summary:  [{'train': 4}, {'valid': 1}, {'test': 0}]
-    checksum: 5
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.jpg | ./train/images/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.jpg
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.txt | ./train/labels/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.txt
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.jpg | ./train/images/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.jpg
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.txt | ./train/labels/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.txt
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.jpg | ./train/images/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.jpg
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.txt | ./train/labels/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.txt
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.jpg | ./train/images/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.jpg
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.txt | ./train/labels/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.txt
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.jpg | ./valid/images/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.jpg
-    target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.txt | ./valid/labels/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.txt
+```python
+from ModelAssistedLabel.train import AutoWeights
+```
+
+```python
+wm = AutoWeights(repo, name, MAX_SIZE=None)
+```
+
+```python
+wm.name="fromIndex"
+```
+
+```python
+%%time
+wm.generate_weights(2000)
+```
+
+```python
+wm.last_results_path
+```
+
+
+
+
+    './fromIndex-876096'
+
 
 
 ```python
-# %%time
-# wm.generate_weights(10)
+!ls "test/images"
 ```
 
-    CPU times: user 2.02 ms, sys: 23.9 ms, total: 25.9 ms
-    Wall time: 30.9 s
-
-
-
-
-
-    './nospaces4-025678'
-
-
+```python
+runs = {
+    './fromIndex-876096': {
+        'description': "841 (?) "
+    }
+}
+```

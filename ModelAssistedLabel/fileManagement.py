@@ -92,15 +92,25 @@ class Generation:
     relevant data will be zipped in `out_dir`
   """
 
-  def __init__(self, repo, out_dir, data_yaml):
+  def __init__(self, repo, out_dir, data_yaml, verbose=False, resource_dirs = ["train", "valid", "test"]):
     """
       Args:
         repo: <string> path to the parent directory of the repository.
+        out_dir: directory in which the zip file will be written
+        data_yaml: bridge between the "class indices" and "class labels"
+        verbose: spam `standard out` with info about files
+        resource_dirs: Ultralytics default names
     """
     self.repo = repo
     self.split = None
     self.data_yaml = data_yaml
     self.out_dir = out_dir
+    self.verbose = verbose
+    self.resource_dirs = resource_dirs
+
+  def set_split_from_disk():
+    "sets the value of `self.split` to images present in train/valid/test folders on disk."
+    self.split = [{x: os.listdir(x)} for x in self.resource_dirs]
 
   def set_split(self, split_ratio = None, MAX_SIZE=None):
     """
@@ -109,14 +119,15 @@ class Generation:
     Args:
       split_ratio: relative fractions of split between test train and validation
       sets.
-      MAX_SIZE: The total number of images to be used in the image set
+      MAX_SIZE: The total number of images to be used in the image set. By default
+      includes all available images
     """
     if split_ratio is None:
       split_ratio = Defaults().split_ratio
 
     files = FileUtilities.match_files(self.repo)
     random.shuffle(files)
-    if MAX_SIZE:
+    if MAX_SIZE is not None:
       files = files[:MAX_SIZE]
 
     train = math.ceil(len(files) * split_ratio["train"])
@@ -129,6 +140,8 @@ class Generation:
     assert sum([len(split[x]) for x in split]) == len(files)
     self.split = split
 
+  def get_split(self):
+    return [{x: len(g.split[x])} for x in g.split]
 
   def write_split_to_disk(self, descriptor = "", autoname_output=True):
     """
@@ -138,7 +151,7 @@ class Generation:
     Args:
       descriptor: <str> a unique identifier for the output's filename
       autoname_output: <bool> if True, `descriptor` field is a component of the
-      output's filename. Otherwise, it is the entire name.
+      output's filename. Otherwise, sets the output filename to `{descriptor}.zip`
 
     Returns:
       A path to the zipped information.
@@ -152,7 +165,9 @@ class Generation:
       out_folder = descriptor
 
     dirs = self.__write_images__() #write images
+    print('dirs', dirs)
     zipped = self.__zip_dirs__(out_folder, dirs) #zip folders
+    print('zipped')
     os.system(f"mv '{zipped}' '{self.out_dir}'") #move the output
     return f"{self.out_dir}/{zipped}"
 
@@ -202,9 +217,9 @@ class Generation:
 
           target = data["path"]
           destination = join(subdir, data["basename"])
-          print("target/dest", target, "|", destination)
           if not os.path.exists(destination):
             os.system(f"cp '{target}' '{destination}'")
+            print("target/dest", target, "|", destination)
     return directories
 
   def __default_filename__(self, prefix=""):

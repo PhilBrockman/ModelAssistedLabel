@@ -65,23 +65,7 @@ of the variables and their respective values are stored in JSON format in the
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Default Values</strong> are stored in "ModelAssistedLabel config.json"</p>
-<p>Every time the class is called, the config file is re-read for changes.</p>
-<p>Currently, the following attributes are then dynamically assigned to the newly-created <code>Default</code> object.</p>
-<ul>
-<li>root <em>(parent folder of YOLOv5 repo)</em></li>
-<li>resource_map <em>(defines images as ".jpg" and labels as ".txt")</em></li>
-<li>split_ratio <em>(by default, 70/20/10 split of train/valid/test.)</em></li>
-<li>data_yaml <em>(from YOLOv5 repo)</em></li>
-<li>trainer template <em>(from YOLOv5 repo)</em></li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Proof of Concept:</p>
+<p>make sure that autonaming works</p>
 
 </div>
 </div>
@@ -93,7 +77,25 @@ of the variables and their respective values are stored in JSON format in the
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;  * </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">datadump</span> <span class="o">=</span> <span class="s2">&quot;tests/00_config_datadump&quot;</span>
+<span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;.text&quot;</span>
+<span class="n">Defaults</span><span class="o">.</span><span class="n">__hard_reset_test_dir__</span><span class="p">(</span><span class="n">datadump</span><span class="p">,</span> <span class="n">keep_folder</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+  <span class="n">next_filename</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">pre</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">datadump</span><span class="si">}</span><span class="s2">/Defaults (&quot;</span><span class="p">,</span> 
+                                     <span class="n">post</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;)</span><span class="si">{</span><span class="n">extension</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">next_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;&lt;data&gt;&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+  <span class="n">next_filename</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">pre</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">datadump</span><span class="si">}</span><span class="s2">/Version - &quot;</span><span class="p">,</span> 
+                                     <span class="n">post</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">next_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;&lt;data&gt;&quot;</span><span class="p">)</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">datadump</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
+<span class="n">files</span>
 </pre></div>
 
     </div>
@@ -106,11 +108,90 @@ of the variables and their respective values are stored in JSON format in the
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  * root
-  * split_ratio
-  * data_yaml
-  * resource_map
-  * trainer_template
+<pre>deleted `tests/00_config_datadump`
+making `tests/00_config_datadump`
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Defaults (1).text&#39;,
+ &#39;Defaults (2).text&#39;,
+ &#39;Defaults (3).text&#39;,
+ &#39;Version - 1&#39;,
+ &#39;Version - 2&#39;,
+ &#39;Version - 3&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Default Values</strong> are stored in "ModelAssistedLabel config.json"</p>
+<p>Every time the class is called, the config file is re-read for changes.</p>
+<p>Currently, the following attributes are then dynamically assigned to the newly-created <code>Default</code> object.</p>
+<ul>
+<li>root <em>(parent folder of YOLOv5 repo)</em></li>
+<li>resource_map <em>(defines images as ".jpg" and labels as ".txt")</em></li>
+<li>split_ratio <em>(by default, 70/20/10 split of train/valid/test.)</em></li>
+<li>data_yaml <em>(from YOLOv5 repo)</em></li>
+<li>trainer template <em>(from YOLOv5 repo)</em></li>
+</ul>
+<p>This data is generated dynamically.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">CONFIG_FILE</span> <span class="o">=</span> <span class="s2">&quot;ModelAssistedLabel config.json&quot;</span>
+
+<span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="n">json_file</span><span class="p">):</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">read_json</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Attribute:&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">- Type:&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Attribute: root 
+	- Type: &lt;class &#39;str&#39;&gt;
+Attribute: split_ratio 
+	- Type: &lt;class &#39;dict&#39;&gt;
+Attribute: data_yaml 
+	- Type: &lt;class &#39;str&#39;&gt;
+Attribute: resource_map 
+	- Type: &lt;class &#39;dict&#39;&gt;
+Attribute: trainer_template 
+	- Type: &lt;class &#39;str&#39;&gt;
 </pre>
 </div>
 </div>
@@ -121,6 +202,97 @@ of the variables and their respective values are stored in JSON format in the
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The default data can be modified:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_root</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/ModelAssistedLabel/&quot;</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_root</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new root:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>new root: /content/drive/MyDrive/Coding/ModelAssistedLabel/
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Overwrite the current config file</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
+  <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">up_data_d</span> <span class="o">=</span> <span class="n">read_json</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">up_data_d</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_root</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Whenever Defaults() class is constructed, the attribute values are reread from "ModelAssistedLabel config.json", so this new <code>root</code> value is accessible across
+this project</p>
+
+</div>
+</div>
+</div>
 </div>
  
 

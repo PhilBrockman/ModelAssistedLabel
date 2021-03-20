@@ -3,7 +3,7 @@
 __all__ = ['Trainer', 'AutoWeights']
 
 # Cell
-from .core import Defaults
+from .config import Defaults
 import os
 
 class Trainer():
@@ -46,7 +46,8 @@ class Trainer():
     os.chdir("..")
 
 # Cell
-from ModelAssistedLabel import *
+from .train import Trainer
+from .fileManagement import Generation
 from datetime import datetime
 
 class AutoWeights():
@@ -57,28 +58,39 @@ class AutoWeights():
   Then call `generate_weights` to run `train.py`. The resultant file will try to
   be moved to the `out_dir` and if a conflict exists, a new name will be made.
   """
-  def __init__(self, resource_dir, name="DEFAULT", out_dir=".", MAX_SIZE=5, custom_data_yaml=None, verbose=True, train_path = "yolov5/runs/train"):
+  def __init__(self, origin_images_dir, name="AutoWeight <name>", out_dir=".", MAX_SIZE=5, custom_data_yaml=None, verbose=True, train_path = "yolov5/runs/train"):
     """
     Args:
-      resource_dir: location of the bag of images/labels
+      origin_images_dir: location of the bag of images/labels
       out_dir: where the results of train.py are moved
       MAX_SIZE: parameter for `Generation`
       custom_data_yaml: see `Defaults`'s `data_yaml` for the default value
       verbose: Print summary information
       train_path: path to Ultralytic's default output folder
     """
-    self.resource_dir = resource_dir
+    self.resource_paths = ["test/", "train/", "valid/"]
+    self.origin_images_dir = origin_images_dir
     self.name = name
-    self.resource_paths = ["test/", "train/", "valid/", "data.yaml"]
-    for r in self.resource_paths: #make sure none of these paths already exist
-      assert os.path.exists(r) is False, f"{r} exists... You may be in the middle of an active project"
     self.out_dir = out_dir
     self.train_path = train_path
-    #automatically build the resource paths and prepare for traniing
-    self.__prepare_split__(MAX_SIZE=MAX_SIZE, data_yaml=custom_data_yaml, verbose=verbose)
-    assert self.g is not None
+    self.custom_data_yaml = custom_data_yaml
+    self.g = Generation(repo=self.origin_images_dir, out_dir=self.out_dir, data_yaml=self.custom_data_yaml)
 
-  def generate_weights(self, epochs, tidy_weights=True):
+    for r in self.resource_paths:
+      if os.path.exists(r):
+        listdir = len(os.listdir(r))
+      else:
+        listdir = "n/a"
+
+      print('Directory:', r, "|" , str(listdir),"files")
+      found = []
+
+    for r in self.resource_paths: #make sure none of these paths already exist
+      if os.path.exists(r):
+        found.append(r)
+
+
+  def generate_weights(self, epochs, tidy_weights=True, MAX_SIZE=None):
     """
     Creates a `Trainer` object and trains for a given amount of time.
 
@@ -89,6 +101,13 @@ class AutoWeights():
     Returns:
       path to the output folder of train.py
     """
+    override = True
+    if len(found) > 0:
+      override = len(input(f"Folders '{found}' exists. Press 'Enter' to leave the files alone, enter anything at all to potentially overwrite")) > 0
+
+    #automatically build the resource paths and prepare for traniing
+    self.__prepare_split__(MAX_SIZE=MAX_SIZE, data_yaml=self.custom_data_yaml, verbose=self.verbose, override=override)
+
     t = Trainer(self.name)
     ldir = lambda path: set(os.listdir(path))
 
@@ -108,7 +127,7 @@ class AutoWeights():
     self.last_results_path = results_path
     return results_path
 
-  def __prepare_split__(self, MAX_SIZE, data_yaml, verbose):
+  def __prepare_split__(self, MAX_SIZE, data_yaml, verbose, override):
     """
     Gets the local filesystem ready to run the wrapper for "train.py".
 
@@ -119,9 +138,12 @@ class AutoWeights():
     """
     if data_yaml is None:
       data_yaml = Defaults().data_yaml
-    self.g = Generation(repo=self.resource_dir, out_dir=self.out_dir, data_yaml=data_yaml)
-    self.g.set_split(MAX_SIZE=MAX_SIZE)
-    self.__split_and_organize_folders__(verbose=verbose)
+
+    if override:
+      self.g.set_split(MAX_SIZE=MAX_SIZE)
+      self.__split_and_organize_folders__(verbose=verbose)
+    else:
+      self.g.set_split_from_disk()
 
   def __split_and_organize_folders__(self, verbose):
     """
@@ -138,6 +160,7 @@ class AutoWeights():
       verbose: print summary information about the split
     """
     assert self.g is not None
+    assert self.g.split is not None
 
     def tostr(split):
       return [{k: len(v)} for k,v in split.items()]

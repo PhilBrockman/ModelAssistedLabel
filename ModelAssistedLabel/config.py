@@ -4,7 +4,7 @@ __all__ = ['Defaults']
 
 # Cell
 
-import json
+import json, os, shutil
 
 class Defaults:
   """
@@ -50,3 +50,45 @@ class Defaults:
 
     # return to parent directory
     os.chdir("..")
+
+  def _itername(pre, post=""):
+    """If function terminates, returns the lowest conflict-free file path
+    formatted as '{pre}X{post}' where X is the string representation of a natural
+    number
+
+    args:
+      pre: filename before the counter
+      post: filename after the counter
+
+    returns:
+      A unique structured filename
+    """
+    counter = 0
+    while True:
+      counter += 1
+      fpath = f'{pre}{counter}{post}'
+      if not os.path.exists(fpath):
+        return fpath
+
+  def __hard_reset_test_dir__(datadump, keep_folder=False):
+    """
+    Helpful to be able to delete folders because I want to avoid name conflicts.
+
+    Args:
+      datadump: test directory. all contenst are subject to deletion
+      keep_folder: if False, will also delete the folder itself.
+    """
+    if os.path.exists(datadump):
+      shutil.rmtree(datadump)
+      print(f"deleted `{datadump}`")
+    else:
+      print(f"`{datadump}`` did not exist")
+
+    if keep_folder:
+      os.makedirs(datadump)
+      print(f"making `{datadump}`")
+      assert os.path.exists(datadump)
+      assert len(os.listdir(datadump)) == 0
+    else:
+      print(f"not making `{datadump}`")
+      assert not os.path.exists(datadump)

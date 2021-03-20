@@ -72,7 +72,7 @@ nb_path: "01_split.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/fileManagement.py#L86" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>, <strong><code>out_dir</code></strong>, <strong><code>data_yaml</code></strong>)</p>
+<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/fileManagement.py#L86" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>, <strong><code>out_dir</code></strong>, <strong><code>data_yaml</code></strong>, <strong><code>verbose</code></strong>=<em><code>False</code></em>, <strong><code>resource_dirs</code></strong>=<em><code>['train', 'valid', 'test']</code></em>)</p>
 </blockquote>
 <p>Container and organizer of photos for a given repository. This class "softly"
 organizes the files upon the setting of the <code>split</code> attribute via <code>set_split</code>.</p>
@@ -92,6 +92,250 @@ relevant data will be zipped in <code>out_dir</code></p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is a two-step confirmation before making any changes to disk. First, crawl through the <code>repo</code> and collect all images and collect all labels. Labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span><span class="p">,</span> 
+               <span class="n">out_dir</span><span class="o">=</span><span class="s2">&quot;testing_01_split&quot;</span><span class="p">,</span>
+               <span class="n">data_yaml</span><span class="o">=</span><span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="n">data_yaml</span><span class="p">)</span>
+
+<span class="c1">#crawl through the `repo`. On colab, may take some time to execute</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_split</span><span class="p">()</span>
+<span class="c1">#take a look at the sizes of split</span>
+<span class="n">g</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&#39;train&#39;: 589}, {&#39;valid&#39;: 169}, {&#39;test&#39;: 83}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For testing, I might use the <code>repo</code> differently.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">custom_split</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">}</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="n">custom_split</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&#39;train&#39;: 5}, {&#39;valid&#39;: 3}, {&#39;test&#39;: 2}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span><span class="o">.</span><span class="n">write_split_to_disk</span><span class="p">(</span><span class="n">descriptor</span><span class="o">=</span><span class="s2">&quot;&lt;01_split&gt;&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">IPython</span>
+<span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Complete: &quot;</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">out_dir</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Complete:  testing_01_split
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">ls</span> .
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> 00_config.ipynb         <span class="ansi-blue-intense-fg ansi-bold">docs</span>/                &#39;ModelAssistedLabel config.json&#39;
+ 01_split.ipynb          <span class="ansi-blue-intense-fg ansi-bold">fromIndex-296227</span>/    <span class="ansi-blue-intense-fg ansi-bold">&#39;pre-trained weights&#39;</span>/
+ 02_train.ipynb         <span class="ansi-blue-intense-fg ansi-bold">&#39;Image Repo&#39;</span>/          README.md
+ 03_detect.ipynb         index.ipynb           settings.ini
+&#39;_capture input.ipynb&#39;   LICENSE               setup.py
+ CONTRIBUTING.md         Makefile              _Synch.ipynb
+ data.yaml               MANIFEST.in           testing_01_split
+ docker-compose.yml      <span class="ansi-blue-intense-fg ansi-bold">ModelAssistedLabel</span>/   <span class="ansi-blue-intense-fg ansi-bold">yolov5</span>/
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">resource_dirs</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-42-944698d19f7c&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-green-fg">for</span> dir <span class="ansi-green-fg">in</span> g<span class="ansi-blue-fg">.</span>resource_dirs<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg">   </span><span class="ansi-green-fg">for</span> files <span class="ansi-green-fg">in</span> os<span class="ansi-blue-fg">.</span>listdir<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span>     print<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>files<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;valid&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">custom_split</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="n">custom_split</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&#39;train&#39;: 3}, {&#39;valid&#39;: 2}, {&#39;test&#39;: 1}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}

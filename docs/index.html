@@ -103,14 +103,7 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import os</span>
-
-<span class="c1"># # enter root directory</span>
-<span class="c1"># os.chdir(Defaults().root)</span>
-
-<span class="c1"># # clone yolov5 repo and install requirements</span>
-<span class="c1"># # ensure GPU is enabled</span>
-<span class="c1"># Defaults.prepare_YOLOv5()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
 </pre></div>
 
     </div>
@@ -123,7 +116,50 @@ nb_path: "index.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla V100-SXM2-16GB&#39;, major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
+<pre>Converted 00_config.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_detect.ipynb.
+Converted index.ipynb.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.config</span> <span class="kn">import</span> <span class="n">Defaults</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># enter root directory</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+<span class="c1"># clone yolov5 repo and install requirements</span>
+<span class="c1"># ensure GPU is enabled</span>
+<span class="n">Defaults</span><span class="o">.</span><span class="n">prepare_YOLOv5</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 </pre>
 </div>
 </div>
@@ -167,8 +203,94 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># name = &quot;nospaces&quot;</span>
-<span class="c1"># wm = AutoWeights(repo, name)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;nospaces&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.train</span> <span class="kn">import</span> <span class="n">AutoWeights</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wm</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wm</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;fromIndex&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+wm.generate_weights(2000)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wm</span><span class="o">.</span><span class="n">last_results_path</span>
 </pre></div>
 
     </div>
@@ -180,21 +302,12 @@ nb_path: "index.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>summary:  [{&#39;train&#39;: 4}, {&#39;valid&#39;: 1}, {&#39;test&#39;: 0}]
-checksum: 5
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.jpg | ./train/images/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.txt | ./train/labels/digittake-52-jpg_jpg.rf.798cf1dcc7a60cbff6c43f5587082f4f.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.jpg | ./train/images/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.txt | ./train/labels/save_dirrsave_dirrcd4d249fd27369f927124e67151b8d97e4bdfdd4-jpg-jpg_jpg.rf.5659d1ef98ace2d9f22fa90d114bf7d6.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.jpg | ./train/images/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.txt | ./train/labels/digittake-106-jpg_jpg.rf.780b7e954c1a7786ba65757732ba9bf6.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.jpg | ./train/images/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.txt | ./train/labels/screenytake-44-jpg-cropped-jpg_jpg.rf.43df93e453f9a236285b3cdd0469bc6f.txt
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/images/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.jpg | ./valid/images/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.jpg
-target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.txt | ./valid/labels/save_dirrtake-40-jpg-cropped-jpg-jpg_jpg.rf.296c8eb30772f8342ff64995ba9ad759.txt
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;./fromIndex-876096&#39;</pre>
 </div>
+
 </div>
 
 </div>
@@ -210,35 +323,31 @@ target/dest /content/drive/MyDrive/Coding/Roboflow Export (841)/labels/save_dirr
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># wm.generate_weights(10)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls <span class="s2">&quot;test/images&quot;</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 2.02 ms, sys: 23.9 ms, total: 25.9 ms
-Wall time: 30.9 s
-</pre>
 </div>
-</div>
+    {% endraw %}
 
-<div class="output_area">
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;./fromIndex-876096&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;841 (?) &quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;./nospaces4-025678&#39;</pre>
-</div>
-
-</div>
-
+    </div>
 </div>
 </div>
 

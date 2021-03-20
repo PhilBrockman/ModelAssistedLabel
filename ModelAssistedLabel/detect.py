@@ -24,7 +24,7 @@ class Detector:
 
   requirements:
     GPU enabled"""
-  def __init__(self, weight_path, conf_threshold = .4, iou_threshold = .45, imgsz = 416, save_dir="save_dir", save_labeled_img = True, save_unscuffed=True):
+  def __init__(self, weight_path, conf_threshold = .4, iou_threshold = .45, imgsz = 416, save_dir="save_dir", write_annotated_images_to_disk=False):
     """ Constructor. I pulled the default numeric values above directly from the
     detect.py file. I added the option to save model output to both images and
     to txt files
@@ -35,8 +35,8 @@ class Detector:
                       bounding box
       iou_threshold: IoU helps determine how overlapped two shapes are.
       imgsz: resolution of image to process (assumes square)
-      save_labeled_img: save a copy of the image with visibile bounding boxing
-      save_unscuffed: save a copy of the original image
+      save_dir: where to write annotated images
+      write_annotated_images_to_disk: save human-friendly annotated images to disk
     """
 
     self.weight_path = weight_path
@@ -51,8 +51,7 @@ class Detector:
     if self.half:
       self.model.half()  # to FP16
 
-    self.save_labeled_img = save_labeled_img
-    self.save_unscuffed = save_unscuffed
+    self.write_annotated_images_to_disk = write_annotated_images_to_disk
     self.save_dir = save_dir
 
   def make_dir(dir):
@@ -64,26 +63,6 @@ class Detector:
     if not os.path.exists(dir):
       os.makedirs(dir)
 
-  def _itername(pre, post):
-    """If function terminates, returns the lowest conflict-free file path
-    formatted as '{pre}X{post}' where X is the string representation of a natural
-    number
-
-    args:
-      pre: filename before the counter
-      post: filename after the counter
-
-    returns:
-      A unique structured filename
-    """
-    counter = 0
-    while True:
-      counter += 1
-      fpath = f'{pre}{counter}{post}'
-      if not os.path.exists(fpath):
-        return fpath
-
-  #not saving images speed up processing dramatically
   def process_image(self, source):
     """Runs on the model with pre-specified weights an input image. See original
     detect.py for more details
@@ -95,12 +74,25 @@ class Detector:
     Reurns:
       A JSON-serializable object encoding bounding box information
     """
+    override = None
+    if os.path.exists(self.save_dir):
+      override = input(f"Save directory '{self.save_dir}' exists. \n 'Enter' to continue, anything else to cancel operation")
+
+    if override is None or len(override) == 0:
+      return self.__process_image__(source)
+
+    assert False, "this code shouldn't run"
+
+
+  #not saving images speed up processing dramatically
+  def __process_image__(self, source):
+    "helper for process_image"
     results = []
     img = torch.zeros((1, 3, self.imgsz, self.imgsz), device=self.device)  # init img
     _ = self.model(img.half() if self.half else img) if self.device.type != 'cpu' else None  # run once
     dataset = LoadImages(source, img_size=self.imgsz)
 
-    if self.save_unscuffed or self.save_labeled_img:
+    if self.write_annotated_images_to_disk:
       save_dir = Path(self.save_dir)
       Detector.make_dir(save_dir)
 
@@ -129,7 +121,7 @@ class Detector:
               n = (det[:, -1] == c).sum()  # detections per class
               s += f'{n} {self.names[int(c)]}s, '  # add to string
 
-          if self.save_unscuffed:
+          if self.write_annotated_images_to_disk:
             tmp["unscuffed"] = f"{save_dir}/unscuffed-{p.name}"
             cv2.imwrite(tmp["unscuffed"], im0)
 
@@ -140,7 +132,7 @@ class Detector:
             tmp["predictions"].append(('%g ' * len(line)).rstrip() % line)
 
             # save image with bboxes drawn on top
-            if self.save_labeled_img:
+            if self.write_annotated_images_to_disk:
               label = f'{self.names[int(cls)]} {conf:.2f}'
               plot_one_box(xyxy, im0, label=label, color=[0,0,200], line_thickness=5)
               tmp["labeled"] = f"{save_dir}/labeled-{p.name}"
@@ -320,7 +312,7 @@ def raw_parse_from_json(json_elements, loaded_detector):
   """
   out = []
   for idx in range(len(json_elements)):
-    from64name = Detector._itername("(", ") image.jpg")
+    from64name = Defaults._itername("(", ") image.jpg")
     b64image = json_elements[idx]["base64"]
     im = PIL.Image.open(io.BytesIO(base64.b64decode(b64image)))
     im.save(from64name)
