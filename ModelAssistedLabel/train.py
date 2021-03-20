@@ -61,10 +61,9 @@ class AutoWeights():
   Then call `generate_weights` to run `train.py`. The resultant file will try to
   be moved to the `out_dir` and if a conflict exists, a new name will be made.
   """
-  def __init__(self, origin_images_dir, name="AutoWeight <name>", out_dir=".", MAX_SIZE=5, custom_data_yaml=None, verbose=True, train_path = "yolov5/runs/train"):
+  def __init__(self, name="AutoWeight <name>", out_dir=".", MAX_SIZE=5, custom_data_yaml=None, verbose=True, train_path = "yolov5/runs/train"):
     """
     Args:
-      origin_images_dir: location of the bag of images/labels
       out_dir: where the results of train.py are moved
       MAX_SIZE: parameter for `Generation`
       custom_data_yaml: see `Defaults`'s `data_yaml` for the default value
@@ -72,27 +71,26 @@ class AutoWeights():
       train_path: path to Ultralytic's default output folder
     """
     self.resource_paths = ["test/", "train/", "valid/"]
-    self.origin_images_dir = origin_images_dir
     self.name = name
     self.out_dir = out_dir
     self.train_path = train_path
     self.custom_data_yaml = custom_data_yaml
-    self.g = Generation(repo=self.origin_images_dir, out_dir=self.out_dir, data_yaml=self.custom_data_yaml)
+    self.verbose = verbose
+    self.MAX_SIZE = MAX_SIZE
 
-    found = []
+    self.traverse_resources()
+
+  def traverse_resources(self):
     for r in self.resource_paths:
       if os.path.exists(r):
         listdir = len(os.listdir(r))
-        found.append(r)
+        for subdir in os.listdir(r):
+          print('Directory:', os.path.join(r, subdir), "|" , len(os.listdir(os.path.join(r, subdir))),"files")
       else:
         listdir = "n/a"
       print('Directory:', r, "|" , str(listdir),"files")
 
-
-    override = True
-    if len(found) > 0:
-      override = len(input(f"Folders '{found}' exists. Press 'Enter' to leave the files alone, enter anything at all to potentially overwrite")) > 0
-
+  def pprep():
     #automatically build the resource paths and prepare for traniing
     self.__prepare_split__(MAX_SIZE=MAX_SIZE, data_yaml=self.custom_data_yaml, verbose=self.verbose, override=override)
 
@@ -108,8 +106,6 @@ class AutoWeights():
     Returns:
       path to the output folder of train.py
     """
-
-
     t = Trainer(self.name)
     ldir = lambda path: set(os.listdir(path))
 
@@ -129,12 +125,11 @@ class AutoWeights():
     self.last_results_path = results_path
     return results_path
 
-  def __prepare_split__(self, MAX_SIZE, data_yaml, verbose, override):
+  def __prepare_split__(self, data_yaml, verbose, override):
     """
     Gets the local filesystem ready to run the wrapper for "train.py".
 
     Args:
-      MAX_SIZE:
       data_yaml:
       verbose: print summary information for the split
     """
@@ -142,18 +137,25 @@ class AutoWeights():
       data_yaml = Defaults().data_yaml
 
     if override:
-      self.g.set_split(MAX_SIZE=MAX_SIZE)
-      self.__split_and_organize_folders__(verbose=verbose)
+      self.g.set_split(MAX_SIZE=self.MAX_SIZE)
+      zipped = self.g.write_split_to_disk(self.name) #create a zip file
+      self.__split_and_organize_folders__(zipped=zipped)
     else:
       self.g.set_split_from_disk()
 
-  def __split_and_organize_folders__(self, verbose):
+  def initialize_images_from_zip(self, zipped):
     """
-    Assume zip file contains 4 items:
+    Assume zip file is of the following structure:
       * data.yaml
       * train/
+        - images/
+        - labels/
       * valid/
+        - images/
+        - labels/
       * test/
+        - images/
+        - labels/
 
     Extract these 4 resources to the ROOT directory and remove the original
     part of the file.
@@ -161,27 +163,18 @@ class AutoWeights():
     Args:
       verbose: print summary information about the split
     """
-    assert self.g is not None
-    assert self.g.split is not None
+    assert os.path.exists(zipped)
+    os.system(f'unzip "{zipped}"') #grab data
+    folder = zipped[:-4] #remove the ".zip from the filename
 
-    def tostr(split):
-      return [{k: len(v)} for k,v in split.items()]
-    def sumg(split):
-      return sum([list(x.values())[0] for x in tostr(split)])
-    if verbose:
-      print("summary: ", tostr(self.g.split))
-      print("checksum:", sumg(self.g.split))
-
-    zipped = self.g.write_split_to_disk(self.name) #create a zip file in the ROOT directory
-    local = os.path.basename(zipped)
-    os.system(f'unzip "{local}"') #grab data
     #move the contents of the zip file into postion within the ROOT directory
-    for content in self.resource_paths:
-      os.system(f"mv '{local[:-4]}/{content}' .")
-    #remove zip file
-    os.system(f"rm -f -r '{local}'")
+    for content in os.listdir(folder):
+      os.system(f"mv '{os.path.join(folder, content)}' .")
+      if os.path.isfile(os.path.join(folder, content)):
+        os.system(f"mv '{content} ./yolov5/{content}")
+
     #removed the folder that was taken out of the zip
-    os.system(f"rm -f -r '{local[:-4]}'")
+    os.system(f"rm -f -r '{folder}'")
 
   def __cleanup__(self):
     """

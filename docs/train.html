@@ -82,7 +82,7 @@ nb_path: "02_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="AutoWeights" class="doc_header"><code>class</code> <code>AutoWeights</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/train.py#L56" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AutoWeights</code>(<strong><code>origin_images_dir</code></strong>, <strong><code>name</code></strong>=<em><code>'AutoWeight &lt;name&gt;'</code></em>, <strong><code>out_dir</code></strong>=<em><code>'.'</code></em>, <strong><code>MAX_SIZE</code></strong>=<em><code>5</code></em>, <strong><code>custom_data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>train_path</code></strong>=<em><code>'yolov5/runs/train'</code></em>)</p>
+<h2 id="AutoWeights" class="doc_header"><code>class</code> <code>AutoWeights</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/train.py#L56" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AutoWeights</code>(<strong><code>name</code></strong>=<em><code>'AutoWeight &lt;name&gt;'</code></em>, <strong><code>out_dir</code></strong>=<em><code>'.'</code></em>, <strong><code>MAX_SIZE</code></strong>=<em><code>5</code></em>, <strong><code>custom_data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>train_path</code></strong>=<em><code>'yolov5/runs/train'</code></em>)</p>
 </blockquote>
 <p>Given a bag of images (.jpg) and labels (.txt) in YOLOv5 format in a repository,
 initialize the ROOT directory with a train-valid-test split and a file needed
@@ -114,7 +114,41 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">__cleanup__</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span>
 </pre></div>
 
     </div>
@@ -127,9 +161,20 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Directory: test/ | n/a files
-Directory: train/ | n/a files
-Directory: valid/ | n/a files
+<pre> 00_config.ipynb         Makefile
+ 01_split.ipynb          MANIFEST.in
+ 02_train.ipynb          <span class="ansi-blue-intense-fg ansi-bold">ModelAssistedLabel</span>/
+ 03_detect.ipynb        &#39;ModelAssistedLabel config.json&#39;
+&#39;_capture input.ipynb&#39;  <span class="ansi-blue-intense-fg ansi-bold">&#39;pre-trained weights&#39;</span>/
+ CONTRIBUTING.md         README.md
+ data.yaml               settings.ini
+ docker-compose.yml      setup.py
+ <span class="ansi-blue-intense-fg ansi-bold">docs</span>/                   _Synch.ipynb
+ <span class="ansi-blue-intense-fg ansi-bold">fromIndex-296227</span>/       <span class="ansi-blue-intense-fg ansi-bold">test</span>/
+<span class="ansi-blue-intense-fg ansi-bold">&#39;Image Repo&#39;</span>/            <span class="ansi-blue-intense-fg ansi-bold">train</span>/
+ index.ipynb             <span class="ansi-blue-intense-fg ansi-bold">valid</span>/
+ <span class="ansi-blue-intense-fg ansi-bold">ipynb_tests</span>/            <span class="ansi-blue-intense-fg ansi-bold">yolov5</span>/
+ LICENSE
 </pre>
 </div>
 </div>
@@ -147,10 +192,152 @@ Directory: valid/ | n/a files
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">split</span>  
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">MAX_SIZE</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">aw</span><span class="o">.</span><span class="n">initialize_images_from_zip</span><span class="p">(</span><span class="s2">&quot;ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_3&gt; 21-03-20 20-52-46.zip&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Directory: test/images | 2 files
+Directory: test/labels | 2 files
+Directory: test/ | 2 files
+Directory: train/images | 7 files
+Directory: train/labels | 6 files
+Directory: train/ | 2 files
+Directory: valid/images | 3 files
+Directory: valid/labels | 3 files
+Directory: valid/ | 2 files
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">set_split_from_disk</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">split</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&#39;train&#39;: [&#39;images&#39;, &#39;labels&#39;]},
+ {&#39;valid&#39;: [&#39;images&#39;, &#39;labels&#39;]},
+ {&#39;test&#39;: [&#39;images&#39;, &#39;labels&#39;]}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_full&gt; 21-03-20 23-11-23.zip&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls ipynb_tests/01_split_datadump/
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#39;Final Roboflow Export (841)&lt;01_split_3&gt; 21-03-20 20-52-46.zip&#39;
+&#39;Final Roboflow Export (841)&lt;01_split_again&gt; 21-03-20 21-32-45.zip&#39;
+&#39;Final Roboflow Export (841)&lt;01_split_full&gt; 21-03-20 23-11-23&#39;
+&#39;Final Roboflow Export (841)&lt;01_split_full&gt; 21-03-20 23-11-23.zip&#39;
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 

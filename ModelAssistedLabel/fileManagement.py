@@ -103,9 +103,9 @@ class Generation:
     self.resource_dirs = resource_dirs
     self.set_split()
     if self.verbose:
-      print()
+      print("call `set_split` before `write_files_to_disk`")
 
-  def set_split_from_disk():
+  def set_split_from_disk(self):
     "sets the value of `self.split` to images present in train/valid/test folders on disk."
     self.split = [{x: os.listdir(x)} for x in self.resource_dirs]
 
@@ -138,7 +138,7 @@ class Generation:
     self.split = split
 
   def get_split(self):
-    return [{x: len(g.split[x])} for x in g.split]
+    return [{x: len(self.split[x])} for x in self.split]
 
   def write_split_to_disk(self, descriptor = "", autoname_output=True):
     """
@@ -223,7 +223,7 @@ class Generation:
           if not os.path.exists(full_out):
             shutil.copyfile(target, full_out)
             if self.verbose:
-              print("copying:", target, "|", full_out, flush=True)
+              print("copying:", target)
     return directories
 
   def __default_filename__(self, prefix=""):
