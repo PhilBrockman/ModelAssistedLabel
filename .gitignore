@@ -10,6 +10,9 @@ _tmp*
 tmp*
 tags
 
+#test data  
+ipynb_tests/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

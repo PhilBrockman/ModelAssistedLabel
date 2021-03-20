@@ -28,7 +28,10 @@ class Trainer():
     """
     Records YOLOv5 architecture
     """
-    f = open(f"yolov5/{self.yaml_file}","w+")
+    yaml = f"yolov5/{self.yaml_file}"
+    if os.path.exists(yaml):
+      os.remove(yaml)
+    f = open(yaml,"w")
     f.writelines(self.template)
     f.close()
 
@@ -42,7 +45,7 @@ class Trainer():
     self.write_yaml()
     os.chdir("yolov5")
     os.system("pip install -r requirements.txt")
-    os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg {self.yaml_file} --weights '' --name {self.name}  --cache")
+    os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg '{self.yaml_file}' --weights '' --name '{self.name}'  --cache")
     os.chdir("..")
 
 # Cell
@@ -76,18 +79,22 @@ class AutoWeights():
     self.custom_data_yaml = custom_data_yaml
     self.g = Generation(repo=self.origin_images_dir, out_dir=self.out_dir, data_yaml=self.custom_data_yaml)
 
+    found = []
     for r in self.resource_paths:
       if os.path.exists(r):
         listdir = len(os.listdir(r))
+        found.append(r)
       else:
         listdir = "n/a"
-
       print('Directory:', r, "|" , str(listdir),"files")
-      found = []
 
-    for r in self.resource_paths: #make sure none of these paths already exist
-      if os.path.exists(r):
-        found.append(r)
+
+    override = True
+    if len(found) > 0:
+      override = len(input(f"Folders '{found}' exists. Press 'Enter' to leave the files alone, enter anything at all to potentially overwrite")) > 0
+
+    #automatically build the resource paths and prepare for traniing
+    self.__prepare_split__(MAX_SIZE=MAX_SIZE, data_yaml=self.custom_data_yaml, verbose=self.verbose, override=override)
 
 
   def generate_weights(self, epochs, tidy_weights=True, MAX_SIZE=None):
@@ -101,12 +108,7 @@ class AutoWeights():
     Returns:
       path to the output folder of train.py
     """
-    override = True
-    if len(found) > 0:
-      override = len(input(f"Folders '{found}' exists. Press 'Enter' to leave the files alone, enter anything at all to potentially overwrite")) > 0
 
-    #automatically build the resource paths and prepare for traniing
-    self.__prepare_split__(MAX_SIZE=MAX_SIZE, data_yaml=self.custom_data_yaml, verbose=self.verbose, override=override)
 
     t = Trainer(self.name)
     ldir = lambda path: set(os.listdir(path))

@@ -9,11 +9,15 @@ import json, os, shutil
 class Defaults:
   """
   Makes certain variables are very accessible across the repository. The names
-  of the variables and their respective values are stored in JSON format in the
-  `config_file`
+  of the variables and their respective values are stored in JSON format in
+  `./ModelAssistedLabel config.json`
+
+  Functions defined here are also available across this project.
   """
 
-  def __init__(self, config_file="ModelAssistedLabel config.json"):
+  def __init__(self):
+    config_file="ModelAssistedLabel config.json"
+    print("reading defaults from:", config_file)
     with open(config_file, "r") as f:
       indata = (json.load(f))
     for k,v in indata.items():

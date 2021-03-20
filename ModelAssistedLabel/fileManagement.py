@@ -69,19 +69,13 @@ class FileUtilities:
     """
     return FileUtilities.matched(FileUtilities.collect_files(walk_dir, recursive=recursive))
 
-  def mkdir(dir):
-    """
-    Don't overwrite an existing file when calling mkdir.
-    """
-    import os
-    if not os.path.exists(dir):
-      os.mkdir(f"{dir}")
-
 
 # Cell
 from .core import Defaults
 from datetime import datetime
-import math, random
+import math, random, shutil
+os.system("pip install progressbar2")
+import progressbar
 
 class Generation:
   """
@@ -92,7 +86,7 @@ class Generation:
     relevant data will be zipped in `out_dir`
   """
 
-  def __init__(self, repo, out_dir, data_yaml, verbose=False, resource_dirs = ["train", "valid", "test"]):
+  def __init__(self, repo, out_dir, data_yaml, verbose=True, resource_dirs = ["train", "valid", "test"]):
     """
       Args:
         repo: <string> path to the parent directory of the repository.
@@ -107,6 +101,9 @@ class Generation:
     self.out_dir = out_dir
     self.verbose = verbose
     self.resource_dirs = resource_dirs
+    self.set_split()
+    if self.verbose:
+      print()
 
   def set_split_from_disk():
     "sets the value of `self.split` to images present in train/valid/test folders on disk."
@@ -167,31 +164,37 @@ class Generation:
     dirs = self.__write_images__() #write images
     print('dirs', dirs)
     zipped = self.__zip_dirs__(out_folder, dirs) #zip folders
-    print('zipped')
-    os.system(f"mv '{zipped}' '{self.out_dir}'") #move the output
-    return f"{self.out_dir}/{zipped}"
+    return zipped
 
 
-  def __zip_dirs__(self, folder, dirs):
+  def __zip_dirs__(self, zip_name, dirs):
     """
     Takes an array of resources and places them all as the children in a specified
-    `folder`.
+    `zip_name`.
 
     Args:
-      folder: Ultimately will be transformed into `folder.zip`
+      zip_name: Ultimately will be transformed into `{zip_name}.zip`
       dirs: resources to become zipped
 
     Returns:
       the name of the zip file uniting the resources in `dirs`
     """
-    FileUtilities.mkdir(folder)
-    self.__write_data_yaml__(folder)
+    outpath = os.path.join(self.out_dir, zip_name)
+    assert not os.path.exists(outpath)
+    os.makedirs(outpath, exist_ok=True)
+    yaml_file = self.__write_data_yaml__(folder=outpath)
+    print("yaml", yaml_file)
     for subdir in self.split:
-      os.system(f"mv './{subdir}' '{folder}/'")
+      if self.verbose:
+        print("subdir", subdir)
+        print("\toutdir", outpath)
+      shutil.move(subdir, outpath)
 
-    os.system(f'zip -r "{folder}.zip" "{folder}"')
-    os.system(f'rm -f -r "{folder}"')
-    return f"{folder}.zip"
+    print("os.listdir", os.listdir(outpath))
+
+    os.system(f'zip -r "{outpath}.zip" "{outpath}"')
+    os.system(f'rm -f -r "{outpath}"')
+    return f"{outpath}.zip"
 
 
   def __write_images__(self):
@@ -208,18 +211,19 @@ class Generation:
     directories = []
     for dirname, pairs in self.split.items():
       dir = join("./", dirname) #test/valid/train
-      FileUtilities.mkdir(dir)
       directories.append(dir)
       for pair in pairs:
         for resource, data in pair.items():
           subdir = join(dir, resource)
-          FileUtilities.mkdir(subdir)
+          os.makedirs(subdir, exist_ok=True)
 
           target = data["path"]
-          destination = join(subdir, data["basename"])
-          if not os.path.exists(destination):
-            os.system(f"cp '{target}' '{destination}'")
-            print("target/dest", target, "|", destination)
+          full_out = os.path.join(subdir, data["basename"])
+
+          if not os.path.exists(full_out):
+            shutil.copyfile(target, full_out)
+            if self.verbose:
+              print("copying:", target, "|", full_out, flush=True)
     return directories
 
   def __default_filename__(self, prefix=""):
@@ -243,6 +247,13 @@ class Generation:
       folder: directory in which to write the data
       filename: optionally rename the yaml data's file
     """
-    f = open(os.path.join(folder, filename),"w+")
+    outfile = os.path.join(folder, filename)
+
+    if os.path.exists(outfile):
+      os.remove(outfile)
+
+    f = open(outfile,"w")
     f.writelines(self.data_yaml)
     f.close()
+    assert os.path.exists(outfile)
+    return outfile
