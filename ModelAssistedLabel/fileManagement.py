@@ -86,7 +86,7 @@ class Generation:
     relevant data will be zipped in `out_dir`
   """
 
-  def __init__(self, repo, out_dir, data_yaml, verbose=True, resource_dirs = ["train", "valid", "test"]):
+  def __init__(self, repo, out_dir, data_yaml=None, verbose=True, resource_dirs = ["train", "valid", "test"]):
     """
       Args:
         repo: <string> path to the parent directory of the repository.
@@ -101,9 +101,6 @@ class Generation:
     self.out_dir = out_dir
     self.verbose = verbose
     self.resource_dirs = resource_dirs
-    self.set_split()
-    if self.verbose:
-      print("call `set_split` before `write_files_to_disk`")
 
   def set_split_from_disk(self):
     "sets the value of `self.split` to images present in train/valid/test folders on disk."
@@ -256,7 +253,10 @@ class Generation:
       os.remove(outfile)
 
     f = open(outfile,"w")
-    f.writelines(self.data_yaml)
+    if self.data_yaml is None:
+      f.writelines(Defaults().data_yaml)
+    else:
+      f.writelines(self.data_yaml)
     f.close()
     assert os.path.exists(outfile)
     return outfile

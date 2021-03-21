@@ -39,17 +39,6 @@ I found the files responsible for training and employing models and wrote wrappe
 Start by cloning https://github.com/ultralytics/yolov5.
 
 ```python
-!nbdev_build_lib
-```
-
-    Converted 00_config.ipynb.
-    Converted 01_split.ipynb.
-    Converted 02_train.ipynb.
-    Converted 03_detect.ipynb.
-    Converted index.ipynb.
-
-
-```python
 from ModelAssistedLabel.config import Defaults
 import os
 
@@ -64,17 +53,15 @@ Defaults.prepare_YOLOv5()
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 
 
-# Image Sets
+# Building models from 
 
-Many options
+To make a model to annotate images, we first need annotated images. When I was first starting, I used Roboflow's tools to both annotate my images and to keep my data organized.
 
-## Vanilla image sets
-
-Recursively search a folder (`repo`) that contains images and labels.
+Once all of the labels/images are in a common folder called `repo`, we're ready to go:
 
 ```python
 repo = "./Image Repo/labeled/Final Roboflow Export (841)"
-name = "nospaces"
+name = "index model"
 ```
 
 ```python
@@ -83,10 +70,6 @@ from ModelAssistedLabel.train import AutoWeights
 
 ```python
 wm = AutoWeights(repo, name, MAX_SIZE=None)
-```
-
-```python
-wm.name="fromIndex"
 ```
 
 ```python

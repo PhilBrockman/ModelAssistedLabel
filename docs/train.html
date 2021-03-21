@@ -49,7 +49,7 @@ nb_path: "02_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="ModelAssistedLabel/train.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>name</code></strong>, <strong><code>yaml_file</code></strong>=<em><code>'models/custom_yolov5s.yaml'</code></em>)</p>
+<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/train.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>name</code></strong>, <strong><code>yaml_file</code></strong>=<em><code>'models/custom_yolov5s.yaml'</code></em>)</p>
 </blockquote>
 <p>A wrapper for Ultralytic's <code>test.py</code></p>
 <p>Write the backbone of the model to file and then run YOLOv5's train file.</p>
@@ -82,7 +82,38 @@ nb_path: "02_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="AutoWeights" class="doc_header"><code>class</code> <code>AutoWeights</code><a href="ModelAssistedLabel/train.py#L56" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AutoWeights</code>(<strong><code>name</code></strong>=<em><code>'AutoWeight &lt;name&gt;'</code></em>, <strong><code>out_dir</code></strong>=<em><code>'.'</code></em>, <strong><code>MAX_SIZE</code></strong>=<em><code>5</code></em>, <strong><code>custom_split</code></strong>=<em><code>None</code></em>, <strong><code>custom_data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>train_path</code></strong>=<em><code>'yolov5/runs/train'</code></em>)</p>
+<h2 id="Resource" class="doc_header"><code>class</code> <code>Resource</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/train.py#L52" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Resource</code>(<strong><code>path</code></strong>, <strong><code>file_type</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="AutoWeights" class="doc_header"><code>class</code> <code>AutoWeights</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/train.py#L65" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AutoWeights</code>(<strong><code>name</code></strong>=<em><code>'AutoWeight &lt;name&gt;'</code></em>, <strong><code>out_dir</code></strong>=<em><code>'.'</code></em>, <strong><code>MAX_SIZE</code></strong>=<em><code>5</code></em>, <strong><code>custom_split</code></strong>=<em><code>None</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>train_path</code></strong>=<em><code>'yolov5/runs/train'</code></em>)</p>
 </blockquote>
 <p>Given a bag of images (.jpg) and labels (.txt) in YOLOv5 format in a repository,
 initialize the ROOT directory with a train-valid-test split and a file needed
@@ -114,8 +145,7 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">out_dir</span><span class="o">=</span><span class="s2">&quot;ipynb_tests/02_train_datadump&quot;</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">aw</span><span class="o">.</span><span class="n">__cleanup__</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
 </pre></div>
 
     </div>
@@ -128,7 +158,168 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>reading defaults from: ModelAssistedLabel config.json
+<pre>Converted 00_config.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_detect.ipynb.
+Converted index.ipynb.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Converted 00_config.ipynb.
+Converted 01_split.ipynb.
+Converted 02_train.ipynb.
+Converted 03_detect.ipynb.
+Converted index.ipynb.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">out_dir</span><span class="o">=</span><span class="s2">&quot;ipynb_tests/02_train_datadump&quot;</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">resource_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;yolov5/data.yaml&quot;</span><span class="p">]</span>
+<span class="n">aw</span><span class="o">.</span><span class="n">traverse_resources</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>train/images
+	 &gt; 7 files
+train/labels
+	 &gt; 7 files
+valid/images
+	 &gt; 2 files
+valid/labels
+	 &gt; 2 files
+test/images
+	 &gt; 1 files
+test/labels
+	 &gt; 1 files
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-82-056362fcf063&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> aw<span class="ansi-blue-fg">.</span>resource_paths <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;train&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;valid&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;test&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;yolov5/data.yaml&#34;</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>aw<span class="ansi-blue-fg">.</span>traverse_resources<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-78-bc9edbf125d1&gt;</span> in <span class="ansi-cyan-fg">traverse_resources</span><span class="ansi-blue-fg">(self, dirs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     36</span>       dirs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>resource_paths
+<span class="ansi-green-intense-fg ansi-bold">     37</span>     <span class="ansi-green-fg">for</span> d <span class="ansi-green-fg">in</span> dirs<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">       </span>self<span class="ansi-blue-fg">.</span>__traverse_resources__<span class="ansi-blue-fg">(</span>d<span class="ansi-blue-fg">,</span> level<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     39</span> 
+<span class="ansi-green-intense-fg ansi-bold">     40</span>   <span class="ansi-green-fg">def</span> __traverse_resources__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> dir<span class="ansi-blue-fg">,</span> level<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-78-bc9edbf125d1&gt;</span> in <span class="ansi-cyan-fg">__traverse_resources__</span><span class="ansi-blue-fg">(self, dir, level)</span>
+<span class="ansi-green-intense-fg ansi-bold">     44</span> 
+<span class="ansi-green-intense-fg ansi-bold">     45</span>     <span class="ansi-red-fg">#check to see if there is a directory in the dir</span>
+<span class="ansi-green-fg">---&gt; 46</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">False</span> <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span><span class="ansi-green-fg">not</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>isdir<span class="ansi-blue-fg">(</span>os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> os<span class="ansi-blue-fg">.</span>listdir<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     47</span>       <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> os<span class="ansi-blue-fg">.</span>listdir<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     48</span>         path <span class="ansi-blue-fg">=</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;yolov5/data.yaml&#39;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">__cleanup__</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Removing:  train
+Removing:  valid
+Removing:  test
+Removing:  yolov5/data.yaml
 </pre>
 </div>
 </div>
@@ -159,35 +350,15 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>call `set_split` before `write_files_to_disk`
-(1) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/digittake-153-jpg_jpg.rf.c540375397ac13ca361faf4acc756a30.jpg
-(2) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/digittake-153-jpg_jpg.rf.c540375397ac13ca361faf4acc756a30.txt
-(3) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/digittake-344-jpg_jpg.rf.cbe8fd13bf132dbb26a2ba0611d29c8f.jpg
-(4) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/digittake-344-jpg_jpg.rf.cbe8fd13bf132dbb26a2ba0611d29c8f.txt
-(5) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/screenytake-68-jpg-cropped-jpg_jpg.rf.18795a8477f8df71ca5fb0e37bfff959.jpg
-(6) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/screenytake-68-jpg-cropped-jpg_jpg.rf.18795a8477f8df71ca5fb0e37bfff959.txt
-(7) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/save_dirrcropped-jpg_jpg.rf.127f02f69b5f5146c1376b9b592d58c7.jpg
-(8) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/save_dirrcropped-jpg_jpg.rf.127f02f69b5f5146c1376b9b592d58c7.txt
-(9) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/digittake-76-jpg_jpg.rf.4d5c6aebb6f1c7c484985a199441fbf6.jpg
-(10) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/digittake-76-jpg_jpg.rf.4d5c6aebb6f1c7c484985a199441fbf6.txt
-(11) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/save_dirrtake-10_jpg_cropped-jpg_jpg.rf.b3d3f63afb0a3ce8c29b8c3fba50faee.jpg
-(12) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/save_dirrtake-10_jpg_cropped-jpg_jpg.rf.b3d3f63afb0a3ce8c29b8c3fba50faee.txt
-(13) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/save_dirrcropped-jpg_jpg.rf.340eb8ea3c457536f9ca160912bf907b.jpg
-(14) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/save_dirrcropped-jpg_jpg.rf.340eb8ea3c457536f9ca160912bf907b.txt
-(15) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/digittake-143-jpg_jpg.rf.b9289ee63ea678e66b7c5e3279296952.jpg
-(16) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/digittake-143-jpg_jpg.rf.b9289ee63ea678e66b7c5e3279296952.txt
-(17) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/digittake-151-jpg_jpg.rf.f6e065d32fe53673953536f16900f4d5.jpg
-(18) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/digittake-151-jpg_jpg.rf.f6e065d32fe53673953536f16900f4d5.txt
-(19) copying: ./Image Repo/labeled/Final Roboflow Export (841)/images/save_dirrsave_dirr4c14ffddd8e9ca7b4a833ab8ce146301fc2c88b6-jpg-jpg_jpg.rf.9f09281424248a4b57fb4419d3b795aa.jpg
-(20) copying: ./Image Repo/labeled/Final Roboflow Export (841)/labels/save_dirrsave_dirr4c14ffddd8e9ca7b4a833ab8ce146301fc2c88b6-jpg-jpg_jpg.rf.9f09281424248a4b57fb4419d3b795aa.txt
+<pre>
 dirs [&#39;./train&#39;, &#39;./valid&#39;, &#39;./test&#39;]
-yaml ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 02-23-11/data.yaml
+yaml ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02/data.yaml
 subdir train
-	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 02-23-11
+	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02
 subdir valid
-	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 02-23-11
+	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02
 subdir test
-	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 02-23-11
+	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02
 os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39;]
 </pre>
 </div>
@@ -241,7 +412,39 @@ Wall time: 6.41 s
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls
+<div class=" highlight hl-ipython3"><pre><span></span>  <span class="k">def</span> <span class="nf">traverse_resources</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Iterate through the levels of each of the resource paths&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+      <span class="k">return</span> <span class="nb">dir</span>
+    <span class="c1">#check to see if there is a directory in the dir</span>
+
+    <span class="k">if</span> <span class="kc">False</span> <span class="ow">in</span> <span class="p">[</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)]:</span>
+      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+          <span class="n">no_folders</span> <span class="o">=</span> <span class="kc">False</span>
+          <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">*</span><span class="n">level</span><span class="o">+</span><span class="n">path</span><span class="p">)</span>
+          <span class="n">traverse_resources</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">*</span><span class="n">level</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)),</span><span class="s2">&quot;files&quot;</span><span class="p">)</span>
+  
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">traverse_resources</span><span class="p">(</span><span class="s2">&quot;data.yaml&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -253,222 +456,14 @@ Wall time: 6.41 s
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> 00_config.ipynb
- 01_split.ipynb
- 02_train.ipynb
- 03_detect.ipynb
-&#39;AutoWeight &lt;name&gt;-160068&#39;
-&#39;AutoWeight &lt;name&gt;2 - 1&#39;
-&#39;AutoWeight &lt;name&gt;-277648&#39;
-&#39;AutoWeight &lt;name&gt;-603604&#39;
-&#39;_capture input.ipynb&#39;
- CONTRIBUTING.md
- data.yaml
- docker-compose.yml
- docs
-&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-57-37&#39;
-&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-57-37.zip&#39;
-&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-58-39&#39;
-&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-58-39.zip&#39;
- fromIndex-296227
-&#39;Image Repo&#39;
- index.ipynb
- ipynb_tests
- LICENSE
- Makefile
- MANIFEST.in
- ModelAssistedLabel
-&#39;ModelAssistedLabel config.json&#39;
-&#39;pre-trained weights&#39;
- README.md
- settings.ini
- setup.py
- _Synch.ipynb
-&#39;test (1)&#39;
-&#39;test (2)&#39;
-&#39;test (3)&#39;
-&#39;test (4)&#39;
-&#39;test (5)&#39;
-&#39;train (1)&#39;
-&#39;train (2)&#39;
-&#39;train (3)&#39;
-&#39;train (4)&#39;
-&#39;train (5)&#39;
-&#39;valid (1)&#39;
-&#39;valid (2)&#39;
-&#39;valid (3)&#39;
-&#39;valid (4)&#39;
-&#39;valid (5)&#39;
- yolov5
-</pre>
-</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;data.yaml&#39;</pre>
 </div>
 
 </div>
-</div>
 
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">r</span> <span class="s1">&#39;test (1)&#39;</span> <span class="s1">&#39;test (2)&#39;</span> <span class="s1">&#39;test (3)&#39;</span> <span class="s1">&#39;test (4)&#39;</span> <span class="s1">&#39;test (5)&#39;</span> <span class="s1">&#39;train (1)&#39;</span> <span class="s1">&#39;train (2)&#39;</span> <span class="s1">&#39;train (3)&#39;</span> <span class="s1">&#39;train (4)&#39;</span> <span class="s1">&#39;train (5)&#39;</span> <span class="s1">&#39;valid (1)&#39;</span> <span class="s1">&#39;valid (2)&#39;</span> <span class="s1">&#39;valid (3)&#39;</span> <span class="s1">&#39;valid (4)&#39;</span> <span class="s1">&#39;valid (5)&#39;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> 00_config.ipynb
- 01_split.ipynb
- 02_train.ipynb
- 03_detect.ipynb
-<span class="ansi-blue-intense-fg ansi-bold">&#39;AutoWeight &lt;name&gt;-160068&#39;</span>/
-<span class="ansi-blue-intense-fg ansi-bold">&#39;AutoWeight &lt;name&gt;2 - 1&#39;</span>/
-<span class="ansi-blue-intense-fg ansi-bold">&#39;AutoWeight &lt;name&gt;-277648&#39;</span>/
-<span class="ansi-blue-intense-fg ansi-bold">&#39;AutoWeight &lt;name&gt;-603604&#39;</span>/
-&#39;_capture input.ipynb&#39;
- CONTRIBUTING.md
- data.yaml
- docker-compose.yml
- <span class="ansi-blue-intense-fg ansi-bold">docs</span>/
-<span class="ansi-blue-intense-fg ansi-bold">&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-57-37&#39;</span>/
-&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-57-37.zip&#39;
-<span class="ansi-blue-intense-fg ansi-bold">&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-58-39&#39;</span>/
-&#39;Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 01-58-39.zip&#39;
- <span class="ansi-blue-intense-fg ansi-bold">fromIndex-296227</span>/
-<span class="ansi-blue-intense-fg ansi-bold">&#39;Image Repo&#39;</span>/
- index.ipynb
- <span class="ansi-blue-intense-fg ansi-bold">ipynb_tests</span>/
- LICENSE
- Makefile
- MANIFEST.in
- <span class="ansi-blue-intense-fg ansi-bold">ModelAssistedLabel</span>/
-&#39;ModelAssistedLabel config.json&#39;
-<span class="ansi-blue-intense-fg ansi-bold">&#39;pre-trained weights&#39;</span>/
- README.md
- settings.ini
- setup.py
- _Synch.ipynb
- <span class="ansi-blue-intense-fg ansi-bold">yolov5</span>/
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add .
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git status
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git commit -m <span class="s2">&quot;closing up refactor on training&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git push
-</pre></div>
-
-    </div>
 </div>
 </div>
 
