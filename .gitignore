@@ -4,6 +4,7 @@
 .gitconfig
 *.bak
 *.log
+*.zip
 *~
 ~*
 _tmp*
@@ -12,6 +13,9 @@ tags
 
 #test data  
 ipynb_tests/
+train/
+valid/
+test/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

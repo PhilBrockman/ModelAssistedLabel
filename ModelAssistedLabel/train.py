@@ -56,12 +56,12 @@ from datetime import datetime
 class AutoWeights():
   """Given a bag of images (.jpg) and labels (.txt) in YOLOv5 format in a repository,
   initialize the ROOT directory with a train-valid-test split and a file needed
-  by the Ultralytics repository. Pairs are identified if `image[:-4] == label[:-4]`
+  by the Ultralytics repository. Pairs are identified via having a common filename.
 
   Then call `generate_weights` to run `train.py`. The resultant file will try to
   be moved to the `out_dir` and if a conflict exists, a new name will be made.
   """
-  def __init__(self, name="AutoWeight <name>", out_dir=".", MAX_SIZE=5, custom_data_yaml=None, verbose=True, train_path = "yolov5/runs/train"):
+  def __init__(self, name="AutoWeight <name>", out_dir=".", MAX_SIZE=5, custom_split=None, custom_data_yaml=None, verbose=True, train_path = "yolov5/runs/train"):
     """
     Args:
       out_dir: where the results of train.py are moved
@@ -74,11 +74,12 @@ class AutoWeights():
     self.name = name
     self.out_dir = out_dir
     self.train_path = train_path
+    if custom_data_yaml is None:
+      custom_data_yaml = Defaults().data_yaml
     self.custom_data_yaml = custom_data_yaml
     self.verbose = verbose
+    self.custom_split=custom_split
     self.MAX_SIZE = MAX_SIZE
-
-    self.traverse_resources()
 
   def traverse_resources(self):
     for r in self.resource_paths:
@@ -89,11 +90,6 @@ class AutoWeights():
       else:
         listdir = "n/a"
       print('Directory:', r, "|" , str(listdir),"files")
-
-  def pprep():
-    #automatically build the resource paths and prepare for traniing
-    self.__prepare_split__(MAX_SIZE=MAX_SIZE, data_yaml=self.custom_data_yaml, verbose=self.verbose, override=override)
-
 
   def generate_weights(self, epochs, tidy_weights=True, MAX_SIZE=None):
     """
@@ -176,12 +172,26 @@ class AutoWeights():
     #removed the folder that was taken out of the zip
     os.system(f"rm -f -r '{folder}'")
 
+  def initialize_images_from_bag(self, bag_of_images_and_labels):
+    g = Generation(repo=bag_of_images_and_labels,
+                  out_dir=self.out_dir,
+                  data_yaml=self.custom_data_yaml,
+                  verbose=self.verbose)
+    g.set_split(split_ratio=self.custom_split, MAX_SIZE=self.MAX_SIZE)
+    g.get_split()
+    zipped = g.write_split_to_disk(descriptor=self.name)
+    self.initialize_images_from_zip(zipped)
+    os.system(f'rm -f -r "{zipped}"')
+    self.g = g
+
   def __cleanup__(self):
     """
     Removes all resources in `self.resource_paths` from the filesystem.
     """
     for r in self.resource_paths:
-      os.system(f"rm -f -r {r}")
+      if os.path.exists(r):
+        print('Removing: ', r)
+        os.system(f"rm -f -r {r}")
 
   def __tidy_weights__(self, results_path):
     """

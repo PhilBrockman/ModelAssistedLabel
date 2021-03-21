@@ -144,41 +144,6 @@ relevant data will be zipped in <code>out_dir</code></p>
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">custom_split</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">}</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="n">custom_split</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[{&#39;train&#39;: 5}, {&#39;valid&#39;: 3}, {&#39;test&#39;: 2}]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>split the entire repository on the default 70%/20%/10% of train/valid/test</p>
@@ -227,6 +192,41 @@ relevant data will be zipped in <code>out_dir</code></p>
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">custom_split</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="o">.</span><span class="mi">2</span><span class="p">}</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="n">custom_split</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&#39;train&#39;: 5}, {&#39;valid&#39;: 3}, {&#39;test&#39;: 2}]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
 
 #write the current split to disk
@@ -246,9 +246,9 @@ print(&quot;Complete: &quot;, zipped)
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Complete:  ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_full&gt; 21-03-20 23-11-23.zip
-CPU times: user 1.68 s, sys: 922 ms, total: 2.6 s
-Wall time: 22.4 s
+<pre>Complete:  ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_full&gt; 21-03-21 00-41-15.zip
+CPU times: user 29.8 ms, sys: 16.8 ms, total: 46.6 ms
+Wall time: 402 ms
 </pre>
 </div>
 </div>
