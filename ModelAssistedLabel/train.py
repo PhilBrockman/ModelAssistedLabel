@@ -81,6 +81,13 @@ class AutoWeights():
     self.custom_split=custom_split
     self.MAX_SIZE = MAX_SIZE
 
+    found = []
+    for r in self.resource_paths:
+      if os.path.exists(r):
+        found.append(r)
+    if len(found) > 0:
+      print("found resources:", found)
+
   def traverse_resources(self):
     for r in self.resource_paths:
       if os.path.exists(r):
@@ -91,7 +98,7 @@ class AutoWeights():
         listdir = "n/a"
       print('Directory:', r, "|" , str(listdir),"files")
 
-  def generate_weights(self, epochs, tidy_weights=True, MAX_SIZE=None):
+  def generate_weights(self, epochs, tidy_weights=True):
     """
     Creates a `Trainer` object and trains for a given amount of time.
 
@@ -203,11 +210,8 @@ class AutoWeights():
     Returns:
       Path to the newly-moved results
     """
-    while True:
-      now = datetime.now()
-      out = f"{os.path.basename(results_path)}-{now.strftime('%f')}" #basename + "random" string
-      outfolder = os.path.join(self.out_dir, out)
-      if not os.path.exists(outfolder): #only stops if a unique name has been found
-        break
-    os.system(f"mv '{results_path}' '{outfolder}'")
-    return outfolder
+    default_name = os.path.join(self.out_dir, os.path.basename(results_path))
+    out = Defaults._itername(f"{default_name} - ", "")
+
+    os.system(f"mv '{results_path}' '{out}'")
+    return out

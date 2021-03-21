@@ -210,10 +210,12 @@ class Generation:
     assert self.split is not None
     directories = []
     counter = 0
+    print()
     for dirname, pairs in self.split.items():
       dir = join("./", dirname) #test/valid/train
       directories.append(dir)
       for pair in pairs:
+        counter += 1
         for resource, data in pair.items():
           subdir = join(dir, resource)
           os.makedirs(subdir, exist_ok=True)
@@ -224,8 +226,7 @@ class Generation:
           if not os.path.exists(full_out):
             shutil.copyfile(target, full_out)
             if self.verbose:
-              counter += 1
-              print(f"({counter}) copying:", target)
+              print(f"({counter}) copying:", target, end='\r')
     return directories
 
   def __default_filename__(self, prefix=""):
