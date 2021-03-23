@@ -32,42 +32,6 @@ nb_path: "03_detect.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">run</span> &quot;_Synch.ipynb&quot;
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(&#34;/content/drive&#34;, force_remount=True).
-/content/drive/MyDrive/Coding/ModelAssistedLabel
-install nbdev: f
-git commit -m: working on detector class
-hooksn
-diffsn
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -76,7 +40,7 @@ diffsn
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>write_annotated_images_to_disk</code></strong>=<em><code>False</code></em>)</p>
+<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L21" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>write_annotated_images_to_disk</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>A wrapper for training loading saved YOLOv5 weights</p>
 <p>requirements:
@@ -101,7 +65,13 @@ diffsn
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{% include note.html content='' %}</p>
+<h1 id="Human-friendly-Labels">Human-friendly Labels<a class="anchor-link" href="#Human-friendly-Labels"> </a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Human-readable information about the class indentities is stored in the data.yaml folder. By default, the data.yaml file is created from the <code>Defaults</code> class. Let's take a look:</p>
 
 </div>
 </div>
@@ -113,7 +83,8 @@ diffsn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="n">weight_path</span><span class="o">=</span><span class="s2">&quot;pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.core</span> <span class="kn">import</span> <span class="n">Defaults</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="n">data_yaml</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -126,7 +97,11 @@ diffsn
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Fusing layers... 
+<pre>train: ../train/images
+val: ../valid/images
+
+nc: 10
+names: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;0&#39;]
 </pre>
 </div>
 </div>
@@ -137,6 +112,13 @@ diffsn
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To convert the "names" variable to a python-friendly format, we do the following manipulation:</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -144,7 +126,22 @@ diffsn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="s2">&quot;Image Repo/labeled/images/Final Roboflow Export (841)/images/&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">re</span>
+
+<span class="c1"># needs to be wrapped in quotes to parse as dict</span>
+<span class="n">substitute</span> <span class="o">=</span> <span class="s2">&quot;names&quot;</span>
+
+<span class="c1">#select last line</span>
+<span class="n">classlist</span> <span class="o">=</span> <span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="n">data_yaml</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">#add quotes around `names` ONLY around the start of a string</span>
+<span class="n">classlist</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;^</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">substitute</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">substitute</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">classlist</span><span class="p">)</span>
+
+<span class="c1">#surround the string in curly braces to tell python it&#39;s a dict</span>
+<span class="n">classlist</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="si">{</span><span class="n">classlist</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span>
+
+<span class="c1"># parse string as dict</span>
+<span class="n">classlist</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">classlist</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -154,6 +151,13 @@ diffsn
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And now here is the value of the classes as used by yolov5</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -161,59 +165,7 @@ diffsn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_config.ipynb.
-Converted 01_split.ipynb.
-Converted 02_train.ipynb.
-Converted 03_detect.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ls</span> <span class="n">test</span><span class="o">/</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls <span class="s2">&quot;train/images&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classlist</span>
 </pre></div>
 
     </div>
@@ -222,116 +174,13 @@ Converted index.ipynb.
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>ls: cannot access &#39;train/images&#39;: No such file or directory
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="ImageProcessor" class="doc_header"><code>class</code> <code>ImageProcessor</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L149" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ImageProcessor</code>(<strong><code>with_weights</code></strong>, <strong><code>save_labeled_img</code></strong>=<em><code>False</code></em>, <strong><code>save_unscuffed</code></strong>=<em><code>False</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ip</span> <span class="o">=</span> <span class="n">ImageProcessor</span><span class="p">(</span><span class="n">with_weights</span><span class="o">=</span><span class="s2">&quot;pre-trained YOLOv5 weights/21-2-25 1k-digits YOLOv5-weights.pt&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Fusing layers... 
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
-ip.process_new_images(folder_path=&quot;Image Repo/unlabeled/21-3-18 rowing 8-12 /&quot;)
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 7.53 s, sys: 320 ms, total: 7.85 s
-Wall time: 8.39 s
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>200</pre>
+<pre>{&#39;names&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;0&#39;]}</pre>
 </div>
 
 </div>
@@ -344,9 +193,7 @@ Wall time: 8.39 s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="resolving-conflicts">resolving conflicts<a class="anchor-link" href="#resolving-conflicts"> </a></h1><blockquote><p>overlapping bounding boxes</p>
-</blockquote>
-
+<h1 id="Visualizing-the-YOLOv5-Output">Visualizing the YOLOv5 Output<a class="anchor-link" href="#Visualizing-the-YOLOv5-Output"> </a></h1>
 </div>
 </div>
 </div>
@@ -361,170 +208,11 @@ Wall time: 8.39 s
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="yoloBox_to_standard" class="doc_header"><code>yoloBox_to_standard</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L180" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>yoloBox_to_standard</code>(<strong><code>result</code></strong>)</p>
+<h2 id="Viewer" class="doc_header"><code>class</code> <code>Viewer</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L149" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Viewer</code>(<strong><code>weight_path</code></strong>, <strong><code>class_arr</code></strong>)</p>
 </blockquote>
-<p>The standard YOLOv5 coordinate format is normed to 1. Need to extract the
-original's image width and height to convert to a standard cartesian plane.</p>
-<p>Args:
-  result: a dictionary that includes both</p>
-
-<pre><code>  * a key called "filename" that points to the original image
-  * a key called "predictions" created when the image is parsed with the
-    YOLOv5 model
-
-</code></pre>
-<p>Returns:
-  Convert the predictions converted to a full-scale Cartesian coordinate system.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="bb_intersection_over_union" class="doc_header"><code>bb_intersection_over_union</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L215" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>bb_intersection_over_union</code>(<strong><code>boxA</code></strong>, <strong><code>boxB</code></strong>)</p>
-</blockquote>
-<p>Source: <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/</a></p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="sorted_api" class="doc_header"><code>sorted_api</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L240" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sorted_api</code>(<strong><code>predictions</code></strong>)</p>
-</blockquote>
-<p>sorts a list of prediction in ascending x order</p>
-<p>Args:
-  an array of dictionaries containing bbox predictions</p>
-<p>Returns:
-  the bounding boxes read off from left to right</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="digit_arr_to_string" class="doc_header"><code>digit_arr_to_string</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L250" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>digit_arr_to_string</code>(<strong><code>predictions</code></strong>)</p>
-</blockquote>
-<p>"Human-friendly interpretation of predictions</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="corners" class="doc_header"><code>corners</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L255" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>corners</code>(<strong><code>r</code></strong>)</p>
-</blockquote>
-<p>Defines the relevante coordinate information</p>
-<p>Args:
-  r: converts a DataFrame row to a tuple</p>
-<p>Returns:
-  Caretensian coordinate information (anchor in the lower left)</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="calculate_iou" class="doc_header"><code>calculate_iou</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L267" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>calculate_iou</code>(<strong><code>frame</code></strong>, <strong><code>threshold</code></strong>=<em><code>0.4</code></em>)</p>
-</blockquote>
-<p>Determines the pair of bounding boxes that has the highest IoU over the :threshold:</p>
-<p>Args:
-  frame: the output of either a YOLOv5 model call or an API call
-  threshold: maximum percentage of overlap allowed between the bounding boxes</p>
+<p>After supplying this class with the paths to (1) several pre-generated weights,
+and (2) several new images, you can create a model from each weight and a prediction
+for each image from each model.</p>
 
 </div>
 
@@ -545,14 +233,7 @@ original's image width and height to convert to a standard cartesian plane.</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{% include note.html content='the following functions work together to form the core of parsing bounding' %}box information.
-{% include warning.html content='I assume that screens have no more than 4 objects in them.' %}
-If extra bounding boxesare detected, I find the pair of boxes that has the highest IoU (Intersection 
-over Union). Of that pair, I identify the box that has the a lower associated
-confidence and remove it.</p>
-<p>If there is still an excess of bounding boxes but no boxes that are overlapping
-in excess of the :threshold:, then bounding boxes with the most deviated y are 
-removed</p>
+<p>Grad a sample of some new images</p>
 
 </div>
 </div>
@@ -564,25 +245,10 @@ removed</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">interpret_predictions</span><span class="p">(</span><span class="n">predictions_arr</span><span class="p">):</span>
-  <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions_arr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions_arr</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">remove_worst</span><span class="p">(</span><span class="n">predictions_arr</span><span class="p">)):</span>
-    <span class="n">predictions_arr</span> <span class="o">=</span> <span class="n">remove_worst</span><span class="p">(</span><span class="n">predictions_arr</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">predictions_arr</span>
-
-<span class="k">def</span> <span class="nf">remove_worst_offender</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
-  <span class="n">overlappers</span> <span class="o">=</span> <span class="n">calculate_iou</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-  
-  <span class="k">if</span> <span class="n">overlappers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">included</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">res</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">overlappers</span><span class="p">[</span><span class="s2">&quot;least confident&quot;</span><span class="p">][</span><span class="s2">&quot;index&quot;</span><span class="p">]]</span>
-    <span class="k">return</span> <span class="n">included</span>
-  <span class="k">else</span><span class="p">:</span> <span class="c1">#look for y outlier</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-    <span class="c1"># print(df.sort_values(by=&quot;confidence&quot;,ascending=False))</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;zscore&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">df</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="c1">#FIXME</span>
-    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;zscore&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1.5</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">remove_worst</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=.</span><span class="mi">4</span><span class="p">):</span>
-  <span class="k">return</span> <span class="n">remove_worst_offender</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/unlabeled/21-3-18 rowing 8-12 /&quot;</span>
+<span class="n">new_images</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">repo</span><span class="p">)]</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">new_images</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -594,13 +260,63 @@ removed</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="post-processing">post-processing<a class="anchor-link" href="#post-processing"> </a></h3>
+<p>Set up a <code>Viewer</code> object to investigate the behavior of a model</p>
+
 </div>
 </div>
 </div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">weight_path</span> <span class="o">=</span> <span class="s1">&#39;pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt&#39;</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">([</span><span class="n">weight_path</span><span class="p">],</span> <span class="n">classlist</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fusing layers... 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Process the sample</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">plot_results</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -608,18 +324,9 @@ removed</p>
 <div class="output_area">
 
 
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="raw_parse_from_json" class="doc_header"><code>raw_parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L300" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>raw_parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
-</blockquote>
-<p>Helper to interpret raw base 64 images. Creates a new JPG file from the base64
-data and feeds the image to the Detector</p>
-<p>Args:
-  json_elements: array of dictionaries from file. Assert existence of a "base64"
-    key where the images are stored
-  loaded_detector: a valid Detector</p>
-<p>returns:
-  the result of processessing all of the base64 images</p>
 
+<div class="output_text output_subarea ">
+<pre>Output hidden; open in https://colab.research.google.com to view.</pre>
 </div>
 
 </div>
@@ -630,9 +337,26 @@ data and feeds the image to the Detector</p>
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>All the results are stored away in the <code>last_result</code> attribute</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">last_result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -640,32 +364,38 @@ data and feeds the image to the Detector</p>
 <div class="output_area">
 
 
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="parse_from_json" class="doc_header"><code>parse_from_json</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L325" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>parse_from_json</code>(<strong><code>json_elements</code></strong>, <strong><code>loaded_detector</code></strong>)</p>
-</blockquote>
-<p>Gets a JSON file containing the base64 images of data to label pushed through
-a Detector. Post-processing automatically de-norms the YOLOv5 bounding boxes
-based on the original image's height and width</p>
-<p>Args:
-  json_elements: array of dictionaries from file. Assert existence of a "base64"
-    key where the images are stored
-  loaded_detector: a valid Detector</p>
-<p>returns:
-  the bounding boxes associated with each image</p>
 
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /164.jpg&#39;,
+  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.263672 0.379861 0.0226563 0.0958333 0.546299&#39;,
+    &#39;2 0.323047 0.386806 0.0210938 0.0875 0.803381&#39;,
+    &#39;9 0.292969 0.381944 0.0234375 0.0888889 0.825718&#39;,
+    &#39;6 0.352344 0.386806 0.01875 0.0930556 0.8395&#39;]}},
+ {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /122.jpg&#39;,
+  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.304688 0.377778 0.021875 0.0833333 0.556505&#39;,
+    &#39;2 0.33125 0.382639 0.0203125 0.0847222 0.723794&#39;,
+    &#39;2 0.275781 0.373611 0.01875 0.0888889 0.842041&#39;,
+    &#39;1 0.357422 0.386806 0.0226563 0.0875 0.920106&#39;]}},
+ {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /16.jpg&#39;,
+  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;8 0.380859 0.388889 0.0226563 0.0888889 0.435701&#39;,
+    &#39;7 0.381641 0.389583 0.0226563 0.0902778 0.503729&#39;,
+    &#39;3 0.353906 0.381944 0.0203125 0.0833333 0.546678&#39;,
+    &#39;2 0.298047 0.377083 0.0210938 0.0930556 0.820826&#39;,
+    &#39;4 0.325 0.379861 0.021875 0.0875 0.867799&#39;]}},
+ {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /111.jpg&#39;,
+  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.303906 0.378472 0.021875 0.0847222 0.418617&#39;,
+    &#39;4 0.358203 0.391667 0.0226563 0.0888889 0.755997&#39;,
+    &#39;2 0.274609 0.375694 0.0210938 0.0902778 0.769457&#39;]}},
+ {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /89.jpg&#39;,
+  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.308984 0.378472 0.0179687 0.0847222 0.404879&#39;,
+    &#39;6 0.366016 0.390972 0.0179687 0.0847222 0.636839&#39;,
+    &#39;2 0.275781 0.374306 0.0203125 0.0902778 0.71588&#39;]}}]</pre>
 </div>
 
 </div>
 
 </div>
 </div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

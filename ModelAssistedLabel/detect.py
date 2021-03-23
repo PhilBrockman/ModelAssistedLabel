@@ -140,7 +140,6 @@ class Detector:
     return tmp
 
 # Cell
-%matplotlib inline
 from .detect import Detector
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
