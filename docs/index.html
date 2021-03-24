@@ -49,18 +49,17 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Expected-Inputs:">Expected Inputs:<a class="anchor-link" href="#Expected-Inputs:"> </a></h2><ul>
-<li>Either:<ul>
-<li>pre-trained <strong>weight file</strong> OR</li>
+<li>Both <ul>
 <li><strong>labeled images</strong><ul>
 <li>All of the images and labels must be in a common folder (subfolders allowed).</li>
-<li>labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60">YOLOv5 format</a>.</li>
+<li>labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60">YOLOv5 format</a>.
+{% include note.html content='Image/label pairs are based on their base filename. For example <code>image.jpg/image.txt</code> would be paired as would <code>other_image5.jpg/other_image5.txt</code>.' %}      </li>
 </ul>
 </li>
 </ul>
 </li>
 <li>And:<ul>
-<li><strong>unlabeled images</strong>
-{% include note.html content='Image/label pairs are based on their base filename. For example <code>image.jpg/image.txt</code> would be paired as would <code>other_image5.jpg/other_image5.txt</code>.' %}</li>
+<li><strong>unlabeled images</strong></li>
 </ul>
 </li>
 </ul>
@@ -143,15 +142,14 @@ nb_path: "index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Building-models-from">Building models from<a class="anchor-link" href="#Building-models-from"> </a></h1>
+<h1 id="Processing-input">Processing input<a class="anchor-link" href="#Processing-input"> </a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To make a model to annotate images, we first need annotated images. When I was first starting, I used Roboflow's tools to both annotate my images and to keep my data organized.</p>
-<p>(Later on, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a>.</p>
-<p>Once all of the labels/images are in a common folder called <code>repo</code>, we're ready to go:</p>
+<p>(Later on, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> as a curiousity. I labeled dozens of dozens of images with Roboflow and would recommend their free annotation service.)</p>
 
 </div>
 </div>
@@ -163,17 +161,41 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
-<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;index model&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">datadump</span> <span class="o">=</span> <span class="s2">&quot;ipynb_tests/index&quot;</span> <span class="c1"># outputs pipe into this folder</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span> <span class="c1"># existing labeled data location</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Removing:  train
+Removing:  valid
+Removing:  test
+Removing:  data.yaml
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The <code>Autoweights</code> class both organizes data and create weights. Running an "initialize" command makes changes to the disk.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -182,32 +204,68 @@ nb_path: "index.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.train</span> <span class="kn">import</span> <span class="n">AutoWeights</span>
+
+<span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;1-step &lt;index&gt;&quot;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="n">datadump</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">aw</span><span class="o">.</span><span class="n">initialize_images_from_bag</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+<span class="n">aw</span><span class="o">.</span><span class="n">traverse_resources</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+dirs [&#39;./train&#39;, &#39;./valid&#39;, &#39;./test&#39;]
+yaml ipynb_tests/index/Final Roboflow Export (841)1-step &lt;index&gt; 21-03-24 23-17-55/data.yaml
+subdir train
+	outdir ipynb_tests/index/Final Roboflow Export (841)1-step &lt;index&gt; 21-03-24 23-17-55
+subdir valid
+	outdir ipynb_tests/index/Final Roboflow Export (841)1-step &lt;index&gt; 21-03-24 23-17-55
+subdir test
+	outdir ipynb_tests/index/Final Roboflow Export (841)1-step &lt;index&gt; 21-03-24 23-17-55
+os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39;]
+train/images
+	 &gt; 589 files
+train/labels
+	 &gt; 589 files
+valid/images
+	 &gt; 169 files
+valid/labels
+	 &gt; 169 files
+test/images
+	 &gt; 83 files
+test/labels
+	 &gt; 83 files
+File:  data.yaml
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wm</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-
-    </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Generate-Weights">Generate Weights<a class="anchor-link" href="#Generate-Weights"> </a></h1>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>With the images written to disk, we can run the Ultralytics training algorithm. On this dataset, I found 1200 epochs to be a reasonable stopping point but using even longer training times are not uncommon.</p>
 
 </div>
-    {% endraw %}
-
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -216,7 +274,7 @@ nb_path: "index.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
-wm.generate_weights(100)
+aw.generate_weights(2)
 </pre></div>
 
     </div>
@@ -231,53 +289,20 @@ wm.generate_weights(100)
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>reading defaults from: ModelAssistedLabel config.json
 reading defaults from: ModelAssistedLabel config.json
+CPU times: user 4.38 ms, sys: 5.82 ms, total: 10.2 ms
+Wall time: 40.3 s
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-8-b84d7c7bbfb1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>run_cell_magic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;time&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;wm.generate_weights(100)&#39;</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">run_cell_magic</span><span class="ansi-blue-fg">(self, magic_name, line, cell)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2115</span>             magic_arg_s <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>var_expand<span class="ansi-blue-fg">(</span>line<span class="ansi-blue-fg">,</span> stack_depth<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2116</span>             <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>builtin_trap<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 2117</span><span class="ansi-red-fg">                 </span>result <span class="ansi-blue-fg">=</span> fn<span class="ansi-blue-fg">(</span>magic_arg_s<span class="ansi-blue-fg">,</span> cell<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2118</span>             <span class="ansi-green-fg">return</span> result
-<span class="ansi-green-intense-fg ansi-bold">   2119</span> 
 
-<span class="ansi-green-fg">&lt;decorator-gen-53&gt;</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
-
-<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magic.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(f, *a, **k)</span>
-<span class="ansi-green-intense-fg ansi-bold">    186</span>     <span class="ansi-red-fg"># but it&#39;s overkill for just that one bit of state.</span>
-<span class="ansi-green-intense-fg ansi-bold">    187</span>     <span class="ansi-green-fg">def</span> magic_deco<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 188</span><span class="ansi-red-fg">         </span>call <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    189</span> 
-<span class="ansi-green-intense-fg ansi-bold">    190</span>         <span class="ansi-green-fg">if</span> callable<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magics/execution.py</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1187</span>         <span class="ansi-green-fg">if</span> mode<span class="ansi-blue-fg">==</span><span class="ansi-blue-fg">&#39;eval&#39;</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1188</span>             st <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">-&gt; 1189</span><span class="ansi-red-fg">             </span>out <span class="ansi-blue-fg">=</span> eval<span class="ansi-blue-fg">(</span>code<span class="ansi-blue-fg">,</span> glob<span class="ansi-blue-fg">,</span> local_ns<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1190</span>             end <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1191</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">&lt;timed eval&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-
-<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/train.py</span> in <span class="ansi-cyan-fg">generate_weights</span><span class="ansi-blue-fg">(self, epochs, tidy_results)</span>
-<span class="ansi-green-intense-fg ansi-bold">    133</span>     after <span class="ansi-blue-fg">=</span> ldir<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>train_path<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    134</span> 
-<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">assert</span> len<span class="ansi-blue-fg">(</span>after<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">==</span> len<span class="ansi-blue-fg">(</span>before<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">+</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">f&#34;files in {self.train_path}&#34;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#34;before&#34;</span><span class="ansi-blue-fg">:</span> before<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;after&#34;</span><span class="ansi-blue-fg">:</span>after<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">}</span> <span class="ansi-red-fg">#only should have made one new file</span>
-<span class="ansi-green-intense-fg ansi-bold">    136</span>     diff <span class="ansi-blue-fg">=</span> list<span class="ansi-blue-fg">(</span>after <span class="ansi-blue-fg">-</span> before<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span> 
-
-<span class="ansi-red-fg">AssertionError</span>: {&#39;files in yolov5/runs/train&#39;: {&#39;before&#39;: {&#39;AutoWeight &lt;name&gt;&#39;, &#39;&lt;AutoWeight&gt;&#39;, &#39;nospaces2&#39;, &#39;nospaces3&#39;, &#39;nospaces&#39;, &#39;&lt;AutoWeight&gt;2&#39;}, &#39;after&#39;: {&#39;AutoWeight &lt;name&gt;&#39;, &#39;&lt;AutoWeight&gt;&#39;, &#39;nospaces2&#39;, &#39;nospaces3&#39;, &#39;nospaces&#39;, &#39;&lt;AutoWeight&gt;2&#39;}}}</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;yolov5/runs/train/1-step &lt;index&gt;2&#39;</pre>
 </div>
+
 </div>
 
 </div>
@@ -286,6 +311,13 @@ reading defaults from: ModelAssistedLabel config.json
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The results folder is stored as an attribute as well.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -293,7 +325,7 @@ reading defaults from: ModelAssistedLabel config.json
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wm</span><span class="o">.</span><span class="n">last_results_path</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -308,7 +340,7 @@ reading defaults from: ModelAssistedLabel config.json
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;./fromIndex-876096&#39;</pre>
+<pre>(&#39;yolov5/runs/train/1-step &lt;index&gt;2&#39;, 22)</pre>
 </div>
 
 </div>
@@ -319,6 +351,13 @@ reading defaults from: ModelAssistedLabel config.json
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And the weights are stored in a subfolder called (aptly) "weights". I use <code>best.pt</code>.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -326,31 +365,26 @@ reading defaults from: ModelAssistedLabel config.json
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>ls <span class="s2">&quot;test/images&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span> <span class="o">+</span> <span class="s2">&quot;/weights&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;last.pt&#39;, &#39;best.pt&#39;]</pre>
 </div>
-    {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+</div>
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;./fromIndex-876096&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;841 (?) &quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 

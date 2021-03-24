@@ -14,14 +14,17 @@ After working through [a Roboflow tutorial]( https://models.roboflow.com/object-
 And I hated annotating my images by hand. Once the models began making reasonable guesses, I enlisted the model's help in labeling new images. This repository is the result of these efforts.
 
 ## Expected Inputs:
-* Either:
-  - pre-trained **weight file** OR
+* Both 
   - **labeled images**
       + All of the images and labels must be in a common folder (subfolders allowed).
       + labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60).
+{% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}      
 * And:
   - **unlabeled images**
-{% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
+
+
+
+
 
 ## Expected Output:
 
@@ -53,105 +56,102 @@ Defaults.prepare_YOLOv5()
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla V100-SXM2-16GB', major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
 
 
-# Building models from 
+# Processing input
 
 To make a model to annotate images, we first need annotated images. When I was first starting, I used Roboflow's tools to both annotate my images and to keep my data organized.
 
-(Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox). 
-
-Once all of the labels/images are in a common folder called `repo`, we're ready to go:
+(Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. I labeled dozens of dozens of images with Roboflow and would recommend their free annotation service.)
 
 ```python
-repo = "./Image Repo/labeled/Final Roboflow Export (841)"
-name = "index model"
+datadump = "ipynb_tests/index" # outputs pipe into this folder
+repo = "./Image Repo/labeled/Final Roboflow Export (841)" # existing labeled data location
 ```
+
+    Removing:  train
+    Removing:  valid
+    Removing:  test
+    Removing:  data.yaml
+
+
+Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `Autoweights` class both organizes data and create weights. Running an "initialize" command makes changes to the disk.
 
 ```python
 from ModelAssistedLabel.train import AutoWeights
+
+aw = AutoWeights(name="1-step <index>", out_dir=datadump, MAX_SIZE=None)
+aw.initialize_images_from_bag(repo)
+aw.traverse_resources()
 ```
 
-```python
-wm = AutoWeights(repo, name, MAX_SIZE=None)
-```
+    
+    dirs ['./train', './valid', './test']
+    yaml ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55/data.yaml
+    subdir train
+    	outdir ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55
+    subdir valid
+    	outdir ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55
+    subdir test
+    	outdir ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55
+    os.listdir ['train', 'valid', 'test', 'data.yaml']
+    train/images
+    	 > 589 files
+    train/labels
+    	 > 589 files
+    valid/images
+    	 > 169 files
+    valid/labels
+    	 > 169 files
+    test/images
+    	 > 83 files
+    test/labels
+    	 > 83 files
+    File:  data.yaml
+
+
+# Generate Weights
+
+With the images written to disk, we can run the Ultralytics training algorithm. On this dataset, I found 1200 epochs to be a reasonable stopping point but using even longer training times are not uncommon.
 
 ```python
 %%time
-wm.generate_weights(100)
+aw.generate_weights(2)
 ```
 
     reading defaults from: ModelAssistedLabel config.json
     reading defaults from: ModelAssistedLabel config.json
+    CPU times: user 4.38 ms, sys: 5.82 ms, total: 10.2 ms
+    Wall time: 40.3 s
 
 
 
-    ---------------------------------------------------------------------------
-
-    AssertionError                            Traceback (most recent call last)
-
-    <ipython-input-8-b84d7c7bbfb1> in <module>()
-    ----> 1 get_ipython().run_cell_magic('time', '', 'wm.generate_weights(100)')
-    
-
-    /usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py in run_cell_magic(self, magic_name, line, cell)
-       2115             magic_arg_s = self.var_expand(line, stack_depth)
-       2116             with self.builtin_trap:
-    -> 2117                 result = fn(magic_arg_s, cell)
-       2118             return result
-       2119 
 
 
-    <decorator-gen-53> in time(self, line, cell, local_ns)
+    'yolov5/runs/train/1-step <index>2'
 
 
-    /usr/local/lib/python3.7/dist-packages/IPython/core/magic.py in <lambda>(f, *a, **k)
-        186     # but it's overkill for just that one bit of state.
-        187     def magic_deco(arg):
-    --> 188         call = lambda f, *a, **k: f(*a, **k)
-        189 
-        190         if callable(arg):
 
-
-    /usr/local/lib/python3.7/dist-packages/IPython/core/magics/execution.py in time(self, line, cell, local_ns)
-       1187         if mode=='eval':
-       1188             st = clock2()
-    -> 1189             out = eval(code, glob, local_ns)
-       1190             end = clock2()
-       1191         else:
-
-
-    <timed eval> in <module>()
-
-
-    /content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/train.py in generate_weights(self, epochs, tidy_results)
-        133     after = ldir(self.train_path)
-        134 
-    --> 135     assert len(after) == len(before)+1, {f"files in {self.train_path}": {"before": before, "after":after}} #only should have made one new file
-        136     diff = list(after - before)[0]
-        137 
-
-
-    AssertionError: {'files in yolov5/runs/train': {'before': {'AutoWeight <name>', '<AutoWeight>', 'nospaces2', 'nospaces3', 'nospaces', '<AutoWeight>2'}, 'after': {'AutoWeight <name>', '<AutoWeight>', 'nospaces2', 'nospaces3', 'nospaces', '<AutoWeight>2'}}}
-
+The results folder is stored as an attribute as well.
 
 ```python
-wm.last_results_path
+aw.last_results_path, len(os.listdir(aw.last_results_path))
 ```
 
 
 
 
-    './fromIndex-876096'
+    ('yolov5/runs/train/1-step <index>2', 22)
 
 
 
-```python
-!ls "test/images"
-```
+And the weights are stored in a subfolder called (aptly) "weights". I use `best.pt`.
 
 ```python
-runs = {
-    './fromIndex-876096': {
-        'description': "841 (?) "
-    }
-}
+os.listdir(aw.last_results_path + "/weights")
 ```
+
+
+
+
+    ['last.pt', 'best.pt']
+
+
