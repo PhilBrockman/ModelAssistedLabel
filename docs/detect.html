@@ -40,7 +40,7 @@ nb_path: "03_detect.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L21" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>write_annotated_images_to_disk</code></strong>=<em><code>False</code></em>)</p>
+<h2 id="Detector" class="doc_header"><code>class</code> <code>Detector</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L20" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Detector</code>(<strong><code>weight_path</code></strong>, <strong><code>conf_threshold</code></strong>=<em><code>0.4</code></em>, <strong><code>iou_threshold</code></strong>=<em><code>0.45</code></em>, <strong><code>imgsz</code></strong>=<em><code>416</code></em>, <strong><code>save_dir</code></strong>=<em><code>'save_dir'</code></em>, <strong><code>write_annotated_images_to_disk</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>A wrapper for training loading saved YOLOv5 weights</p>
 <p>requirements:
@@ -59,6 +59,110 @@ nb_path: "03_detect.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">weight_path</span> <span class="o">=</span> <span class="s1">&#39;pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt&#39;</span>
+
+<span class="n">repos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-18 rowing 8-12 /&quot;</span><span class="p">)</span>
+<span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span><span class="p">)</span>
+<span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50&quot;</span><span class="p">)</span>
+
+<span class="n">dirs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
+  <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+  <span class="n">absolute_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+  <span class="n">dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">absolute_paths</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">detector</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="n">weight_path</span><span class="o">=</span><span class="n">weight_path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Fusing layers... 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">dirs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="o">+</span> <span class="n">dirs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="o">+</span> <span class="n">dirs</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-18 rowing 8-12 /100.jpg: 0 | [{&#39;predictions&#39;: [&#39;4 0.329688 0.385417 0.021875 0.0902778 0.809661&#39;, &#39;2 0.275781 0.375694 0.0203125 0.0902778 0.821206&#39;, &#39;7 0.358594 0.388889 0.021875 0.0888889 0.854578&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-18 rowing 8-12 /101.jpg: 1 | [{&#39;predictions&#39;: [&#39;9 0.329297 0.384722 0.0210938 0.0861111 0.655793&#39;, &#39;2 0.275391 0.375694 0.0210938 0.0902778 0.687569&#39;, &#39;9 0.357812 0.392361 0.0234375 0.0875 0.749733&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-18 rowing 8-12 /102.jpg: 2 | [{&#39;predictions&#39;: [&#39;6 0.366016 0.390278 0.0164062 0.0861111 0.723955&#39;, &#39;2 0.275391 0.375 0.0195312 0.0888889 0.786876&#39;, &#39;9 0.331641 0.384722 0.0210938 0.0861111 0.851035&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-18 rowing 8-12 /103.jpg: 3 | [{&#39;predictions&#39;: [&#39;2 0.275781 0.375 0.01875 0.0861111 0.825081&#39;, &#39;9 0.330078 0.385417 0.0226563 0.0875 0.87784&#39;, &#39;2 0.360156 0.390278 0.0203125 0.0888889 0.895363&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/19.jpg: 4 | []
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/6.jpg: 5 | []
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/25.jpg: 6 | [{&#39;predictions&#39;: [&#39;3 0.827734 0.869444 0.0351562 0.122222 0.50515&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/9.jpg: 7 | []
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/7.jpg: 8 | [{&#39;predictions&#39;: [&#39;0 0.441797 0.385417 0.0148437 0.0736111 0.849962&#39;, &#39;9 0.412891 0.378472 0.0226563 0.0791667 0.858775&#39;, &#39;9 0.364453 0.372222 0.0226563 0.0833333 0.8981&#39;, &#39;7 0.389062 0.375694 0.021875 0.0791667 0.932286&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/0.jpg: 9 | [{&#39;predictions&#39;: [&#39;4 0.411719 0.378472 0.021875 0.0819444 0.866474&#39;, &#39;9 0.365234 0.371528 0.0226563 0.0819444 0.889749&#39;, &#39;9 0.436719 0.381944 0.0234375 0.075 0.911735&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/4.jpg: 10 | [{&#39;predictions&#39;: [&#39;6 0.394922 0.372917 0.0164062 0.0763889 0.435396&#39;, &#39;4 0.411328 0.377083 0.0210938 0.0791667 0.895521&#39;, &#39;9 0.365625 0.371528 0.021875 0.0791667 0.896913&#39;, &#39;5 0.436328 0.379861 0.0210938 0.0763889 0.917066&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/12.jpg: 11 | [{&#39;predictions&#39;: [&#39;9 0.412109 0.377778 0.0226563 0.0805556 0.842007&#39;, &#39;9 0.364844 0.372222 0.0234375 0.0861111 0.853243&#39;, &#39;7 0.435937 0.383333 0.0234375 0.0805556 0.907213&#39;, &#39;7 0.388672 0.375 0.0226563 0.0833333 0.929839&#39;]}]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -210,9 +314,8 @@ names: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&
 <div class="output_markdown rendered_html output_subarea ">
 <h2 id="Viewer" class="doc_header"><code>class</code> <code>Viewer</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/detect.py#L149" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Viewer</code>(<strong><code>weight_path</code></strong>, <strong><code>class_arr</code></strong>)</p>
 </blockquote>
-<p>After supplying this class with the paths to (1) several pre-generated weights,
-and (2) several new images, you can create a model from each weight and a prediction
-for each image from each model.</p>
+<p>Connects a set of pre-trained weights to an image. Also incorporates
+the human-friendly class labels, as opposed to dealing with the label's index</p>
 
 </div>
 
@@ -245,8 +348,7 @@ for each image from each model.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">weight_path</span> <span class="o">=</span> <span class="s1">&#39;pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt&#39;</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">([</span><span class="n">weight_path</span><span class="p">],</span> <span class="n">classlist</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">([</span><span class="n">weight_path</span><span class="p">],</span> <span class="n">classlist</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -270,13 +372,6 @@ for each image from each model.</p>
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Grad a sample of some new images</p>
-
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -284,34 +379,11 @@ for each image from each model.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">repos</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-18 rowing 8-12 /&quot;</span><span class="p">)</span>
-<span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span><span class="p">)</span>
-<span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Process the sample</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt;&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">predict_for</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -324,21 +396,45 @@ for each image from each model.</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/84.jpg: </pre>
+<pre>&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/19.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/19.jpg: []
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/19.jpg: {&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/19.jpg&#39;, &#39;predictions&#39;: []}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/6.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/6.jpg: []
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/6.jpg: {&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/6.jpg&#39;, &#39;predictions&#39;: []}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/25.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/25.jpg: [{&#39;predictions&#39;: [&#39;3 0.827734 0.869444 0.0351562 0.122222 0.50515&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/25.jpg: &gt;&gt;&gt; [{&#39;predictions&#39;: [&#39;3 0.827734 0.869444 0.0351562 0.122222 0.50515&#39;]}]
+{&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/25.jpg&#39;, &#39;predictions&#39;: [{&#39;class&#39;: &#39;4&#39;, &#39;confidence&#39;: 0.50515, &#39;height&#39;: 87, &#39;width&#39;: 44, &#39;x&#39;: 1036, &#39;y&#39;: 581}]}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/9.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/9.jpg: []
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/9.jpg: {&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/9.jpg&#39;, &#39;predictions&#39;: []}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/7.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/7.jpg: [{&#39;predictions&#39;: [&#39;0 0.441797 0.385417 0.0148437 0.0736111 0.849962&#39;, &#39;9 0.412891 0.378472 0.0226563 0.0791667 0.858775&#39;, &#39;9 0.364453 0.372222 0.0226563 0.0833333 0.8981&#39;, &#39;7 0.389062 0.375694 0.021875 0.0791667 0.932286&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/7.jpg: &gt;&gt;&gt; [{&#39;predictions&#39;: [&#39;0 0.441797 0.385417 0.0148437 0.0736111 0.849962&#39;, &#39;9 0.412891 0.378472 0.0226563 0.0791667 0.858775&#39;, &#39;9 0.364453 0.372222 0.0226563 0.0833333 0.8981&#39;, &#39;7 0.389062 0.375694 0.021875 0.0791667 0.932286&#39;]}]
+{&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/7.jpg&#39;, &#39;predictions&#39;: [{&#39;class&#39;: &#39;1&#39;, &#39;confidence&#39;: 0.849962, &#39;height&#39;: 52, &#39;width&#39;: 18, &#39;x&#39;: 556, &#39;y&#39;: 251}, {&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.858775, &#39;height&#39;: 57, &#39;width&#39;: 29, &#39;x&#39;: 514, &#39;y&#39;: 243}, {&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.8981, &#39;height&#39;: 59, &#39;width&#39;: 29, &#39;x&#39;: 451, &#39;y&#39;: 237}, {&#39;class&#39;: &#39;8&#39;, &#39;confidence&#39;: 0.932286, &#39;height&#39;: 57, &#39;width&#39;: 28, &#39;x&#39;: 483, &#39;y&#39;: 241}]}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/0.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/0.jpg: [{&#39;predictions&#39;: [&#39;4 0.411719 0.378472 0.021875 0.0819444 0.866474&#39;, &#39;9 0.365234 0.371528 0.0226563 0.0819444 0.889749&#39;, &#39;9 0.436719 0.381944 0.0234375 0.075 0.911735&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/0.jpg: &gt;&gt;&gt; [{&#39;predictions&#39;: [&#39;4 0.411719 0.378472 0.021875 0.0819444 0.866474&#39;, &#39;9 0.365234 0.371528 0.0226563 0.0819444 0.889749&#39;, &#39;9 0.436719 0.381944 0.0234375 0.075 0.911735&#39;]}]
+{&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/0.jpg&#39;, &#39;predictions&#39;: [{&#39;class&#39;: &#39;5&#39;, &#39;confidence&#39;: 0.866474, &#39;height&#39;: 58, &#39;width&#39;: 28, &#39;x&#39;: 513, &#39;y&#39;: 242}, {&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.889749, &#39;height&#39;: 58, &#39;width&#39;: 29, &#39;x&#39;: 452, &#39;y&#39;: 238}, {&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.911735, &#39;height&#39;: 54, &#39;width&#39;: 30, &#39;x&#39;: 544, &#39;y&#39;: 247}]}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/4.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/4.jpg: [{&#39;predictions&#39;: [&#39;6 0.394922 0.372917 0.0164062 0.0763889 0.435396&#39;, &#39;4 0.411328 0.377083 0.0210938 0.0791667 0.895521&#39;, &#39;9 0.365625 0.371528 0.021875 0.0791667 0.896913&#39;, &#39;5 0.436328 0.379861 0.0210938 0.0763889 0.917066&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/4.jpg: &gt;&gt;&gt; [{&#39;predictions&#39;: [&#39;6 0.394922 0.372917 0.0164062 0.0763889 0.435396&#39;, &#39;4 0.411328 0.377083 0.0210938 0.0791667 0.895521&#39;, &#39;9 0.365625 0.371528 0.021875 0.0791667 0.896913&#39;, &#39;5 0.436328 0.379861 0.0210938 0.0763889 0.917066&#39;]}]
+{&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/4.jpg&#39;, &#39;predictions&#39;: [{&#39;class&#39;: &#39;7&#39;, &#39;confidence&#39;: 0.435396, &#39;height&#39;: 55, &#39;width&#39;: 20, &#39;x&#39;: 495, &#39;y&#39;: 241}, {&#39;class&#39;: &#39;5&#39;, &#39;confidence&#39;: 0.895521, &#39;height&#39;: 57, &#39;width&#39;: 27, &#39;x&#39;: 512, &#39;y&#39;: 242}, {&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.896913, &#39;height&#39;: 57, &#39;width&#39;: 28, &#39;x&#39;: 454, &#39;y&#39;: 239}, {&#39;class&#39;: &#39;6&#39;, &#39;confidence&#39;: 0.917066, &#39;height&#39;: 55, &#39;width&#39;: 27, &#39;x&#39;: 544, &#39;y&#39;: 245}]}
+&gt;&gt;&gt;
+Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/12.jpg
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/12.jpg: [{&#39;predictions&#39;: [&#39;9 0.412109 0.377778 0.0226563 0.0805556 0.842007&#39;, &#39;9 0.364844 0.372222 0.0234375 0.0861111 0.853243&#39;, &#39;7 0.435937 0.383333 0.0234375 0.0805556 0.907213&#39;, &#39;7 0.388672 0.375 0.0226563 0.0833333 0.929839&#39;]}]
+image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/12.jpg: &gt;&gt;&gt; [{&#39;predictions&#39;: [&#39;9 0.412109 0.377778 0.0226563 0.0805556 0.842007&#39;, &#39;9 0.364844 0.372222 0.0234375 0.0861111 0.853243&#39;, &#39;7 0.435937 0.383333 0.0234375 0.0805556 0.907213&#39;, &#39;7 0.388672 0.375 0.0226563 0.0833333 0.929839&#39;]}]
+{&#39;image path&#39;: &#39;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/12.jpg&#39;, &#39;predictions&#39;: [{&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.842007, &#39;height&#39;: 58, &#39;width&#39;: 29, &#39;x&#39;: 512, &#39;y&#39;: 243}, {&#39;class&#39;: &#39;0&#39;, &#39;confidence&#39;: 0.853243, &#39;height&#39;: 61, &#39;width&#39;: 30, &#39;x&#39;: 452, &#39;y&#39;: 236}, {&#39;class&#39;: &#39;8&#39;, &#39;confidence&#39;: 0.907213, &#39;height&#39;: 58, &#39;width&#39;: 30, &#39;x&#39;: 542, &#39;y&#39;: 246}, {&#39;class&#39;: &#39;8&#39;, &#39;confidence&#39;: 0.929839, &#39;height&#39;: 59, &#39;width&#39;: 29, &#39;x&#39;: 483, &#39;y&#39;: 240}]}
+</pre>
 </div>
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;predictions&#39;: [&#39;1 0.491797 0.257639 0.0195312 0.0736111 0.551745&#39;,
-  &#39;3 0.442969 0.250694 0.0203125 0.0763889 0.743457&#39;,
-  &#39;9 0.464453 0.252083 0.0210938 0.0791667 0.786505&#39;,
-  &#39;9 0.414844 0.247222 0.021875 0.0861111 0.791806&#39;]}</pre>
-</div>
-
 </div>
 
 </div>
@@ -354,11 +450,10 @@ for each image from each model.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
-<span class="n">repo</span> <span class="o">=</span> <span class="n">repos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">new_images</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">repo</span><span class="p">)]</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">new_images</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">v</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">plot_results</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">plot_for</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+  <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -384,13 +479,6 @@ for each image from each model.</p>
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>All the results are stored away in the <code>last_result</code> attribute</p>
-
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -398,7 +486,12 @@ for each image from each model.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">last_result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">repo</span> <span class="o">=</span> <span class="n">repos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">detector</span><span class="o">.</span><span class="n">process_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">new_images</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">repo</span><span class="p">)]</span>
+<span class="c1"># samples = random.sample(new_images, 5)</span>
+<span class="c1"># v.process(samples, plot_results=True)</span>
 </pre></div>
 
     </div>
@@ -410,35 +503,9 @@ for each image from each model.</p>
 
 <div class="output_area">
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[{&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /164.jpg&#39;,
-  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.263672 0.379861 0.0226563 0.0958333 0.546299&#39;,
-    &#39;2 0.323047 0.386806 0.0210938 0.0875 0.803381&#39;,
-    &#39;9 0.292969 0.381944 0.0234375 0.0888889 0.825718&#39;,
-    &#39;6 0.352344 0.386806 0.01875 0.0930556 0.8395&#39;]}},
- {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /122.jpg&#39;,
-  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.304688 0.377778 0.021875 0.0833333 0.556505&#39;,
-    &#39;2 0.33125 0.382639 0.0203125 0.0847222 0.723794&#39;,
-    &#39;2 0.275781 0.373611 0.01875 0.0888889 0.842041&#39;,
-    &#39;1 0.357422 0.386806 0.0226563 0.0875 0.920106&#39;]}},
- {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /16.jpg&#39;,
-  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;8 0.380859 0.388889 0.0226563 0.0888889 0.435701&#39;,
-    &#39;7 0.381641 0.389583 0.0226563 0.0902778 0.503729&#39;,
-    &#39;3 0.353906 0.381944 0.0203125 0.0833333 0.546678&#39;,
-    &#39;2 0.298047 0.377083 0.0210938 0.0930556 0.820826&#39;,
-    &#39;4 0.325 0.379861 0.021875 0.0875 0.867799&#39;]}},
- {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /111.jpg&#39;,
-  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.303906 0.378472 0.021875 0.0847222 0.418617&#39;,
-    &#39;4 0.358203 0.391667 0.0226563 0.0888889 0.755997&#39;,
-    &#39;2 0.274609 0.375694 0.0210938 0.0902778 0.769457&#39;]}},
- {&#39;img path&#39;: &#39;Image Repo/unlabeled/21-3-18 rowing 8-12 /89.jpg&#39;,
-  &#39;predictions&#39;: {&#39;predictions&#39;: [&#39;2 0.308984 0.378472 0.0179687 0.0847222 0.404879&#39;,
-    &#39;6 0.366016 0.390972 0.0179687 0.0847222 0.636839&#39;,
-    &#39;2 0.275781 0.374306 0.0203125 0.0902778 0.71588&#39;]}}]</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/23.jpg: </pre>
 </div>
-
 </div>
 
 </div>

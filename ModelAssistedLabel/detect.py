@@ -3,7 +3,6 @@
 __all__ = ['Detector', 'Viewer']
 
 # Cell
-
 import os, torch
 os.chdir("yolov5")
 from pathlib import Path
@@ -97,6 +96,8 @@ class Detector:
 
     for path, img, im0s, vid_cap in dataset:
       tmp = {}
+      tmp["predictions"] = []
+
       img = torch.from_numpy(img).to(self.device)
       img = img.half() if self.half else img.float()  # uint8 to fp16/32
       img /= 255.0  # 0 - 255 to 0.0 - 1.0
@@ -113,7 +114,6 @@ class Detector:
 
         s += '%gx%g ' % img.shape[2:]  # print string
         gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
-
         if len(det):
           det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
           for c in det[:, -1].unique():
@@ -124,7 +124,6 @@ class Detector:
             tmp["unscuffed"] = f"{save_dir}/unscuffed-{p.name}"
             cv2.imwrite(tmp["unscuffed"], im0)
 
-          tmp["predictions"] = []
           for *xyxy, conf, cls in reversed(det):
             xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
             line = (cls, *xywh, conf) # label format
@@ -136,8 +135,9 @@ class Detector:
               plot_one_box(xyxy, im0, label=label, color=[0,0,200], line_thickness=5)
               tmp["labeled"] = f"{save_dir}/labeled-{p.name}"
               cv2.imwrite(tmp["labeled"], im0)
+          results.append(tmp)
 
-    return tmp
+    return results
 
 # Cell
 from .detect import Detector
@@ -147,9 +147,8 @@ import pandas as pd
 import PIL
 
 class Viewer:
-  """ After supplying this class with the paths to (1) several pre-generated weights,
-  and (2) several new images, you can create a model from each weight and a prediction
-  for each image from each model.
+  """ Connects a set of pre-trained weights to an image. Also incorporates
+  the human-friendly class labels, as opposed to dealing with the label's index
   """
   def __init__(self, weight_path, class_arr):
     """
@@ -163,41 +162,19 @@ class Viewer:
     self.class_arr = class_arr
     self.last_result = []
 
-  def process(self, images, plot_results=True, show_labels=True,figsize=(20,10)):
-    """
-    Runs an image set through this class's detector.
+  def plot_for(self, image, show_labels=True, figsize=(20,10)):
+    """ (temporarily) overlay predictions onto the image
 
     Args:
-      images: array of images
-      plot_results: display the images with superimposed bounding boxes
-      show_labels: whether or not to show the human-friendly labels about the bounding boxes
-      figsize: passed to plt
+      image: path to image
 
-    Returns:
-      an array of dicts. Dicts relate each set of predictions to an image path
+    Returns: metadata in the form of an array of dicts
     """
-    results = []
-    for image in images:
-      result = self.detector.process_image(image)
-      results.append({"img path": image, "predictions": result})
-      #re-calculate predictions with "de-normalized" values
-      predictions = self.__yolov5_pred_to_standard__(image, result)["predictions"]
-      #show the image with super-imposed bounding boxes
-      if plot_results:
-        Viewer.__plot_with_bbox__(image,predictions,show_labels=show_labels, figsize=figsize)
-    self.last_result.append(results)
+    predictions = self.predict_for(image)["predictions"]
 
-  def __plot_with_bbox__(img_path, predictions, show_labels, figsize):
-    """display the rectangles on top of the image using pyplot
-
-    Args:
-      img_path: path to the image of interest
-      predictions: the output from the Detector's process image
-      figsize: parameter for fig
-    """
     fig, ax = plt.subplots(figsize=figsize)
     #open/display the image
-    im0 = PIL.Image.open(img_path)
+    im0 = PIL.Image.open(image)
     ax.imshow(im0)
 
     for prediction in predictions:
@@ -209,36 +186,43 @@ class Viewer:
       ax.add_patch(rect)
 
     plt.show()
+    return predictions
 
-  def __yolov5_pred_to_standard__(self, image, result):
+
+  def predict_for(self, image):
     """
     The standard YOLOv5 coordinate format is normed to 1. Need to extract the
     original's image width and height to convert to a standard cartesian plane.
 
     Args:
       image: path to image
-      result: a dictionary that includes both
-          * a key called "filename" that points to the original image
-          * a key called "predictions" created when the image is parsed with the
-            YOLOv5 model
 
     Returns:
       Convert the predictions converted to a full-scale Cartesian coordinate system.
     """
+    assert os.path.exists(image)
+    #initialize return
     out = {}
     out["image path"] = image
+    out["predictions"] = []
+
+    #process the image in yolov5
+    results = v.detector.process_image(image)
+
+    #need height/width to de-norm
     PILim= PIL.Image.open(image)
     width, height = PILim.width, PILim.height
 
-    out["predictions"] = []
-    for prediction in result["predictions"]:
-      bbox = prediction.split(" ")
-      out["predictions"].append({
-          "class": self.class_arr[int(bbox[0])],
-          "confidence": float(bbox[5]),
-          "height": int(PILim.height*float(bbox[4])),
-          "width": int(PILim.width*float(bbox[3])),
-          "x": int(PILim.width*(float(bbox[1]) - float(bbox[3])/2)),
-          "y": int(PILim.height*(float(bbox[2]) - float(bbox[4])/2))
-          })
+    if len(results) > 0:
+      print(">>>", results)
+      for prediction in results[0]['predictions']:
+        bbox = prediction.split(" ")
+        out["predictions"].append({
+            "class":       self.class_arr[int(bbox[0])],
+            "confidence":               float(bbox[5]),
+            "height": int(PILim.height* float(bbox[4])),
+            "width":  int(PILim.width * float(bbox[3])),
+            "x":      int(PILim.width *(float(bbox[1]) - float(bbox[3])/2)),
+            "y":      int(PILim.height*(float(bbox[2]) - float(bbox[4])/2))
+            })
     return out
