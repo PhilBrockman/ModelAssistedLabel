@@ -94,7 +94,10 @@ class AutoWeights():
     if dirs is None:
       dirs = self.resource_paths
     for d in dirs:
-      self.__traverse_resources__(d, level=0)
+      if os.path.isdir(d):
+        self.__traverse_resources__(d, level=0)
+      else:
+        print("File: ", d)
 
   def __traverse_resources__(self, dir, level):
     "Iterate through the levels of each of the resource paths"
@@ -105,22 +108,22 @@ class AutoWeights():
     if False in [not os.path.isdir(os.path.join(dir, x)) for x in os.listdir(dir)]:
       for x in os.listdir(dir):
         path = os.path.join(dir, x)
+        print("\t"*level+path)
         if not os.path.isfile(path):
-          no_folders = False
-          print("\t"*level+path)
-          traverse_resources(path, level=level+1)
+          self.__traverse_resources__(path, level=level+1)
     #otherwise print the number of files on this leaf
     else:
       print("\t"*level, ">", len(os.listdir(dir)),"files")
 
 
-  def generate_weights(self, epochs, tidy_results=True):
+  def generate_weights(self, epochs, rm_local_files=False):
     """
     Creates a `Trainer` object and trains for a given amount of time.
 
     Args:
       epochs: number of iterations (according to docs, over 3000 is not uncommon)
-      tidy_weights: if True, remove all of the resources in `self.resources`
+      rm_local_files: if True, deletes the folders recursively in ROOT/train, ROOT/valid
+      and ROOT/test and removes ROOT/data.yaml as well.
 
     Returns:
       path to the output folder of train.py
@@ -136,12 +139,10 @@ class AutoWeights():
     diff = list(after - before)[0]
 
     results_path = os.path.join(self.train_path, diff)
-
-    if tidy_results:
-      results_path = self.__tidy_results__(results_path = results_path)
-
-    self.__cleanup__()
     self.last_results_path = results_path
+
+    if rm_local_files:
+      self.__cleanup__()
     return results_path
 
   def initialize_images_from_zip(self, zipped):
@@ -171,11 +172,7 @@ class AutoWeights():
     #move the contents of the zip file into postion within the ROOT directory
     for content in os.listdir(folder):
       os.system(f"mv '{os.path.join(folder, content)}' .")
-      if os.path.isfile(os.path.join(folder, content)):
-        outpath = f"./yolov5/{content}"
-        os.system(f"mv '{content}' '{datayaml_path}'")
-      else:
-        outpath = content
+      outpath = content
       self.resource_paths.append(outpath)
 
     #removed the folder that was taken out of the zip
@@ -208,19 +205,3 @@ class AutoWeights():
       if os.path.exists(r):
         print('Removing: ', r)
         os.system(f"rm -f -r {r}")
-
-  def __tidy_results__(self, results_path):
-    """
-    Moves the results to a desired directly while ensuring that no data is overwritten
-
-    Args:
-      results_path: path to the folder that has desired information
-
-    Returns:
-      Path to the newly-moved results
-    """
-    default_name = os.path.join(self.out_dir, os.path.basename(results_path))
-    out = Defaults._itername(f"{default_name} - ", "")
-
-    os.system(f"mv '{results_path}' '{out}'")
-    return out

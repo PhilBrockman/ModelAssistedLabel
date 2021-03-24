@@ -145,7 +145,41 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;AutoWeight&gt;&quot;</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="s2">&quot;ipynb_tests/02_train_datadump&quot;</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">initialize_images_from_zip</span><span class="p">(</span><span class="s2">&quot;ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-24 17-23-14.zip&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">resource_paths</span>
 </pre></div>
 
     </div>
@@ -157,49 +191,12 @@ be moved to the <code>out_dir</code> and if a conflict exists, a new name will b
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_config.ipynb.
-Converted 01_split.ipynb.
-Converted 02_train.ipynb.
-Converted 03_detect.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39;]</pre>
 </div>
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>nbdev_build_lib
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Converted 00_config.ipynb.
-Converted 01_split.ipynb.
-Converted 02_train.ipynb.
-Converted 03_detect.ipynb.
-Converted index.ipynb.
-</pre>
-</div>
 </div>
 
 </div>
@@ -215,25 +212,7 @@ Converted index.ipynb.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">out_dir</span><span class="o">=</span><span class="s2">&quot;ipynb_tests/02_train_datadump&quot;</span><span class="p">,</span> <span class="n">MAX_SIZE</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">resource_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;valid&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;yolov5/data.yaml&quot;</span><span class="p">]</span>
-<span class="n">aw</span><span class="o">.</span><span class="n">traverse_resources</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">traverse_resources</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -247,119 +226,18 @@ Converted index.ipynb.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>train/images
-	 &gt; 7 files
+	 &gt; 231 files
 train/labels
-	 &gt; 7 files
+	 &gt; 231 files
 valid/images
-	 &gt; 2 files
+	 &gt; 169 files
 valid/labels
-	 &gt; 2 files
+	 &gt; 169 files
 test/images
-	 &gt; 1 files
+	 &gt; 83 files
 test/labels
-	 &gt; 1 files
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-82-056362fcf063&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> aw<span class="ansi-blue-fg">.</span>resource_paths <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;train&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;valid&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;test&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;yolov5/data.yaml&#34;</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>aw<span class="ansi-blue-fg">.</span>traverse_resources<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">&lt;ipython-input-78-bc9edbf125d1&gt;</span> in <span class="ansi-cyan-fg">traverse_resources</span><span class="ansi-blue-fg">(self, dirs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>       dirs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>resource_paths
-<span class="ansi-green-intense-fg ansi-bold">     37</span>     <span class="ansi-green-fg">for</span> d <span class="ansi-green-fg">in</span> dirs<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">       </span>self<span class="ansi-blue-fg">.</span>__traverse_resources__<span class="ansi-blue-fg">(</span>d<span class="ansi-blue-fg">,</span> level<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span> 
-<span class="ansi-green-intense-fg ansi-bold">     40</span>   <span class="ansi-green-fg">def</span> __traverse_resources__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> dir<span class="ansi-blue-fg">,</span> level<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">&lt;ipython-input-78-bc9edbf125d1&gt;</span> in <span class="ansi-cyan-fg">__traverse_resources__</span><span class="ansi-blue-fg">(self, dir, level)</span>
-<span class="ansi-green-intense-fg ansi-bold">     44</span> 
-<span class="ansi-green-intense-fg ansi-bold">     45</span>     <span class="ansi-red-fg">#check to see if there is a directory in the dir</span>
-<span class="ansi-green-fg">---&gt; 46</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">False</span> <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span><span class="ansi-green-fg">not</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>isdir<span class="ansi-blue-fg">(</span>os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> os<span class="ansi-blue-fg">.</span>listdir<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     47</span>       <span class="ansi-green-fg">for</span> x <span class="ansi-green-fg">in</span> os<span class="ansi-blue-fg">.</span>listdir<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span>         path <span class="ansi-blue-fg">=</span> os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>join<span class="ansi-blue-fg">(</span>dir<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;yolov5/data.yaml&#39;</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">__cleanup__</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Removing:  train
-Removing:  valid
-Removing:  test
-Removing:  yolov5/data.yaml
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">aw</span><span class="o">.</span><span class="n">initialize_images_from_bag</span><span class="p">(</span><span class="n">bag_of_images_and_labels</span> <span class="o">=</span> <span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-dirs [&#39;./train&#39;, &#39;./valid&#39;, &#39;./test&#39;]
-yaml ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02/data.yaml
-subdir train
-	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02
-subdir valid
-	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02
-subdir test
-	outdir ipynb_tests/02_train_datadump/Final Roboflow Export (841)AutoWeight &lt;name&gt; 21-03-21 15-26-02
-os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39;]
+	 &gt; 83 files
+File:  data.yaml
 </pre>
 </div>
 </div>
@@ -378,7 +256,7 @@ os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
-current = aw.generate_weights(3)
+current = aw.generate_weights(30, rm_local_files=True)
 </pre></div>
 
     </div>
@@ -393,8 +271,12 @@ current = aw.generate_weights(3)
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>reading defaults from: ModelAssistedLabel config.json
 reading defaults from: ModelAssistedLabel config.json
-CPU times: user 1.83 ms, sys: 9.67 ms, total: 11.5 ms
-Wall time: 6.41 s
+Removing:  train
+Removing:  valid
+Removing:  test
+Removing:  data.yaml
+CPU times: user 11.6 ms, sys: 24 ms, total: 35.5 ms
+Wall time: 2min 37s
 </pre>
 </div>
 </div>
@@ -412,58 +294,10 @@ Wall time: 6.41 s
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>  <span class="k">def</span> <span class="nf">traverse_resources</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="s2">&quot;Iterate through the levels of each of the resource paths&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
-      <span class="k">return</span> <span class="nb">dir</span>
-    <span class="c1">#check to see if there is a directory in the dir</span>
-
-    <span class="k">if</span> <span class="kc">False</span> <span class="ow">in</span> <span class="p">[</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)]:</span>
-      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-          <span class="n">no_folders</span> <span class="o">=</span> <span class="kc">False</span>
-          <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">*</span><span class="n">level</span><span class="o">+</span><span class="n">path</span><span class="p">)</span>
-          <span class="n">traverse_resources</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">*</span><span class="n">level</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)),</span><span class="s2">&quot;files&quot;</span><span class="p">)</span>
-  
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">cat</span> &quot;{current}/results.txt&quot;
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">traverse_resources</span><span class="p">(</span><span class="s2">&quot;data.yaml&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;data.yaml&#39;</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 

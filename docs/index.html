@@ -130,7 +130,7 @@ nb_path: "index.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
+<pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla V100-SXM2-16GB&#39;, major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
 </pre>
 </div>
 </div>
@@ -150,6 +150,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To make a model to annotate images, we first need annotated images. When I was first starting, I used Roboflow's tools to both annotate my images and to keep my data organized.</p>
+<p>(Later on, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a>.</p>
 <p>Once all of the labels/images are in a common folder called <code>repo</code>, we're ready to go:</p>
 
 </div>
@@ -215,10 +216,70 @@ nb_path: "index.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
-wm.generate_weights(2000)
+wm.generate_weights(100)
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>reading defaults from: ModelAssistedLabel config.json
+reading defaults from: ModelAssistedLabel config.json
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-8-b84d7c7bbfb1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>run_cell_magic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;time&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;wm.generate_weights(100)&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py</span> in <span class="ansi-cyan-fg">run_cell_magic</span><span class="ansi-blue-fg">(self, magic_name, line, cell)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2115</span>             magic_arg_s <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>var_expand<span class="ansi-blue-fg">(</span>line<span class="ansi-blue-fg">,</span> stack_depth<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2116</span>             <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>builtin_trap<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2117</span><span class="ansi-red-fg">                 </span>result <span class="ansi-blue-fg">=</span> fn<span class="ansi-blue-fg">(</span>magic_arg_s<span class="ansi-blue-fg">,</span> cell<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2118</span>             <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">   2119</span> 
+
+<span class="ansi-green-fg">&lt;decorator-gen-53&gt;</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magic.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(f, *a, **k)</span>
+<span class="ansi-green-intense-fg ansi-bold">    186</span>     <span class="ansi-red-fg"># but it&#39;s overkill for just that one bit of state.</span>
+<span class="ansi-green-intense-fg ansi-bold">    187</span>     <span class="ansi-green-fg">def</span> magic_deco<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 188</span><span class="ansi-red-fg">         </span>call <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>k<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    189</span> 
+<span class="ansi-green-intense-fg ansi-bold">    190</span>         <span class="ansi-green-fg">if</span> callable<span class="ansi-blue-fg">(</span>arg<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.7/dist-packages/IPython/core/magics/execution.py</span> in <span class="ansi-cyan-fg">time</span><span class="ansi-blue-fg">(self, line, cell, local_ns)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1187</span>         <span class="ansi-green-fg">if</span> mode<span class="ansi-blue-fg">==</span><span class="ansi-blue-fg">&#39;eval&#39;</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1188</span>             st <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 1189</span><span class="ansi-red-fg">             </span>out <span class="ansi-blue-fg">=</span> eval<span class="ansi-blue-fg">(</span>code<span class="ansi-blue-fg">,</span> glob<span class="ansi-blue-fg">,</span> local_ns<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1190</span>             end <span class="ansi-blue-fg">=</span> clock2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1191</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">&lt;timed eval&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">/content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/train.py</span> in <span class="ansi-cyan-fg">generate_weights</span><span class="ansi-blue-fg">(self, epochs, tidy_results)</span>
+<span class="ansi-green-intense-fg ansi-bold">    133</span>     after <span class="ansi-blue-fg">=</span> ldir<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>train_path<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    134</span> 
+<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">assert</span> len<span class="ansi-blue-fg">(</span>after<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">==</span> len<span class="ansi-blue-fg">(</span>before<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">+</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">f&#34;files in {self.train_path}&#34;</span><span class="ansi-blue-fg">:</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#34;before&#34;</span><span class="ansi-blue-fg">:</span> before<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;after&#34;</span><span class="ansi-blue-fg">:</span>after<span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">}</span> <span class="ansi-red-fg">#only should have made one new file</span>
+<span class="ansi-green-intense-fg ansi-bold">    136</span>     diff <span class="ansi-blue-fg">=</span> list<span class="ansi-blue-fg">(</span>after <span class="ansi-blue-fg">-</span> before<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    137</span> 
+
+<span class="ansi-red-fg">AssertionError</span>: {&#39;files in yolov5/runs/train&#39;: {&#39;before&#39;: {&#39;AutoWeight &lt;name&gt;&#39;, &#39;&lt;AutoWeight&gt;&#39;, &#39;nospaces2&#39;, &#39;nospaces3&#39;, &#39;nospaces&#39;, &#39;&lt;AutoWeight&gt;2&#39;}, &#39;after&#39;: {&#39;AutoWeight &lt;name&gt;&#39;, &#39;&lt;AutoWeight&gt;&#39;, &#39;nospaces2&#39;, &#39;nospaces3&#39;, &#39;nospaces&#39;, &#39;&lt;AutoWeight&gt;2&#39;}}}</pre>
+</div>
+</div>
+
 </div>
 </div>
 

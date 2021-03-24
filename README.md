@@ -50,12 +50,14 @@ os.chdir(Defaults().root)
 Defaults.prepare_YOLOv5()
 ```
 
-    Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
+    Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla V100-SXM2-16GB', major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
 
 
 # Building models from 
 
 To make a model to annotate images, we first need annotated images. When I was first starting, I used Roboflow's tools to both annotate my images and to keep my data organized.
+
+(Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox). 
 
 Once all of the labels/images are in a common folder called `repo`, we're ready to go:
 
@@ -74,8 +76,62 @@ wm = AutoWeights(repo, name, MAX_SIZE=None)
 
 ```python
 %%time
-wm.generate_weights(2000)
+wm.generate_weights(100)
 ```
+
+    reading defaults from: ModelAssistedLabel config.json
+    reading defaults from: ModelAssistedLabel config.json
+
+
+
+    ---------------------------------------------------------------------------
+
+    AssertionError                            Traceback (most recent call last)
+
+    <ipython-input-8-b84d7c7bbfb1> in <module>()
+    ----> 1 get_ipython().run_cell_magic('time', '', 'wm.generate_weights(100)')
+    
+
+    /usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py in run_cell_magic(self, magic_name, line, cell)
+       2115             magic_arg_s = self.var_expand(line, stack_depth)
+       2116             with self.builtin_trap:
+    -> 2117                 result = fn(magic_arg_s, cell)
+       2118             return result
+       2119 
+
+
+    <decorator-gen-53> in time(self, line, cell, local_ns)
+
+
+    /usr/local/lib/python3.7/dist-packages/IPython/core/magic.py in <lambda>(f, *a, **k)
+        186     # but it's overkill for just that one bit of state.
+        187     def magic_deco(arg):
+    --> 188         call = lambda f, *a, **k: f(*a, **k)
+        189 
+        190         if callable(arg):
+
+
+    /usr/local/lib/python3.7/dist-packages/IPython/core/magics/execution.py in time(self, line, cell, local_ns)
+       1187         if mode=='eval':
+       1188             st = clock2()
+    -> 1189             out = eval(code, glob, local_ns)
+       1190             end = clock2()
+       1191         else:
+
+
+    <timed eval> in <module>()
+
+
+    /content/drive/MyDrive/Coding/ModelAssistedLabel/ModelAssistedLabel/train.py in generate_weights(self, epochs, tidy_results)
+        133     after = ldir(self.train_path)
+        134 
+    --> 135     assert len(after) == len(before)+1, {f"files in {self.train_path}": {"before": before, "after":after}} #only should have made one new file
+        136     diff = list(after - before)[0]
+        137 
+
+
+    AssertionError: {'files in yolov5/runs/train': {'before': {'AutoWeight <name>', '<AutoWeight>', 'nospaces2', 'nospaces3', 'nospaces', '<AutoWeight>2'}, 'after': {'AutoWeight <name>', '<AutoWeight>', 'nospaces2', 'nospaces3', 'nospaces', '<AutoWeight>2'}}}
+
 
 ```python
 wm.last_results_path

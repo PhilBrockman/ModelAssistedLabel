@@ -110,8 +110,10 @@ relevant data will be zipped in <code>out_dir</code></p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span><span class="p">,</span> 
-               <span class="n">out_dir</span><span class="o">=</span><span class="s2">&quot;ipynb_tests/01_split_datadump&quot;</span><span class="p">,</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">datadump</span> <span class="o">=</span> <span class="s2">&quot;ipynb_tests/01_split_datadump&quot;</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span><span class="p">,</span> 
+               <span class="n">out_dir</span><span class="o">=</span><span class="n">datadump</span><span class="p">,</span>
                <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
@@ -234,13 +236,13 @@ relevant data will be zipped in <code>out_dir</code></p>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 dirs [&#39;./train&#39;, &#39;./valid&#39;, &#39;./test&#39;]
-yaml ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-21 14-30-17/data.yaml
+yaml ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-24 17-23-14/data.yaml
 subdir train
-	outdir ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-21 14-30-17
+	outdir ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-24 17-23-14
 subdir valid
-	outdir ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-21 14-30-17
+	outdir ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-24 17-23-14
 subdir test
-	outdir ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-21 14-30-17
+	outdir ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-24 17-23-14
 os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39;]
 </pre>
 </div>
@@ -263,6 +265,20 @@ os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Complete:  ipynb_tests/01_split_datadump/Final Roboflow Export (841)&lt;01_split_all&gt; 21-03-24 17-23-14.zip
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
