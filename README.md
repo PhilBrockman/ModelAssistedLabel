@@ -2,16 +2,7 @@
 > bootstrapping image annotation
 
 
-```python
-splash()
-```
-
-
-
-
-![png](docs/images/output_1_0.png)
-
-
+![base64 splash](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/modelassistedlabel%20splash.jpg?raw=true)
 
 ## Background
 
@@ -207,21 +198,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_26_1.png)
+![png](docs/images/output_25_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_26_3.png)
+![png](docs/images/output_25_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_26_5.png)
+![png](docs/images/output_25_5.png)
 
 
 ## Exporting annotated images
@@ -246,7 +237,7 @@ with open(os.path.join(outzip, "label_map.txt"), "w") as label_map:
 Ensure that image/label pairs have a common root filename
 
 ```python
-import random
+import random, PIL
 salt = lambda: str(random.random())[2:]
 
 for result in results:
