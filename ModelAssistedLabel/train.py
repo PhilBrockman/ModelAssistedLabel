@@ -61,6 +61,7 @@ class Resource:
 from .train import Trainer
 from .fileManagement import Generation
 from datetime import datetime
+import zipfile, shutil
 
 class AutoWeights():
   """Given a bag of images (.jpg) and labels (.txt) in YOLOv5 format in a repository,
@@ -166,17 +167,18 @@ class AutoWeights():
       zipped: path to the zip file
     """
     assert os.path.exists(zipped)
-    os.system(f'unzip "{zipped}"') #grab data
-    folder = zipped[:-4] #remove the ".zip from the filename
 
     #move the contents of the zip file into postion within the ROOT directory
-    for content in os.listdir(folder):
+    with zipfile.ZipFile(zipped, 'r') as zip_ref:
+      zip_ref.extractall("unzipped")
+
+    for content in os.listdir(f"unzipped/{folder}"):
       os.system(f"mv '{os.path.join(folder, content)}' .")
       outpath = content
       self.resource_paths.append(outpath)
 
     #removed the folder that was taken out of the zip
-    os.system(f"rm -f -r '{folder}'")
+    shutil.rmtree("unzipped")
 
   def initialize_images_from_bag(self, bag_of_images_and_labels):
     """Converts a folder than contains images and labels to a format acceptable

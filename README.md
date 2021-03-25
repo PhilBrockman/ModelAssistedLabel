@@ -16,6 +16,16 @@ And I hated annotating my images by hand. Once the models began making reasonabl
 
 (Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)
 
+## Getting Started
+
+```python
+#Fresh colab installation:
+
+!git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
+%cd "ModelAssistedLabel"
+pip install -i https://test.pypi.org/simple/ ModelAssistedLabel==1.0
+```
+
 ### Expected Inputs:
 * Both 
   - **labeled images**
@@ -30,9 +40,30 @@ And I hated annotating my images by hand. Once the models began making reasonabl
 
 
 ```python
+# these images have already had the images labeled and verified by a human
 labeled_images   = "./Image Repo/labeled/Final Roboflow Export (841)"
-unlabeled_images = "./Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
+
+unlabeled_images_repos = [] #including a variety of lighting from three seperate recordingns
+unlabeled_images_repos.append("Image Repo/unlabeled/21-3-18 rowing 8-12 /")
+unlabeled_images_repos.append("Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00")
+unlabeled_images_repos.append("Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50")
+
+unlabeled_images = repos[2] #for the sake of example, I'm selecting the images with the best lighting
 ```
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-837237021288> in <module>()
+          7 unlabeled_images_repos.append("Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50")
+          8 
+    ----> 9 unlabeled_images = repos[2] #for the sake of example, I'm selecting the images with the best lighting
+    
+
+    NameError: name 'repos' is not defined
+
 
 ### Expected Output:
 
@@ -45,49 +76,47 @@ unlabeled_images = "./Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
     - `classmap.yaml` to preserve the identity of the classes
 
 
+## Configure defaults
+
+Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
+
 ```python
 from ModelAssistedLabel.config import Defaults
 
 d= Defaults()
-print(">>>")
-print(d.data_yaml)
+print(" -- Defined Keys: --")
+print("\n".join([x for x in d.__dict__.keys()]))
 ```
 
-    reading defaults from: ModelAssistedLabel config.json
-    >>>
-    train: ../train/images
-    val: ../valid/images
-    
-    nc: 10
-    names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+     -- Defined Keys: --
+    config_file
+    root
+    split_ratio
+    data_yaml
+    resource_map
+    trainer_template
 
 
-To change any of the Defaults values, either override the class or see the Configuration page for more details.
-
-## Configure defaults
-
-Set the absolute path of the root directory.
+Speciy the absolute path of the root directory.
 
 ```python
-import json, os
-#load defaults
-d = Defaults()
-
-#change root
 d.root = "/content/drive/MyDrive/Coding/ModelAssistedLabel/"
+```
 
-#save changes
-with open(d.config_file, "w") as config_file:
-  json.dump(d.__dict__, config_file)
+Save any changes
 
-# enter root directory
+```python
+d.save()
+```
+
+Enter root directory
+
+```python
+import os
 os.chdir(Defaults().root)
 ```
 
-    reading defaults from: ModelAssistedLabel config.json
-
-
-Clone yolov5 repo and install requirements ensure GPU is enabled.
+Clone yolov5 repo and install requirements.
 
 ```python
 Defaults.prepare_YOLOv5()
@@ -101,35 +130,51 @@ Defaults.prepare_YOLOv5()
 Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `Autoweights` class both organizes data and create weights. Running an "initialize" command makes changes to the disk.
 
 ```python
+ls
+```
+
+     00_config.ipynb         [0m[01;34mdocs[0m/                'ModelAssistedLabel config.json'
+     01_split.ipynb         [01;34m'Image Repo'[0m/         'modelassistedlabel splash.jpg'
+     02_train.ipynb          index.ipynb          [01;34m'pre-trained weights'[0m/
+     03_detect.ipynb         [01;34mipynb_tests[0m/          README.md
+    '_capture input.ipynb'   LICENSE               settings.ini
+     CONTRIBUTING.md         Makefile              setup.py
+     data.yaml               MANIFEST.in           _Synch.ipynb
+     docker-compose.yml      [01;34mModelAssistedLabel[0m/   [01;34myolov5[0m/
+
+
+```python
 from ModelAssistedLabel.train import AutoWeights
 
-aw = AutoWeights(name="1-step <index>", out_dir=datadump, MAX_SIZE=None)
+datadump="ipynb_tests/index"
+
+aw = AutoWeights(name="<index>", out_dir=datadump, MAX_SIZE=200)
 aw.initialize_images_from_bag(labeled_images)
 aw.traverse_resources()
 ```
 
     
     dirs ['./train', './valid', './test']
-    yaml ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55/data.yaml
+    yaml ipynb_tests/index/Final Roboflow Export (841)<index> 21-03-25 12-30-41/data.yaml
     subdir train
-    	outdir ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55
+    	outdir ipynb_tests/index/Final Roboflow Export (841)<index> 21-03-25 12-30-41
     subdir valid
-    	outdir ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55
+    	outdir ipynb_tests/index/Final Roboflow Export (841)<index> 21-03-25 12-30-41
     subdir test
-    	outdir ipynb_tests/index/Final Roboflow Export (841)1-step <index> 21-03-24 23-17-55
+    	outdir ipynb_tests/index/Final Roboflow Export (841)<index> 21-03-25 12-30-41
     os.listdir ['train', 'valid', 'test', 'data.yaml']
     train/images
-    	 > 589 files
+    	 > 140 files
     train/labels
-    	 > 589 files
+    	 > 140 files
     valid/images
-    	 > 169 files
+    	 > 40 files
     valid/labels
-    	 > 169 files
+    	 > 40 files
     test/images
-    	 > 83 files
+    	 > 20 files
     test/labels
-    	 > 83 files
+    	 > 20 files
     File:  data.yaml
 
 
@@ -139,19 +184,17 @@ With the images written to disk, we can run the Ultralytics training algorithm. 
 
 ```python
 %%time
-aw.generate_weights(100)
+aw.generate_weights(1000)
 ```
 
-    reading defaults from: ModelAssistedLabel config.json
-    reading defaults from: ModelAssistedLabel config.json
-    CPU times: user 20.6 ms, sys: 13.8 ms, total: 34.5 ms
-    Wall time: 11min 36s
+    CPU times: user 10.5 s, sys: 1.45 s, total: 11.9 s
+    Wall time: 45min 23s
 
 
 
 
 
-    'yolov5/runs/train/1-step <index>3'
+    'yolov5/runs/train/<index>'
 
 
 
@@ -164,7 +207,7 @@ aw.last_results_path, len(os.listdir(aw.last_results_path))
 
 
 
-    ('yolov5/runs/train/1-step <index>3', 22)
+    ('yolov5/runs/train/<index>', 20)
 
 
 
@@ -178,6 +221,29 @@ os.listdir(aw.last_results_path + "/weights")
 
 
     ['last.pt', 'best.pt']
+
+
+
+View the last couple lines 
+
+```python
+with open(aw.last_results_path + "/results.txt") as results_file:
+  results = results_file.readlines()
+print("Epoch   gpu_mem       box       obj       cls     total    labels  img_size")
+results[-5:]
+```
+
+    Epoch   gpu_mem       box       obj       cls     total    labels  img_size
+
+
+
+
+
+    ['   995/999     1.82G   0.02979   0.02355   0.01262   0.06595       119       416    0.9787    0.9698    0.9861    0.8327   0.02502   0.01936  0.008843\n',
+     '   996/999     1.82G   0.02952   0.02375   0.01236   0.06562       124       416    0.9785    0.9677    0.9861    0.8326   0.02496   0.01922  0.008919\n',
+     '   997/999     1.82G   0.03078   0.02463   0.01184   0.06725       162       416    0.9719    0.9679    0.9859    0.8301   0.02492   0.01924  0.008982\n',
+     '   998/999     1.82G   0.03055   0.02504   0.01201    0.0676       148       416     0.973    0.9663    0.9859    0.8312   0.02488   0.01942   0.00898\n',
+     '   999/999     1.82G   0.03112   0.02214   0.01227   0.06553       146       416    0.9731    0.9666    0.9857    0.8301   0.02482   0.01951  0.009014\n']
 
 
 
@@ -212,21 +278,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_27_1.png)
+![png](docs/images/output_36_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_27_3.png)
+![png](docs/images/output_36_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_27_5.png)
+![png](docs/images/output_36_5.png)
 
 
 ## Exporting annotated images

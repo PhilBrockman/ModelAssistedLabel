@@ -17,7 +17,7 @@ class Defaults:
 
   def __init__(self, config_file="ModelAssistedLabel config.json"):
     self.config_file=config_file
-    print("reading defaults from:", config_file)
+
     with open(config_file, "r") as f:
       indata = (json.load(f))
     for k,v in indata.items():
@@ -111,3 +111,8 @@ class Defaults:
     with open(json_file) as config:
       raw = config.readlines()[0]
       return json.loads(raw)
+
+  def save(self):
+    "save changes made to attributes"
+    with open(self.config_file, "w") as config_file:
+      json.dump(self.__dict__, config_file)
