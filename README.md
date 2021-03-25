@@ -30,8 +30,8 @@ And I hated annotating my images by hand. Once the models began making reasonabl
 
 
 ```python
-labeled_images = "./Image Repo/labeled/Final Roboflow Export (841)"
-unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
+labeled_images   = "./Image Repo/labeled/Final Roboflow Export (841)"
+unlabeled_images = "./Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
 ```
 
 ### Expected Output:
@@ -64,18 +64,32 @@ print(d.data_yaml)
 
 To change any of the Defaults values, either override the class or see the Configuration page for more details.
 
-## Clone YOLOv5
+## Configure defaults
 
-Start by cloning https://github.com/ultralytics/yolov5.
+Set the absolute path of the root directory.
 
 ```python
-import os
+import json, os
+#load defaults
+d = Defaults()
+
+#change root
+d.root = "/content/drive/MyDrive/Coding/ModelAssistedLabel/"
+
+#save changes
+with open(d.config_file, "w") as config_file:
+  json.dump(d.__dict__, config_file)
 
 # enter root directory
 os.chdir(Defaults().root)
+```
 
-# clone yolov5 repo and install requirements
-# ensure GPU is enabled
+    reading defaults from: ModelAssistedLabel config.json
+
+
+Clone yolov5 repo and install requirements ensure GPU is enabled.
+
+```python
 Defaults.prepare_YOLOv5()
 ```
 
@@ -198,21 +212,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_25_1.png)
+![png](docs/images/output_27_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_25_3.png)
+![png](docs/images/output_27_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_25_5.png)
+![png](docs/images/output_27_5.png)
 
 
 ## Exporting annotated images
@@ -254,7 +268,7 @@ for result in results:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
 ```
 
-## From here
+## Next Steps
 
 After letting the YOLOv5 model take a stab at labeling, I would then adjust these predictions manually before absorbing them to the training data. While I built (an admittedly janky) labeler to perform my touchups, There are certaintly a number of other anntotation tool available.
 

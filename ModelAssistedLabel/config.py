@@ -15,8 +15,8 @@ class Defaults:
   Functions defined here are also available across this project.
   """
 
-  def __init__(self):
-    config_file="ModelAssistedLabel config.json"
+  def __init__(self, config_file="ModelAssistedLabel config.json"):
+    self.config_file=config_file
     print("reading defaults from:", config_file)
     with open(config_file, "r") as f:
       indata = (json.load(f))
@@ -96,3 +96,18 @@ class Defaults:
     else:
       print(f"not making `{datadump}`")
       assert not os.path.exists(datadump)
+
+  def read_json(self, json_file= None):
+    """Reads and returns the value of a json file
+
+    Args:
+      json_file: the path to a json file. By default None is `self.config_file`
+
+    Returns:
+      the contents of the json file
+    """
+    if json_file is None:
+      json_file = self.config_file
+    with open(json_file) as config:
+      raw = config.readlines()[0]
+      return json.loads(raw)

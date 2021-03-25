@@ -40,7 +40,7 @@ nb_path: "00_config.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Defaults" class="doc_header"><code>class</code> <code>Defaults</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/config.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Defaults</code>()</p>
+<h2 id="Defaults" class="doc_header"><code>class</code> <code>Defaults</code><a href="https://github.com/PhilBrockman/ModelAssistedLabel/tree/master/ModelAssistedLabel/config.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Defaults</code>(<strong><code>config_file</code></strong>=<em><code>'ModelAssistedLabel config.json'</code></em>)</p>
 </blockquote>
 <p>Makes certain variables are very accessible across the repository. The names
 of the variables and their respective values are stored in JSON format in
@@ -109,7 +109,7 @@ of the variables and their respective values are stored in JSON format in
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>`ipynb_tests/00_config_datadump`` did not exist
+<pre>deleted `ipynb_tests/00_config_datadump`
 making `ipynb_tests/00_config_datadump`
 </pre>
 </div>
@@ -161,14 +161,8 @@ making `ipynb_tests/00_config_datadump`
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="n">CONFIG_FILE</span> <span class="o">=</span> <span class="s2">&quot;ModelAssistedLabel config.json&quot;</span>
-
-<span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="n">json_file</span><span class="p">):</span>
-  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
-    <span class="n">raw</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">read_json</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Defaults</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">read_json</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Attribute:&quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">- Type:&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
 </pre></div>
@@ -183,7 +177,10 @@ making `ipynb_tests/00_config_datadump`
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Attribute: root 
+<pre>reading defaults from: ModelAssistedLabel config.json
+Attribute: config_file 
+	- Type: &lt;class &#39;str&#39;&gt;
+Attribute: root 
 	- Type: &lt;class &#39;str&#39;&gt;
 Attribute: split_ratio 
 	- Type: &lt;class &#39;dict&#39;&gt;
@@ -203,97 +200,6 @@ Attribute: trainer_template
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The default data can be modified:</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_root</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/Coding/ModelAssistedLabel/&quot;</span>
-<span class="n">data</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_root</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;new root:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;root&quot;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>new root: /content/drive/MyDrive/Coding/ModelAssistedLabel/
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Overwrite the current config file</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
-  <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">up_data_d</span> <span class="o">=</span> <span class="n">read_json</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">up_data_d</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_root</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Whenever Defaults() class is constructed, the attribute values are reread from "ModelAssistedLabel config.json", so this new <code>root</code> value is accessible across
-this project</p>
-
-</div>
-</div>
-</div>
 </div>
  
 
