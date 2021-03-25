@@ -79,7 +79,7 @@ os.chdir(Defaults().root)
 Defaults.prepare_YOLOv5()
 ```
 
-    Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla V100-SXM2-16GB', major=7, minor=0, total_memory=16160MB, multi_processor_count=80)
+    Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 
 
 ## Processing input
@@ -90,7 +90,7 @@ Next, the images need to be written in a way so that the Ultralytics repository 
 from ModelAssistedLabel.train import AutoWeights
 
 aw = AutoWeights(name="1-step <index>", out_dir=datadump, MAX_SIZE=None)
-aw.initialize_images_from_bag(repo)
+aw.initialize_images_from_bag(labeled_images)
 aw.traverse_resources()
 ```
 
@@ -130,6 +130,15 @@ aw.generate_weights(100)
 
     reading defaults from: ModelAssistedLabel config.json
     reading defaults from: ModelAssistedLabel config.json
+    CPU times: user 20.6 ms, sys: 13.8 ms, total: 34.5 ms
+    Wall time: 11min 36s
+
+
+
+
+
+    'yolov5/runs/train/1-step <index>3'
+
 
 
 The results folder is stored as an attribute as well, and it has a lot of data stored therein.
@@ -141,7 +150,7 @@ aw.last_results_path, len(os.listdir(aw.last_results_path))
 
 
 
-    ('yolov5/runs/train/1-step <index>2', 22)
+    ('yolov5/runs/train/1-step <index>3', 22)
 
 
 
@@ -157,3 +166,96 @@ os.listdir(aw.last_results_path + "/weights")
     ['last.pt', 'best.pt']
 
 
+
+## Labeling a new set of images
+
+The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
+
+```python
+#aw.last_results_path + "/weights/best.pt"
+from ModelAssistedLabel.detect import Viewer
+
+class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+v = Viewer("pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt", class_idx)
+```
+
+    Fusing layers... 
+
+
+```python
+import random
+
+images = [os.path.join(unlabeled_images, x) for x in os.listdir(unlabeled_images)]
+```
+
+```python
+%matplotlib inline 
+for image in random.sample(images,3):
+  v.plot_for(image)
+```
+
+    image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/27.jpg: >>> [{'predictions': ['0 0.441406 0.385417 0.0140625 0.0708333 0.834958', '2 0.413672 0.379167 0.0195312 0.0777778 0.893516', '7 0.389453 0.376389 0.0210938 0.0777778 0.90789', '9 0.364844 0.372917 0.021875 0.0791667 0.912621']}]
+
+
+
+![png](docs/images/output_25_1.png)
+
+
+    image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
+
+
+
+![png](docs/images/output_25_3.png)
+
+
+    image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
+
+
+
+![png](docs/images/output_25_5.png)
+
+
+## Exporting annotated images
+
+```python
+project_name = "seven segment digits"
+outzip = Defaults._itername(project_name)
+os.mkdir(outzip)
+print(outzip)
+```
+
+    seven segment digits3
+
+
+Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
+
+```python
+with open(os.path.join(outzip, "label_map.txt"), "w") as label_map:
+  label_map.writelines("\n".join(class_idx))
+```
+
+Ensure that image/label pairs have a common root filename
+
+```python
+import random
+salt = lambda: str(random.random())[2:]
+
+for result in results:
+  #generate a likely-to-be-unique filename
+  shared_root = Defaults._itername(f"{project_name}-{salt()}")
+
+  #save the image to the outfile
+  image = PIL.Image.open(result["image path"])
+  image.save(os.path.join(outzip, f"{shared_root}.jpg"))
+
+  #save the predictions to the outfile
+  predictions = result["predictions"]
+  with open(os.path.join(outzip, f"{shared_root}.txt"), "w") as prediction_file:
+    prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
+```
+
+## From here
+
+After letting the YOLOv5 model take a stab at labeling, I would then adjust these predictions manually before absorbing them to the training data. While I built (an admittedly janky) labeler to perform my touchups, There are certaintly a number of other anntotation tool available.
+
+I've only used one commerical annotation tool and that would be Roboflow's annotator. Roboflow was a great tool for me to use when I was starting off.

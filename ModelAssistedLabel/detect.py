@@ -207,7 +207,7 @@ class Viewer:
     out["predictions"] = []
 
     #process the image in yolov5
-    results = v.detector.process_image(image)
+    results = self.detector.process_image(image)
 
     #need height/width to de-norm
     PILim= PIL.Image.open(image)
@@ -223,6 +223,7 @@ class Viewer:
             "height": int(PILim.height* float(bbox[4])),
             "width":  int(PILim.width * float(bbox[3])),
             "x":      int(PILim.width *(float(bbox[1]) - float(bbox[3])/2)),
-            "y":      int(PILim.height*(float(bbox[2]) - float(bbox[4])/2))
+            "y":      int(PILim.height*(float(bbox[2]) - float(bbox[4])/2)),
+            "yolov5 format": prediction
             })
     return out
