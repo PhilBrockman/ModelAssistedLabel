@@ -1,18 +1,37 @@
 # Model-asisted Labeling with YOLOv5
-> bootstrapping image annotation
+> custom image set annotation with a model's help
 
 
 ![base64 splash](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/modelassistedlabel%20splash.jpg?raw=true)
 
 ## Background
 
-Object detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
+My exercise equipment, despite even being electronic, doesn’t connect to a network.
 
-Unfortunately, I was unable to find a suitable existing set of labeled LCD digits. So I began using my webcam to campture images of my rowing screen.
+But if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout. 
 
-After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate and store my images. But I hated annotating my images by hand. Once the models began making reasonable guesses, I enlisted the model's help in labeling new images. This repository is the result of these efforts.
+First question, just a tiny one, how do you do that?  
 
-(Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)
+After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They helped provide a hands-on and accessible experience in machine learning.
+
+Unfortunately, I didn't have much luck with existing models being able to readily parse digits. Instead, I decided to start building my own dataset.
+
+I shouldn't have been caught off-guard by the tedium of manually annotating images. As my mind starts to drift, I wonder if I’m a reCAPTCHA interface that’s gained sentience, and I break through. If I label enough digits, I can train a YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions. 
+
+The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project and build wrappers around the essential functions in `detect.py` and `train.py`.
+
+This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
+
+I need two inputs:
+* Either:
+  + a set of YOLOv5 weights 
+  + or a repository of ".jpg" images and ".txt" labels.
+* And:
+  + a folder with unlabeled images
+{% include note.html content='In `./Image Repo` I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}
+
+
+
 
 ## Getting Started
 
@@ -29,7 +48,6 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 -  **labeled images**
     + All of the images and labels must be in a common folder (subfolders allowed).
     + Labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885).
-    + I provide 841 annotated images of 7 segment digits.
 {% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
 
 
@@ -42,7 +60,6 @@ labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
 ```
 
   - **unlabeled images**
-    * I provide 3 sets of unlabeled images under `Image Repo/unlabeled`.
 
 ```
 # these images need to be labeled
@@ -70,7 +87,7 @@ export_folder = Defaults._itername(project_name)
 print(export_folder)
 ```
 
-    seven segment digits - 2
+    seven segment digits - 1
 
 
 ```
@@ -314,7 +331,7 @@ import random, glob
 
 images = glob.glob(f"./{unlabeled_images}/*.jpg")
 
-for image in random.sample(images,3):
+for image in random.sample(images,5):
   v.plot_for(image)
 ```
 
@@ -519,13 +536,13 @@ for result in results:
 
 #check if weights were generated
 if aw is not None and os.path.exists(aw.last_results_path):
-  print("Moving yolov5 results folder")
+  print(f"Moving yolov5 results folder {aw.last_results_path}")
   shutil.move(aw.last_results_path, export_folder)
 else:
   print("No weights to save")
 ```
 
-    Moving yolov5 results folder
+    No weights to save
 
 
 ## Wrap up
@@ -538,5 +555,9 @@ You can see the sensitivity to environmental conditions in these training sets u
 * `21-3-22 rowing (200) 7:50-12:50`
 * `21-3-22 rowing (200) 1:53-7:00`
 * `21-3-18 rowing 8-12 `
+
+
+
+(Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)
 
 

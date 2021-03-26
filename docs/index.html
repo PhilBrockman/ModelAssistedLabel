@@ -6,8 +6,8 @@ title: Model-asisted Labeling with YOLOv5
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "bootstrapping image annotation"
-description: "bootstrapping image annotation"
+summary: "custom image set annotation with a model's help"
+description: "custom image set annotation with a model's help"
 nb_path: "index.ipynb"
 ---
 <!--
@@ -44,10 +44,27 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Object detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).</p>
-<p>Unfortunately, I was unable to find a suitable existing set of labeled LCD digits. So I began using my webcam to campture images of my rowing screen.</p>
-<p>After working through <a href="https://models.roboflow.com/object-detection/yolov5">a YOLOv5 tutorial</a>, I started to use Roboflow to annotate and store my images. But I hated annotating my images by hand. Once the models began making reasonable guesses, I enlisted the model's help in labeling new images. This repository is the result of these efforts.</p>
-<p>(Later on, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)</p>
+<p>My exercise equipment, despite even being electronic, doesn’t connect to a network.</p>
+<p>But if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout.</p>
+<p>First question, just a tiny one, how do you do that?</p>
+<p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They helped provide a hands-on and accessible experience in machine learning.</p>
+<p>Unfortunately, I didn't have much luck with existing models being able to readily parse digits. Instead, I decided to start building my own dataset.</p>
+<p>I shouldn't have been caught off-guard by the tedium of manually annotating images. As my mind starts to drift, I wonder if I’m a reCAPTCHA interface that’s gained sentience, and I break through. If I label enough digits, I can train a YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions.</p>
+<p>The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project and build wrappers around the essential functions in <code>detect.py</code> and <code>train.py</code>.</p>
+<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.</p>
+<p>I need two inputs:</p>
+<ul>
+<li>Either:<ul>
+<li>a set of YOLOv5 weights </li>
+<li>or a repository of ".jpg" images and ".txt" labels.</li>
+</ul>
+</li>
+<li>And:<ul>
+<li>a folder with unlabeled images
+{% include note.html content='In <code>./Image Repo</code> I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}</li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
@@ -88,8 +105,7 @@ nb_path: "index.ipynb"
 <h3 id="Expected-Inputs:">Expected Inputs:<a class="anchor-link" href="#Expected-Inputs:"> </a></h3><ul>
 <li><strong>labeled images</strong><ul>
 <li>All of the images and labels must be in a common folder (subfolders allowed).</li>
-<li>Labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.</li>
-<li>I provide 841 annotated images of 7 segment digits.
+<li>Labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.
 {% include note.html content='Image/label pairs are based on their base filename. For example <code>image.jpg/image.txt</code> would be paired as would <code>other_image5.jpg/other_image5.txt</code>.' %}</li>
 </ul>
 </li>
@@ -118,10 +134,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>unlabeled images</strong><ul>
-<li>I provide 3 sets of unlabeled images under <code>Image Repo/unlabeled</code>.</li>
-</ul>
-</li>
+<li><strong>unlabeled images</strong></li>
 </ul>
 
 </div>
@@ -191,7 +204,7 @@ nb_path: "index.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>seven segment digits - 2
+<pre>seven segment digits - 1
 </pre>
 </div>
 </div>
@@ -833,7 +846,7 @@ Wall time: 3h 46min 43s
 
 <span class="n">images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./</span><span class="si">{</span><span class="n">unlabeled_images</span><span class="si">}</span><span class="s2">/*.jpg&quot;</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
   <span class="n">v</span><span class="o">.</span><span class="n">plot_for</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </pre></div>
 
@@ -1147,7 +1160,7 @@ image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/
 
 <span class="c1">#check if weights were generated</span>
 <span class="k">if</span> <span class="n">aw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Moving yolov5 results folder&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving yolov5 results folder </span><span class="si">{</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
   <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">,</span> <span class="n">export_folder</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No weights to save&quot;</span><span class="p">)</span>
@@ -1163,7 +1176,7 @@ image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Moving yolov5 results folder
+<pre>No weights to save
 </pre>
 </div>
 </div>
@@ -1184,6 +1197,7 @@ image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/
 <li><code>21-3-22 rowing (200) 1:53-7:00</code></li>
 <li><code>21-3-18 rowing 8-12</code></li>
 </ul>
+<p>(Later on, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)</p>
 
 </div>
 </div>
