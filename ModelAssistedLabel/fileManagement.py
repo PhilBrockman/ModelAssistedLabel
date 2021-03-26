@@ -74,7 +74,6 @@ class FileUtilities:
 from .core import Defaults
 from datetime import datetime
 import math, random, shutil
-os.system("pip install progressbar2")
 import progressbar
 
 class Generation:
