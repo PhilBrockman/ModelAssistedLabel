@@ -123,6 +123,9 @@ class AutoWeights():
     t = Trainer(self.name)
     t.train(epochs)
 
+    import time
+    time.sleep()
+
     most_recent = max(glob.glob(os.path.join("yolov5/runs/train/", '*/')), key=os.path.getmtime)
 
     self.last_results_path = most_recent
