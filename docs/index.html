@@ -122,17 +122,11 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Expected-Inputs:">Expected Inputs:<a class="anchor-link" href="#Expected-Inputs:"> </a></h3><ul>
-<li>Both <ul>
 <li><strong>labeled images</strong><ul>
 <li>All of the images and labels must be in a common folder (subfolders allowed).</li>
-<li>labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.
+<li>labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.</li>
+<li>I provide 841 annotated images.
 {% include note.html content='Image/label pairs are based on their base filename. For example <code>image.jpg/image.txt</code> would be paired as would <code>other_image5.jpg/other_image5.txt</code>.' %}</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>And:<ul>
-<li><strong>unlabeled images</strong></li>
 </ul>
 </li>
 </ul>
@@ -148,9 +142,35 @@ nb_path: "index.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">labeled_images</span>   <span class="o">=</span> <span class="s2">&quot;Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
+</pre></div>
 
-<span class="c1"># this is a folder that contains images that need to be labeled</span>
-<span class="n">unlabeled_images</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span>
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><strong>unlabeled images</strong><ul>
+<li>I provide 3 sets of unlabeled images under <code>Image Repo/unlabeled</code>.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unlabeled_images</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span>
 </pre></div>
 
     </div>
@@ -702,8 +722,10 @@ Wall time: 45min 23s
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.detect</span> <span class="kn">import</span> <span class="n">Viewer</span>
 
+<span class="n">weight_path</span> <span class="o">=</span> <span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span> <span class="o">+</span> <span class="s2">&quot;/weights/best.pt&quot;</span>
+
 <span class="n">class_idx</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">(</span><span class="s2">&quot;pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt&quot;</span><span class="p">,</span> <span class="n">class_idx</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">(,</span> <span class="n">class_idx</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -945,8 +967,14 @@ Wall time: 45min 23s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Next-Steps">Next Steps<a class="anchor-link" href="#Next-Steps"> </a></h2><p>After letting the YOLOv5 model take a stab at labeling, I would then adjust these predictions manually before absorbing them to the training data. While I built (an admittedly janky) labeler to perform my touchups, There are certaintly a number of other anntotation tool available.</p>
-<p>I've only used one commerical annotation tool and that would be Roboflow's annotator. Roboflow was a great tool for me to use when I was starting off.</p>
+<h2 id="Wrap-up">Wrap up<a class="anchor-link" href="#Wrap-up"> </a></h2><p>With the class wrappers built around Ultralytic's YOLOv5 libraries, models can now be programmically generated. Even with the time and resource constrainst of Colab Pro, I was still comfortably able to train a YOLOv5 model on 841 images for 2000 epochs (weights are available under <code>./pre-trained weights/841 rowing images.pt</code>)</p>
+<p>And with that model, I can achive my original goal (under certain conditions)! If I employ blackout curtains and carefully adjust the lamps lighting the room, I can reliably read the LCD display.</p>
+<p>You can see the sensitivity to environmental conditions in these training sets under <code>Image Repo/unlabeled/</code></p>
+<ul>
+<li><code>21-3-22 rowing (200) 7:50-12:50</code></li>
+<li><code>21-3-22 rowing (200) 1:53-7:00</code></li>
+<li><code>21-3-18 rowing 8-12</code></li>
+</ul>
 
 </div>
 </div>

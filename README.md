@@ -38,23 +38,27 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 ```
 
 ### Expected Inputs:
-* Both 
-  - **labeled images**
-      + All of the images and labels must be in a common folder (subfolders allowed).
-      + labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885).
+
+-  **labeled images**
+    + All of the images and labels must be in a common folder (subfolders allowed).
+    + labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885).
+    + I provide 841 annotated images.
 {% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
-* And:
-  - **unlabeled images**
 
 
 
 
 
 ```
-# these images have already had the images labeled and verified by a human
+# these images have already been labeled
 labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
+```
 
-# this is a folder that contains images that need to be labeled
+  - **unlabeled images**
+    * I provide 3 sets of unlabeled images under `Image Repo/unlabeled`.
+
+```
+# these images need to be labeled
 unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
 ```
 
@@ -261,11 +265,12 @@ results[-5:]
 The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
 
 ```
-#aw.last_results_path + "/weights/best.pt"
 from ModelAssistedLabel.detect import Viewer
 
+weight_path = aw.last_results_path + "/weights/best.pt"
+
 class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-v = Viewer("pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt", class_idx)
+v = Viewer(, class_idx)
 ```
 
     Fusing layers... 
@@ -287,21 +292,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_38_1.png)
+![png](docs/images/output_40_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_38_3.png)
+![png](docs/images/output_40_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_38_5.png)
+![png](docs/images/output_40_5.png)
 
 
 ```
@@ -350,8 +355,15 @@ for result in results:
 len(os.listdir(export_folder))
 ```
 
-## Next Steps
+## Wrap up
 
-After letting the YOLOv5 model take a stab at labeling, I would then adjust these predictions manually before absorbing them to the training data. While I built (an admittedly janky) labeler to perform my touchups, There are certaintly a number of other anntotation tool available.
+With the class wrappers built around Ultralytic's YOLOv5 libraries, models can now be programmically generated. Even with the time and resource constrainst of Colab Pro, I was still comfortably able to train a YOLOv5 model on 841 images for 2000 epochs (weights are available under `./pre-trained weights/841 rowing images.pt`)
 
-I've only used one commerical annotation tool and that would be Roboflow's annotator. Roboflow was a great tool for me to use when I was starting off.
+And with that model, I can achive my original goal (under certain conditions)! If I employ blackout curtains and carefully adjust the lamps lighting the room, I can reliably read the LCD display.
+
+You can see the sensitivity to environmental conditions in these training sets under `Image Repo/unlabeled/`
+* `21-3-22 rowing (200) 7:50-12:50`
+* `21-3-22 rowing (200) 1:53-7:00`
+* `21-3-18 rowing 8-12 `
+
+
