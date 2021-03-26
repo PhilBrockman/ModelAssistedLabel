@@ -66,12 +66,21 @@ import os
 
 project_name = "seven segment digits"
 export_folder = Defaults._itername(project_name)
-os.mkdir(export_folder)
+
 print(export_folder)
 ```
 
     seven segment digits3
 
+
+```
+#make the export folder
+os.mkdir(export_folder)
+
+#make the images and labels subfolders
+for resource_folder in ["images", "labels"]:
+  os.mkdir(os.path.join(export_folder, resource_folder))
+```
 
 ## Configure defaults
 
@@ -255,29 +264,33 @@ results[-5:]
 The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
 
 ```
+class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+```
+
+And the `Viewer` class doesn't care how recently your weights were generated so you can plug in existing weights.
+
+```
 from ModelAssistedLabel.detect import Viewer
 
 results_folder = aw.last_results_path
 #results_folder = 'yolov5/runs/train/<index>' #uncomment to run with pre-trained weights
 
 weight_path = results_folder + "/weights/best.pt"
-'
 
-class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-v = Viewer(, class_idx)
+v = Viewer(weight_path, class_idx)
 ```
 
     Fusing layers... 
 
 
-```
-import random, glob
-
-images = [os.path.join(unlabeled_images, x) for x in glob.glob(f"./{unlabeled_images}/*.jpg")]
-```
+Selects all images in the unlabeled folder and let's us look through the computer's eyes at the images.
 
 ```
 %matplotlib inline 
+import random, glob
+
+images = glob.glob(f"./{unlabeled_images}/*.jpg")
+
 for image in random.sample(images,3):
   v.plot_for(image)
 ```
@@ -286,21 +299,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_40_1.png)
+![png](docs/images/output_43_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_40_3.png)
+![png](docs/images/output_43_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_40_5.png)
+![png](docs/images/output_43_5.png)
 
 
 ```
@@ -343,10 +356,6 @@ for result in results:
     shutil.move(aw.last_results_path, export_folder)
   else:
     print("No weights to save")
-```
-
-```
-len(os.listdir(export_folder))
 ```
 
 ## Wrap up
