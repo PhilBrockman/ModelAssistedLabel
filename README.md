@@ -43,19 +43,15 @@ And I hated annotating my images by hand. Once the models began making reasonabl
 
 ```python
 # these images have already had the images labeled and verified by a human
-labeled_images   = "./Image Repo/labeled/Final Roboflow Export (841)"
+labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
 
-unlabeled_images_repos = [] #including a variety of lighting from three seperate recordingns
-unlabeled_images_repos.append("Image Repo/unlabeled/21-3-18 rowing 8-12 /")
-unlabeled_images_repos.append("Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00")
-unlabeled_images_repos.append("Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50")
-
-unlabeled_images = unlabeled_images_repos[2] #for the sake of example, I'm selecting the images with the best lighting
+# this is a folder that contains images that need to be labeled
+unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
 ```
 
 ### Expected Output:
 
-* ***ZIP file*** that contains: 
+* **Folder** that contains: 
     - `images/`
       + a copy of every image in **Unlabeled Data**
     - `labels/`
@@ -326,12 +322,15 @@ for result in results:
 
   #save the image to the outfile
   image = PIL.Image.open(result["image path"])
-  image.save(os.path.join(export_folder, f"{shared_root}.jpg"))
+  image.save(os.path.join(export_folder, "images", f"{shared_root}.jpg"))
 
   #save the predictions to the outfile
   predictions = result["predictions"]
-  with open(os.path.join(export_folder, f"{shared_root}.txt"), "w") as prediction_file:
+  with open(os.path.join(export_folder, "labels", f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
+
+  import shutil
+  shutil.move(aw.last_results_path, export_folder)
 ```
 
 ```python

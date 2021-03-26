@@ -113,14 +113,10 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">labeled_images</span>   <span class="o">=</span> <span class="s2">&quot;./Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">labeled_images</span>   <span class="o">=</span> <span class="s2">&quot;Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
 
-<span class="n">unlabeled_images_repos</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#including a variety of lighting from three seperate recordingns</span>
-<span class="n">unlabeled_images_repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-18 rowing 8-12 /&quot;</span><span class="p">)</span>
-<span class="n">unlabeled_images_repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span><span class="p">)</span>
-<span class="n">unlabeled_images_repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50&quot;</span><span class="p">)</span>
-
-<span class="n">unlabeled_images</span> <span class="o">=</span> <span class="n">unlabeled_images_repos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#for the sake of example, I&#39;m selecting the images with the best lighting</span>
+<span class="c1"># this is a folder that contains images that need to be labeled</span>
+<span class="n">unlabeled_images</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span>
 </pre></div>
 
     </div>
@@ -133,7 +129,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Expected-Output:">Expected Output:<a class="anchor-link" href="#Expected-Output:"> </a></h3><ul>
-<li><strong><em>ZIP file</em></strong> that contains: <ul>
+<li><strong>Folder</strong> that contains: <ul>
 <li><code>images/</code><ul>
 <li>a copy of every image in <strong>Unlabeled Data</strong></li>
 </ul>
@@ -874,12 +870,15 @@ Wall time: 45min 23s
 
   <span class="c1">#save the image to the outfile</span>
   <span class="n">image</span> <span class="o">=</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;image path&quot;</span><span class="p">])</span>
-  <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shared_root</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">))</span>
+  <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shared_root</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">))</span>
 
   <span class="c1">#save the predictions to the outfile</span>
   <span class="n">predictions</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span>
-  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shared_root</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">prediction_file</span><span class="p">:</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shared_root</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">prediction_file</span><span class="p">:</span>
     <span class="n">prediction_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;yolov5 format&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">]))</span>
+
+  <span class="kn">import</span> <span class="nn">shutil</span>
+  <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">,</span> <span class="n">export_folder</span><span class="p">)</span>
 </pre></div>
 
     </div>
