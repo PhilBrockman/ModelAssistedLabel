@@ -194,6 +194,7 @@ aw.generate_weights(1000)
 The results folder is stored as an attribute as well, and it has a lot of data stored therein.
 
 ```python
+import os
 aw.last_results_path, len(os.listdir(aw.last_results_path))
 ```
 
@@ -207,7 +208,6 @@ aw.last_results_path, len(os.listdir(aw.last_results_path))
 However, the weights are stored in a subfolder called (aptly) "weights". I use `best.pt`.
 
 ```python
-import os
 os.listdir(aw.last_results_path + "/weights")
 ```
 
@@ -299,9 +299,9 @@ for image in images:
 
 ```python
 project_name = "seven segment digits"
-outzip = Defaults._itername(project_name)
-os.mkdir(outzip)
-print(outzip)
+export_folder = Defaults._itername(project_name)
+os.mkdir(export_folder)
+print(export_folder)
 ```
 
     seven segment digits3
@@ -332,6 +332,10 @@ for result in results:
   predictions = result["predictions"]
   with open(os.path.join(outzip, f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
+```
+
+```python
+len(os.listdir(export_folder))
 ```
 
 ## Next Steps
