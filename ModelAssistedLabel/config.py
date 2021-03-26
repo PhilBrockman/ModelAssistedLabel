@@ -29,39 +29,6 @@ class Defaults:
     print(f"moving to {self.root}")
     os.chdir(self.root)
 
-
-  def prepare_YOLOv5():
-    """
-    * Clone repository if the YOLOv5 directory does not exist.
-    * Install requirements.txt
-    * Check that GPU is enabled.
-    """
-    # safety for re-executions
-    if not os.path.exists("yolov5"):
-      # clone YOLOv5 and reset to a specific git checkpoint that has been verified working
-      os.system("git clone https://github.com/ultralytics/yolov5")  # clone repo
-      os.system("git reset --hard 68211f72c99915a15855f7b99bf5d93f5631330f") # standardize models
-
-    # enter the yolov5 directory
-    os.chdir("yolov5")
-
-    # install dependencies as necessary
-    os.system("pip install -qr requirements.txt")  # install dependencies (ignore errors)
-    import torch
-
-    from IPython.display import Image, clear_output  # to display images
-    # from utils.google_utils import gdrive_download  # to download models/datasets
-
-    clear_output()
-
-    if torch.cuda.is_available():
-      print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0)))
-    else:
-      raise Exception("You need to enable your GPU access to this runtime environment")
-
-    # return to parent directory
-    os.chdir("..")
-
   def _itername(pre, post=""):
     """If function terminates, returns the lowest conflict-free file path
     formatted as '{pre}X{post}' where X is the string representation of a natural

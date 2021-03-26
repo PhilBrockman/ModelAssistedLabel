@@ -4,8 +4,6 @@
 
 ![base64 splash](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/modelassistedlabel%20splash.jpg?raw=true)
 
-{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
-
 ## Background
 
 Object detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
@@ -19,6 +17,8 @@ And I hated annotating my images by hand. Once the models began making reasonabl
 (Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)
 
 ## Getting Started
+
+{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
 
 ```python
 #Fresh colab installation:
@@ -105,14 +105,32 @@ d.save()
 d.to_root()
 ```
 
-Clone yolov5 repo and install requirements.
+These following 14 lines regarding seting up the Ultralytics are taken from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5).
 
 ```python
-Defaults.prepare_YOLOv5()
+# clone YOLOv5 repository
+!git clone https://github.com/ultralytics/yolov5  # clone repo
+%cd yolov5
+!git reset --hard 886f1c03d839575afecb059accf74296fad395b6
+
+# install dependencies as necessary
+!pip install -qr requirements.txt  # install dependencies (ignore errors)
+import torch
+
+from IPython.display import Image, clear_output  # to display images
+from utils.google_utils import gdrive_download  # to download models/datasets
+
+# clear_output()
+print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) if torch.cuda.is_available() else 'CPU'))
 ```
 
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 
+
+```python
+# step back to the Root directory
+%cd ..
+```
 
 ## Processing input
 
@@ -189,6 +207,7 @@ aw.last_results_path, len(os.listdir(aw.last_results_path))
 However, the weights are stored in a subfolder called (aptly) "weights". I use `best.pt`.
 
 ```python
+import os
 os.listdir(aw.last_results_path + "/weights")
 ```
 
@@ -253,22 +272,28 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_35_1.png)
+![png](docs/images/output_36_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_35_3.png)
+![png](docs/images/output_36_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_35_5.png)
+![png](docs/images/output_36_5.png)
 
+
+```python
+results = []
+for image in images:
+  results.append(v.predict_for(image))
+```
 
 ## Exporting annotated images
 
