@@ -28,8 +28,8 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 
 -  **labeled images**
     + All of the images and labels must be in a common folder (subfolders allowed).
-    + labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885).
-    + I provide 841 annotated images.
+    + Labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885).
+    + I provide 841 annotated images of 7 segment digits.
 {% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
 
 
