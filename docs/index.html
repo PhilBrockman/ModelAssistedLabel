@@ -256,7 +256,7 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">=</span> <span class="n">Defaults</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">Defaults</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; -- Defined Keys: --&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
 </pre></div>
@@ -398,7 +398,6 @@ trainer_template
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;yolov5&quot;</span><span class="p">):</span>
   <span class="o">!</span>git clone https://github.com/ultralytics/yolov5  # clone repo
-  <span class="o">!</span>git reset --hard 886f1c03d839575afecb059accf74296fad395b6
 
 <span class="o">%</span><span class="k">cd</span> yolov5
 <span class="c1"># install dependencies as necessary</span>

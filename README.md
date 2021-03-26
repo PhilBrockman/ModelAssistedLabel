@@ -104,7 +104,7 @@ for resource_folder in ["images", "labels"]:
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
 
 ```
-d= Defaults()
+d = Defaults()
 print(" -- Defined Keys: --")
 print("\n".join([x for x in d.__dict__.keys()]))
 ```
@@ -147,7 +147,6 @@ These following 11 lines regarding seting up the Ultralytics are taken from [the
 # clone YOLOv5 repository
 if not os.path.exists("yolov5"):
   !git clone https://github.com/ultralytics/yolov5  # clone repo
-  !git reset --hard 886f1c03d839575afecb059accf74296fad395b6
 
 %cd yolov5
 # install dependencies as necessary
