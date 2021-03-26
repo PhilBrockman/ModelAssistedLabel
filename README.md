@@ -59,13 +59,13 @@ unlabeled_images = "21-3-22 rowing (200) 7:50-12:50"
 
 
 ```python
-project_name = "seven segment digits"
+project_name = "seven segment digits - "
 export_folder = Defaults._itername(project_name)
 os.mkdir(export_folder)
 print(export_folder)
 ```
 
-    seven segment digits1
+    seven segment digits - 1
 
 
 ## Configure defaults
