@@ -72,8 +72,7 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># clone this repository</span>
-<span class="o">!</span>git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 <span class="o">%</span><span class="k">cd</span> &quot;ModelAssistedLabel&quot;
 </pre></div>
 
@@ -173,7 +172,10 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;seven segment digits&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.config</span> <span class="kn">import</span> <span class="n">Defaults</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;seven segment digits&quot;</span>
 <span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
@@ -220,9 +222,7 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.config</span> <span class="kn">import</span> <span class="n">Defaults</span>
-
-<span class="n">d</span><span class="o">=</span> <span class="n">Defaults</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">=</span> <span class="n">Defaults</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; -- Defined Keys: --&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]))</span>
 </pre></div>
@@ -336,7 +336,7 @@ trainer_template
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>These following 14 lines regarding seting up the Ultralytics are taken from <a href="https://models.roboflow.com/object-detection/yolov5">the Roboflow tutorial</a>.</p>
+<p>These following 11 lines regarding seting up the Ultralytics are taken from <a href="https://models.roboflow.com/object-detection/yolov5">the Roboflow tutorial</a>.</p>
 
 </div>
 </div>
@@ -358,9 +358,34 @@ trainer_template
 
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">clear_output</span>  <span class="c1"># to display images</span>
 <span class="kn">from</span> <span class="nn">utils.google_utils</span> <span class="kn">import</span> <span class="n">gdrive_download</span>  <span class="c1"># to download models/datasets</span>
+</pre></div>
 
-<span class="c1"># clear_output()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Setup complete. Using torch </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;enable GPU&quot;</span><span class="p">)))</span>
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Make sure GPU is enabled.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Setup complete. Using torch </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">))</span>
+  <span class="n">d</span><span class="o">.</span><span class="n">to_root</span><span class="p">()</span> <span class="c1">#step up a level</span>
+<span class="k">else</span><span class="p">:</span>
+   <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;enable GPU&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -378,23 +403,6 @@ trainer_template
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">cd</span> ..
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -687,7 +695,11 @@ Wall time: 45min 23s
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.detect</span> <span class="kn">import</span> <span class="n">Viewer</span>
 
-<span class="n">weight_path</span> <span class="o">=</span> <span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span> <span class="o">+</span> <span class="s2">&quot;/weights/best.pt&quot;</span>
+<span class="n">results_folder</span> <span class="o">=</span> <span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span>
+<span class="c1">#results_folder = &#39;yolov5/runs/train/&lt;index&gt;&#39; #uncomment to run with pre-trained weights</span>
+
+<span class="n">weight_path</span> <span class="o">=</span> <span class="n">results_folder</span> <span class="o">+</span> <span class="s2">&quot;/weights/best.pt&quot;</span>
+<span class="s1">&#39;</span>
 
 <span class="n">class_idx</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
 <span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">(,</span> <span class="n">class_idx</span><span class="p">)</span>

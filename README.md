@@ -19,8 +19,6 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 {% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
 
 ```
-#Fresh colab installation:
-
 # clone this repository
 !git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 %cd "ModelAssistedLabel"
@@ -63,6 +61,9 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
 
 
 ```
+from ModelAssistedLabel.config import Defaults
+import os
+
 project_name = "seven segment digits"
 export_folder = Defaults._itername(project_name)
 os.mkdir(export_folder)
@@ -77,8 +78,6 @@ print(export_folder)
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
 
 ```
-from ModelAssistedLabel.config import Defaults
-
 d= Defaults()
 print(" -- Defined Keys: --")
 print("\n".join([x for x in d.__dict__.keys()]))
@@ -113,7 +112,7 @@ d.save()
 d.to_root()
 ```
 
-These following 14 lines regarding seting up the Ultralytics are taken from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5).
+These following 11 lines regarding seting up the Ultralytics are taken from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5).
 
 ```
 # clone YOLOv5 repository
@@ -127,18 +126,20 @@ import torch
 
 from IPython.display import Image, clear_output  # to display images
 from utils.google_utils import gdrive_download  # to download models/datasets
+```
 
-# clear_output()
-print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) if torch.cuda.is_available() else raise Exception("enable GPU")))
+Make sure GPU is enabled.
+
+```
+if torch.cuda.is_available():
+  print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) ))
+  d.to_root() #step up a level
+else:
+   raise Exception("enable GPU")
 ```
 
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 
-
-```
-# step back to the Root directory
-%cd ..
-```
 
 ## Processing input
 
@@ -256,7 +257,11 @@ The names of my classes are digits. Under the hood, the YOLOv5 model is working 
 ```
 from ModelAssistedLabel.detect import Viewer
 
-weight_path = aw.last_results_path + "/weights/best.pt"
+results_folder = aw.last_results_path
+#results_folder = 'yolov5/runs/train/<index>' #uncomment to run with pre-trained weights
+
+weight_path = results_folder + "/weights/best.pt"
+'
 
 class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 v = Viewer(, class_idx)
@@ -281,21 +286,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_39_1.png)
+![png](docs/images/output_40_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_39_3.png)
+![png](docs/images/output_40_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_39_5.png)
+![png](docs/images/output_40_5.png)
 
 
 ```
