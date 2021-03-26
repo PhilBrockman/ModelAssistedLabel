@@ -64,20 +64,20 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
 from ModelAssistedLabel.config import Defaults
 import os
 
-project_name = "seven segment digits"
+project_name = "seven segment digits - "
 export_folder = Defaults._itername(project_name)
 
 print(export_folder)
 ```
 
-    seven segment digits3
+    seven segment digits - 2
 
 
 ```
-#make the export folder
+# make the export folder
 os.mkdir(export_folder)
 
-#make the images and labels subfolders
+# make the images and labels subfolders
 for resource_folder in ["images", "labels"]:
   os.mkdir(os.path.join(export_folder, resource_folder))
 ```
