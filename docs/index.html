@@ -88,8 +88,8 @@ nb_path: "index.ipynb"
 <h3 id="Expected-Inputs:">Expected Inputs:<a class="anchor-link" href="#Expected-Inputs:"> </a></h3><ul>
 <li><strong>labeled images</strong><ul>
 <li>All of the images and labels must be in a common folder (subfolders allowed).</li>
-<li>labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.</li>
-<li>I provide 841 annotated images.
+<li>Labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.</li>
+<li>I provide 841 annotated images of 7 segment digits.
 {% include note.html content='Image/label pairs are based on their base filename. For example <code>image.jpg/image.txt</code> would be paired as would <code>other_image5.jpg/other_image5.txt</code>.' %}</li>
 </ul>
 </li>
@@ -175,7 +175,7 @@ nb_path: "index.ipynb"
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.config</span> <span class="kn">import</span> <span class="n">Defaults</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;seven segment digits&quot;</span>
+<span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;seven segment digits - &quot;</span>
 <span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
@@ -191,7 +191,7 @@ nb_path: "index.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>seven segment digits3
+<pre>seven segment digits - 2
 </pre>
 </div>
 </div>
@@ -211,7 +211,7 @@ nb_path: "index.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
 
-<span class="c1">#make the images and labels subfolders</span>
+<span class="c1"># make the images and labels subfolders</span>
 <span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
   <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
 </pre></div>
