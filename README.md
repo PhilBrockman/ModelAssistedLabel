@@ -29,9 +29,11 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
   - **labeled images**
       + All of the images and labels must be in a common folder (subfolders allowed).
       + labels must be in [YOLOv5 format](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885).
-{% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}
+{% include note.html content='Image/label pairs are based on their base filename. For example `image.jpg/image.txt` would be paired as would `other_image5.jpg/other_image5.txt`.' %}      + I provide 841 annotated images in the github.
+
 * And:
   - **unlabeled images**
+      + I provide 3 sets (each of 200 images) in the github
 
 
 
@@ -41,7 +43,7 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 # these images have already had the images labeled and verified by a human
 labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
 
-# this is a folder that contains images that need to be labeled
+# one of the sets of unlabeled images
 unlabeled_images = "21-3-22 rowing (200) 7:50-12:50"
 ```
 
@@ -128,7 +130,7 @@ print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_d
 
 
 ```python
-d.to_root()
+d.to_root() 
 ```
 
     moving to /content/drive/MyDrive/Coding/ModelAssistedLabel/
@@ -404,6 +406,6 @@ len(os.listdir(export_folder))
 
 
 
-*   In add
+
 
 
