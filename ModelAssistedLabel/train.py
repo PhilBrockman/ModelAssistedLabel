@@ -172,11 +172,15 @@ class AutoWeights():
     with zipfile.ZipFile(zipped, 'r') as zip_ref:
       zip_ref.extractall("unzipped")
 
-    folder = zipped[:-4]
-    for content in os.listdir(f"unzipped/{folder}"):
-      os.system(f"mv '{os.path.join(folder, content)}' .")
+    resource_paths = []
+    resources = f"unzipped/{os.path.dirname(zipped)}/{os.path.basename(zipped)[:-4]}/"
+
+    for content in os.listdir(resources):
+      movement = f"mv '{os.path.join(resources, content)}' ."
+      print(movement)
+      os.system(movement)
       outpath = content
-      self.resource_paths.append(outpath)
+      resource_paths.append(outpath)
 
     #removed the folder that was taken out of the zip
     shutil.rmtree("unzipped")

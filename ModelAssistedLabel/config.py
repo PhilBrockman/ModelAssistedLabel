@@ -23,6 +23,13 @@ class Defaults:
     for k,v in indata.items():
       self.__dict__[k] = v
 
+  def to_root(self):
+    "move to the root directory"
+    assert self.root
+    print(f"moving to {self.root}")
+    os.chdir(self.root)
+
+
   def prepare_YOLOv5():
     """
     * Clone repository if the YOLOv5 directory does not exist.
