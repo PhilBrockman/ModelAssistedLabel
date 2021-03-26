@@ -2,7 +2,7 @@
 > bootstrapping image annotation
 
 
-```python
+```
 from google.colab import drive
 drive.mount("/content/drive")
 
@@ -29,7 +29,7 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 
 {% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
 
-```python
+```
 #Fresh colab installation:
 
 # clone this repository
@@ -50,7 +50,7 @@ After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-de
 
 
 
-```python
+```
 # these images have already had the images labeled and verified by a human
 labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
 
@@ -69,7 +69,7 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
     - `class labels.txt` to preserve the identity of the classes
 
 
-```python
+```
 project_name = "seven segment digits"
 export_folder = Defaults._itername(project_name)
 os.mkdir(export_folder)
@@ -83,7 +83,7 @@ print(export_folder)
 
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
 
-```python
+```
 from ModelAssistedLabel.config import Defaults
 
 d= Defaults()
@@ -102,27 +102,27 @@ print("\n".join([x for x in d.__dict__.keys()]))
 
 Speciy the absolute path of the root directory.
 
-```python
+```
 !pwd
 ```
 
     /content/ModelAssistedLabel
 
 
-```python
+```
 d.root = "/content/ModelAssistedLabel/"
 ```
 
 Save any changes and enter root directory
 
-```python
+```
 d.save()
 d.to_root()
 ```
 
 These following 14 lines regarding seting up the Ultralytics are taken from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5).
 
-```python
+```
 # clone YOLOv5 repository
 !git clone https://github.com/ultralytics/yolov5  # clone repo
 %cd yolov5
@@ -142,7 +142,7 @@ print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_d
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
 
 
-```python
+```
 # step back to the Root directory
 %cd ..
 ```
@@ -151,7 +151,7 @@ print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_d
 
 Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `Autoweights` class both organizes data and create weights. Running an "initialize" command makes changes to the disk.
 
-```python
+```
 from ModelAssistedLabel.train import AutoWeights
 
 datadump="ipynb_tests/index"
@@ -190,7 +190,7 @@ aw.traverse_resources()
 
 With the images written to disk, we can run the Ultralytics training algorithm. On this dataset, I found 1200 epochs to be a reasonable stopping point but using even longer training times are not uncommon.
 
-```python
+```
 %%time
 aw.generate_weights(1000)
 ```
@@ -208,7 +208,7 @@ aw.generate_weights(1000)
 
 The results folder is stored as an attribute as well, and it has a lot of data stored therein.
 
-```python
+```
 import os
 aw.last_results_path, len(os.listdir(aw.last_results_path))
 ```
@@ -222,7 +222,7 @@ aw.last_results_path, len(os.listdir(aw.last_results_path))
 
 However, the weights are stored in a subfolder called (aptly) "weights". I use `best.pt`.
 
-```python
+```
 os.listdir(aw.last_results_path + "/weights")
 ```
 
@@ -235,7 +235,7 @@ os.listdir(aw.last_results_path + "/weights")
 
 View the last couple lines 
 
-```python
+```
 with open(aw.last_results_path + "/results.txt") as results_file:
   results = results_file.readlines()
 print("Epoch   gpu_mem       box       obj       cls     total    labels  img_size")
@@ -260,7 +260,7 @@ results[-5:]
 
 The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
 
-```python
+```
 #aw.last_results_path + "/weights/best.pt"
 from ModelAssistedLabel.detect import Viewer
 
@@ -271,13 +271,13 @@ v = Viewer("pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt", class_idx)
     Fusing layers... 
 
 
-```python
+```
 import random, glob
 
 images = [os.path.join(unlabeled_images, x) for x in glob.glob(f"./{unlabeled_images}/*.jpg")]
 ```
 
-```python
+```
 %matplotlib inline 
 for image in random.sample(images,3):
   v.plot_for(image)
@@ -304,7 +304,7 @@ for image in random.sample(images,3):
 ![png](docs/images/output_38_5.png)
 
 
-```python
+```
 results = []
 for image in images:
   results.append(v.predict_for(image))
@@ -314,14 +314,14 @@ for image in images:
 
 Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
 
-```python
+```
 with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
   label_map.writelines("\n".join(class_idx))
 ```
 
 Ensure that image/label pairs have a common root filename
 
-```python
+```
 import random, PIL, shutil
 salt = lambda: str(random.random())[2:]
 
@@ -346,7 +346,7 @@ for result in results:
     print("No weights to save")
 ```
 
-```python
+```
 len(os.listdir(export_folder))
 ```
 
