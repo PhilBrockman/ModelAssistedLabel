@@ -310,7 +310,7 @@ print(export_folder)
 Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
 
 ```python
-with open(os.path.join(outzip, "label_map.txt"), "w") as label_map:
+with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
   label_map.writelines("\n".join(class_idx))
 ```
 
@@ -326,11 +326,11 @@ for result in results:
 
   #save the image to the outfile
   image = PIL.Image.open(result["image path"])
-  image.save(os.path.join(outzip, f"{shared_root}.jpg"))
+  image.save(os.path.join(export_folder, f"{shared_root}.jpg"))
 
   #save the predictions to the outfile
   predictions = result["predictions"]
-  with open(os.path.join(outzip, f"{shared_root}.txt"), "w") as prediction_file:
+  with open(os.path.join(export_folder, f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
 ```
 

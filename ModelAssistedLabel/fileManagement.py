@@ -74,7 +74,6 @@ class FileUtilities:
 from .core import Defaults
 from datetime import datetime
 import math, random, shutil
-import progressbar
 
 class Generation:
   """
