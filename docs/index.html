@@ -68,7 +68,7 @@ nb_path: "index.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 <span class="o">%</span><span class="k">cd</span> &quot;ModelAssistedLabel&quot;
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">i</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">test</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span> <span class="n">ModelAssistedLabel</span><span class="o">==</span><span class="mf">1.0</span>
+<span class="o">!</span>pip install -i https://test.pypi.org/simple/ <span class="nv">ModelAssistedLabel</span><span class="o">==</span><span class="m">1</span>.1
 </pre></div>
 
     </div>
@@ -113,31 +113,10 @@ nb_path: "index.ipynb"
 <span class="n">unlabeled_images_repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span><span class="p">)</span>
 <span class="n">unlabeled_images_repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50&quot;</span><span class="p">)</span>
 
-<span class="n">unlabeled_images</span> <span class="o">=</span> <span class="n">repos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#for the sake of example, I&#39;m selecting the images with the best lighting</span>
+<span class="n">unlabeled_images</span> <span class="o">=</span> <span class="n">unlabeled_images_repos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#for the sake of example, I&#39;m selecting the images with the best lighting</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-1-837237021288&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      7</span> unlabeled_images_repos<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50&#34;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span> 
-<span class="ansi-green-fg">----&gt; 9</span><span class="ansi-red-fg"> </span>unlabeled_images <span class="ansi-blue-fg">=</span> repos<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">]</span> <span class="ansi-red-fg">#for the sake of example, I&#39;m selecting the images with the best lighting</span>
-
-<span class="ansi-red-fg">NameError</span>: name &#39;repos&#39; is not defined</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -226,6 +205,39 @@ trainer_template
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pwd
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;/content&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">

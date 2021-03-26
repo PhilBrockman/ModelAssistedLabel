@@ -172,6 +172,7 @@ class AutoWeights():
     with zipfile.ZipFile(zipped, 'r') as zip_ref:
       zip_ref.extractall("unzipped")
 
+    folder = zipped[:-4]
     for content in os.listdir(f"unzipped/{folder}"):
       os.system(f"mv '{os.path.join(folder, content)}' .")
       outpath = content
