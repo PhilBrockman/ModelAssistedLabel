@@ -2,17 +2,26 @@
 > bootstrapping image annotation
 
 
+```python
+from google.colab import drive
+drive.mount("/content/drive")
+
+%cd "/content/drive/MyDrive/Coding/ModelAssistedLabel/"
+```
+
+    Mounted at /content/drive
+    /content/drive/MyDrive/Coding/ModelAssistedLabel
+
+
 ![base64 splash](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/modelassistedlabel%20splash.jpg?raw=true)
 
 ## Background
 
 Object detection is great! ... if your labeled dataset already exists. I wanted to use machine learning to turn my regular rowing machine into a "smart" rowing machine (specifically: I want to track my workout stats).
 
-Unfortunately, I was unable to find a suitable existing set of labeled LCD digits.
+Unfortunately, I was unable to find a suitable existing set of labeled LCD digits. So I began using my webcam to campture images of my rowing screen.
 
-After working through [a Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate and store my images. 
-
-And I hated annotating my images by hand. Once the models began making reasonable guesses, I enlisted the model's help in labeling new images. This repository is the result of these efforts.
+After working through [a YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5), I started to use Roboflow to annotate and store my images. But I hated annotating my images by hand. Once the models began making reasonable guesses, I enlisted the model's help in labeling new images. This repository is the result of these efforts.
 
 (Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)
 
@@ -23,9 +32,9 @@ And I hated annotating my images by hand. Once the models began making reasonabl
 ```python
 #Fresh colab installation:
 
+# clone this repository
 !git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 %cd "ModelAssistedLabel"
-!pip install -i https://test.pypi.org/simple/ ModelAssistedLabel==1.3.5
 ```
 
 ### Expected Inputs:
@@ -57,7 +66,17 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
     - `labels/`
       + result of running object detection on each image
     - a results folder produced by Ultralytic's `train.py` on the **Labeled Data** (if not using pre-trained weights)
-    - `classmap.yaml` to preserve the identity of the classes
+    - `class labels.txt` to preserve the identity of the classes
+
+
+```python
+project_name = "seven segment digits"
+export_folder = Defaults._itername(project_name)
+os.mkdir(export_folder)
+print(export_folder)
+```
+
+    seven segment digits3
 
 
 ## Configure defaults
@@ -117,7 +136,7 @@ from IPython.display import Image, clear_output  # to display images
 from utils.google_utils import gdrive_download  # to download models/datasets
 
 # clear_output()
-print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) if torch.cuda.is_available() else 'CPU'))
+print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) if torch.cuda.is_available() else raise Exception("enable GPU")))
 ```
 
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
@@ -253,9 +272,9 @@ v = Viewer("pre-trained weights/21-2-25 1k-digits YOLOv5-weights.pt", class_idx)
 
 
 ```python
-import random
+import random, glob
 
-images = [os.path.join(unlabeled_images, x) for x in os.listdir(unlabeled_images)]
+images = [os.path.join(unlabeled_images, x) for x in glob.glob(f"./{unlabeled_images}/*.jpg")]
 ```
 
 ```python
@@ -268,21 +287,21 @@ for image in random.sample(images,3):
 
 
 
-![png](docs/images/output_36_1.png)
+![png](docs/images/output_38_1.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/136.jpg: >>> [{'predictions': ['0 0.419141 0.377778 0.0148437 0.075 0.61542', '0 0.36875 0.370833 0.01875 0.0805556 0.804835', '0 0.397656 0.376389 0.015625 0.075 0.825409', '8 0.436719 0.382639 0.01875 0.0763889 0.894479']}]
 
 
 
-![png](docs/images/output_36_3.png)
+![png](docs/images/output_38_3.png)
 
 
     image 1/1 /content/drive/My Drive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50/143.jpg: >>> [{'predictions': ['7 0.437891 0.380556 0.0195312 0.0777778 0.547772', '0 0.397656 0.375694 0.015625 0.0708333 0.758558', '0 0.369141 0.371528 0.0164062 0.0763889 0.805282', '1 0.414453 0.377778 0.0210938 0.0805556 0.907629']}]
 
 
 
-![png](docs/images/output_36_5.png)
+![png](docs/images/output_38_5.png)
 
 
 ```python
@@ -292,16 +311,6 @@ for image in images:
 ```
 
 ## Exporting annotated images
-
-```python
-project_name = "seven segment digits"
-export_folder = Defaults._itername(project_name)
-os.mkdir(export_folder)
-print(export_folder)
-```
-
-    seven segment digits3
-
 
 Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
 
@@ -313,7 +322,7 @@ with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
 Ensure that image/label pairs have a common root filename
 
 ```python
-import random, PIL
+import random, PIL, shutil
 salt = lambda: str(random.random())[2:]
 
 for result in results:
@@ -329,8 +338,12 @@ for result in results:
   with open(os.path.join(export_folder, "labels", f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
 
-  import shutil
-  shutil.move(aw.last_results_path, export_folder)
+  #check if weights were generated
+  if aw is not None and os.path.exists(aw.last_results_path):
+    print("Moving yolov5 results folder")
+    shutil.move(aw.last_results_path, export_folder)
+  else:
+    print("No weights to save")
 ```
 
 ```python
