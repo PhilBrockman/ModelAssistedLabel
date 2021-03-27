@@ -113,7 +113,7 @@ with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
   label_map.writelines("\n".join(class_idx))
 ```
 
-### Configure defaults
+### Configure Defaults
 
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
 
@@ -357,7 +357,7 @@ results[-5:]
 
 ## Machine-assisted Labeling
 
-### Labeling a new set of images
+### Labeling a New Set of Images
 
 And the `Viewer` class doesn't care how recently your weights were generated so you can plug in existing weights.
 
@@ -401,7 +401,7 @@ for image in images:
   results.append(v.predict_for(image))
 ```
 
-### Exporting annotated images
+### Exporting Annotated Images
 
 Ensure that image/label pairs have a common root filename
 
@@ -437,7 +437,7 @@ The images are ready for human verification. As the model grows more accurate, I
 
 I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
 
-## Wrap up
+## Wrap Up
 
 My original goal of "smartifying" my rowing machine is closer than ever. 
 
