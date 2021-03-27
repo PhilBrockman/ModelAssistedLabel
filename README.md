@@ -30,7 +30,7 @@ This repository contains the tools that let me "pre-label" my images before send
 
 ```
 # clone this repository
-!git clone -b future_forward https://github.com/PhilBrockman/ModelAssistedLabel.git
+!git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 %cd "ModelAssistedLabel"
 ```
 
@@ -45,7 +45,7 @@ This repository contains the tools that let me "pre-label" my images before send
     /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel
 
 
-### Expected Inputs:
+### Expected Inputs
 
 -  **labeled images**
     + All of the images and labels must be in a common folder (subfolders allowed).
@@ -68,7 +68,7 @@ labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
 unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
 ```
 
-### Expected Output:
+### Expected Output
 
 * **Folder** that contains: 
     - `images/`
