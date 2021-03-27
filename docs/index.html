@@ -1175,7 +1175,7 @@ Wall time: 4h 57min 26s
 <span class="k">try</span><span class="p">:</span> 
   <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">):</span>
     <span class="c1"># `aw` exists and it has been executed </span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving yolov5 results folder: </span><span class="si">{</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving yolov5 results: </span><span class="si">{</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">,</span> <span class="n">export_folder</span><span class="p">)</span>
 
     <span class="c1">#flip the flag</span>

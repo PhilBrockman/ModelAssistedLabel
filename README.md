@@ -448,7 +448,7 @@ moved = False #set a flag
 try: 
   if os.path.exists(aw.last_results_path):
     # `aw` exists and it has been executed 
-    print(f"Moving yolov5 results folder: {aw.last_results_path}")
+    print(f"Moving yolov5 results: {aw.last_results_path}")
     shutil.move(aw.last_results_path, export_folder)
 
     #flip the flag
