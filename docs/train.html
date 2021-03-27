@@ -81,7 +81,7 @@ nb_path: "02_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="ModelAssistedLabel/train.py#L9" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>name</code></strong>)</p>
+<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="ModelAssistedLabel/train.py#L8" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>yaml_data</code></strong>, <strong><code>name</code></strong>, <strong><code>yaml_file</code></strong>=<em><code>'models/custom_yolov5s.yaml'</code></em>)</p>
 </blockquote>
 <p>A wrapper for Ultralytic's <code>test.py</code></p>
 <p>Write the backbone of the model to file and then run YOLOv5's train file.</p>
@@ -114,7 +114,7 @@ nb_path: "02_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="AutoWeights" class="doc_header"><code>class</code> <code>AutoWeights</code><a href="ModelAssistedLabel/train.py#L55" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AutoWeights</code>(<strong><code>name</code></strong>=<em><code>'AutoWeight &lt;name&gt;'</code></em>, <strong><code>out_dir</code></strong>=<em><code>'.'</code></em>, <strong><code>MAX_SIZE</code></strong>=<em><code>5</code></em>, <strong><code>custom_split</code></strong>=<em><code>None</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>train_path</code></strong>=<em><code>'yolov5/runs/train'</code></em>)</p>
+<h2 id="AutoWeights" class="doc_header"><code>class</code> <code>AutoWeights</code><a href="ModelAssistedLabel/train.py#L52" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AutoWeights</code>(<strong><code>name</code></strong>=<em><code>'AutoWeight &lt;name&gt;'</code></em>, <strong><code>out_dir</code></strong>=<em><code>'.'</code></em>, <strong><code>MAX_SIZE</code></strong>=<em><code>5</code></em>, <strong><code>custom_split</code></strong>=<em><code>None</code></em>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>train_path</code></strong>=<em><code>'yolov5/runs/train'</code></em>)</p>
 </blockquote>
 <p>Given a bag of images (.jpg) and labels (.txt) in YOLOv5 format in a repository,
 initialize the ROOT directory with a train-valid-test split and a file needed

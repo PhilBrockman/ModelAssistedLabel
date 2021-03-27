@@ -179,6 +179,7 @@ else:
 ## Processing input
 
 ```
+from ModelAssistedLabel.fileManagement import Generation
 datadump = "path/to/anywhere"
 
 g = Generation(repo=labeled_images, 
@@ -198,11 +199,12 @@ from ModelAssistedLabel.train import AutoWeights
 aw = AutoWeights(name=export_folder, out_dir=datadump)
 
 # create train/valid/test split from a bag of labeled images (recusively seek out images/labels)
-aw.initialize_from_zip(zipped)
+aw.initialize_images_from_zip(zipped)
 ```
 
+Peep on the sizes of the train/valid/test groups.
+
 ```
-# see the sizes of the train/valid/test groups
 aw.traverse_resources()
 ```
 
@@ -347,21 +349,21 @@ for image in random.sample(images,5):
 
 
 
-![png](docs/images/output_45_1.png)
+![png](docs/images/output_46_1.png)
 
 
     image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/189.jpg: >>> [{'predictions': ['5 0.439453 0.251389 0.0210938 0.0833333 0.881868', '9 0.414453 0.249306 0.0226563 0.0847222 0.882727', '4 0.489844 0.258333 0.021875 0.0833333 0.904524']}]
 
 
 
-![png](docs/images/output_45_3.png)
+![png](docs/images/output_46_3.png)
 
 
     image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/165.jpg: >>> [{'predictions': ['7 0.490625 0.260417 0.021875 0.0819444 0.686349', '9 0.464844 0.257639 0.0234375 0.0819444 0.766056', '9 0.414453 0.249306 0.0226563 0.0847222 0.892554', '5 0.439844 0.252083 0.021875 0.0847222 0.896628']}]
 
 
 
-![png](docs/images/output_45_5.png)
+![png](docs/images/output_46_5.png)
 
 
 ```

@@ -3,7 +3,6 @@
 __all__ = ['Trainer', 'AutoWeights']
 
 # Cell
-from .config import Defaults
 import os
 
 class Trainer():
@@ -11,27 +10,25 @@ class Trainer():
 
   Write the backbone of the model to file and then run YOLOv5's train file."""
 
-  def __init__(self, name):
-    """
-    sets the current directory to the project's root as defined in Defaults.
+  def __init__(self, yaml_data, name, yaml_file = "models/custom_yolov5s.yaml"):
+    """ Constructs the Trainer class and defines the `yaml_file` location
 
     Args:
       name: identifier for results
     """
-    os.chdir(Defaults().root)
-    self.yaml_file = "yolov5/models/custom_yolov5s.yaml"
+    self.yaml_file = yaml_file
     self.name = name
-    self.template = Defaults().trainer_template
+    self.yaml_data = yaml_data
 
-  def write_yaml(self):
+  def write_yaml(self, data, prefix="yolov5/"):
     """
     Records YOLOv5 architecture
     """
-    yaml = self.yaml_file
+    yaml = prefix+self.yaml_file
     if os.path.exists(yaml):
       os.remove(yaml)
     f = open(yaml,"w+")
-    f.writelines(self.template)
+    f.writelines(data)
     f.close()
 
   def train(self, epochs):
@@ -41,7 +38,7 @@ class Trainer():
     Args:
       epochs: number of iterations
     """
-    self.write_yaml()
+    self.write_yaml(self.yaml_data)
     os.chdir("yolov5")
     os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg '{self.yaml_file}' --weights '' --name '{self.name}'  --cache")
     os.chdir("..")
