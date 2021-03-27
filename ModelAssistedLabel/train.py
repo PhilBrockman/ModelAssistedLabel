@@ -19,7 +19,7 @@ class Trainer():
       name: identifier for results
     """
     os.chdir(Defaults().root)
-    self.yaml_file = "models/custom_yolov5s.yaml"
+    self.yaml_file = "yolov5/models/custom_yolov5s.yaml"
     self.name = name
     self.template = Defaults().trainer_template
 
@@ -27,7 +27,7 @@ class Trainer():
     """
     Records YOLOv5 architecture
     """
-    yaml = f"yolov5/{self.yaml_file}"
+    yaml = self.yaml_file
     if os.path.exists(yaml):
       os.remove(yaml)
     f = open(yaml,"w+")
@@ -43,7 +43,6 @@ class Trainer():
     """
     self.write_yaml()
     os.chdir("yolov5")
-    os.system("pip install -r requirements.txt")
     os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg '{self.yaml_file}' --weights '' --name '{self.name}'  --cache")
     os.chdir("..")
 

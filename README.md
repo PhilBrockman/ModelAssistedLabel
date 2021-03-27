@@ -184,10 +184,10 @@ Next, the images need to be written in a way so that the Ultralytics repository 
 from ModelAssistedLabel.train import AutoWeights
 
 #location to store anything that needs to be written to disk
-datadump="ipynb_tests/indexdump/autoweights"
+datadump="tmp/"
 
 #configure a basic AutoWeights class instance
-aw = AutoWeights(name="<index auto weights>", out_dir=datadump)
+aw = AutoWeights(name=export_folder, out_dir=datadump)
 
 # create train/valid/test split from a bag of labeled images (recusively seek out images/labels)
 aw.initialize_images_from_bag(labeled_images)
