@@ -21,9 +21,6 @@ entries:
     - output: web,pdf
       title: Detecting Objects
       url: detect.html
-    - output: web,pdf
-      title: Setup
-      url: tutorial.html
     output: web
     title: ModelAssistedLabel
   output: web
