@@ -384,7 +384,7 @@ trainer_template
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>These following 11 lines regarding seting up the Ultralytics are taken from <a href="https://models.roboflow.com/object-detection/yolov5">the Roboflow tutorial</a>.</p>
+<p>I borrow the instructions to set up the Ultralytics repo from <a href="https://models.roboflow.com/object-detection/yolov5">the Roboflow tutorial</a>. (If I'd be allowed one undo on this project, I wish I would have intially forked this project from that tutorial.)</p>
 
 </div>
 </div>
@@ -396,8 +396,7 @@ trainer_template
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;yolov5&quot;</span><span class="p">):</span>
-  <span class="o">!</span>git clone https://github.com/ultralytics/yolov5  # clone repo
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git clone https://github.com/ultralytics/yolov5  # clone repo
 
 <span class="o">%</span><span class="k">cd</span> yolov5
 <span class="c1"># install dependencies as necessary</span>
@@ -795,7 +794,7 @@ Wall time: 3h 46min 43s
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.detect</span> <span class="kn">import</span> <span class="n">Viewer</span>
 
-<span class="c1"># access the last results from the AutoWeights instance</span>
+<span class="c1"># access the folder of results from the AutoWeights instance</span>
 <span class="n">results_folder</span> <span class="o">=</span> <span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span>
 
 <span class="c1"># I&#39;m choosing to use the best weight.</span>
@@ -1159,7 +1158,7 @@ image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/
 
 <span class="c1">#check if weights were generated</span>
 <span class="k">if</span> <span class="n">aw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving yolov5 results folder </span><span class="si">{</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving yolov5 results folder: </span><span class="si">{</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
   <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">,</span> <span class="n">export_folder</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No weights to save&quot;</span><span class="p">)</span>
@@ -1188,15 +1187,32 @@ image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Wrap-up">Wrap up<a class="anchor-link" href="#Wrap-up"> </a></h2><p>With the class wrappers built around Ultralytic's YOLOv5 libraries, models can now be programmically generated. Even with the time and resource constrainst of Colab Pro, I was still comfortably able to train a YOLOv5 model on 841 images for 2000 epochs (weights are available under <code>./pre-trained weights/841 rowing images.pt</code>)</p>
-<p>And with that model, I can achive my original goal (under certain conditions)! If I employ blackout curtains and carefully adjust the lamps lighting the room, I can reliably read the LCD display.</p>
-<p>You can see the sensitivity to environmental conditions in these training sets under <code>Image Repo/unlabeled/</code></p>
+<p>At this point I would have uploaded this set of image/label pairs to Roboflow for correction and annotation. As the model grows more accurate, I would alter camera position or lighting until the model started stumbling again. I want to be keeping the model on its toes!</p>
+<p>To be transparent, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> that better suited my needs.</p>
+<p>I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Wrap-up">Wrap up<a class="anchor-link" href="#Wrap-up"> </a></h2><p>My original goal of "smartifying" my rowing machine is closer than ever.</p>
+<p>It is possible to parse workout information (thought currently, I only have access to a maximum of 4 digits). I wonder if the model could keep up if there were 20+ digits to capture.</p>
+<p>I know that lighting and camera position have an effect on accuracy. Here's how I'm holding my computer steady as I modify the lighting: <a href="https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg">standing</a>, <a href="https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg">floor 1</a>, <a href="https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true">floor 2</a>.</p>
+<p>Here are 3 runs captured under different lighting conditions:</p>
 <ul>
-<li><code>21-3-22 rowing (200) 7:50-12:50</code></li>
-<li><code>21-3-22 rowing (200) 1:53-7:00</code></li>
-<li><code>21-3-18 rowing 8-12</code></li>
+<li><code>21-3-22 rowing (200) 7:50-12:50</code> (direct lighting from one light source)</li>
+<li><code>21-3-22 rowing (200) 1:53-7:00</code> (direct lighting from one light source with glare)</li>
+<li><code>21-3-18 rowing 8-12</code> (direct light and ambient lamps turned on)
+{% include note.html content='All unlabeled images were taken inside a blacked-out room. The are stored in <code>Image Repo/unlabeled/</code>' %}</li>
 </ul>
-<p>(Later on, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Parting-Questions">Parting Questions<a class="anchor-link" href="#Parting-Questions"> </a></h3><p>My labeled images are disorderly. There's data from other rowing machines and from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind stranger's github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
 
 </div>
 </div>

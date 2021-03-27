@@ -11,16 +11,15 @@ class Trainer():
 
   Write the backbone of the model to file and then run YOLOv5's train file."""
 
-  def __init__(self, name, yaml_file = "models/custom_yolov5s.yaml"):
+  def __init__(self, name):
     """
     sets the current directory to the project's root as defined in Defaults.
 
     Args:
       name: identifier for results
-      yaml_file: path to write the file
     """
     os.chdir(Defaults().root)
-    self.yaml_file = yaml_file
+    self.yaml_file = "models/custom_yolov5s.yaml"
     self.name = name
     self.template = Defaults().trainer_template
 
@@ -31,7 +30,7 @@ class Trainer():
     yaml = f"yolov5/{self.yaml_file}"
     if os.path.exists(yaml):
       os.remove(yaml)
-    f = open(yaml,"w")
+    f = open(yaml,"w+")
     f.writelines(self.template)
     f.close()
 

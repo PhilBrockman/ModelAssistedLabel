@@ -141,12 +141,11 @@ d.to_root()
     moving to /content/drive/MyDrive/Coding/ModelAssistedLabel/
 
 
-These following 11 lines regarding seting up the Ultralytics are taken from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5).
+I borrow the instructions to set up the Ultralytics repo from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5). (If I'd be allowed one undo on this project, I wish I would have intially forked this project from that tutorial.)
 
 ```
 # clone YOLOv5 repository
-if not os.path.exists("yolov5"):
-  !git clone https://github.com/ultralytics/yolov5  # clone repo
+!git clone https://github.com/ultralytics/yolov5  # clone repo
 
 %cd yolov5
 # install dependencies as necessary
@@ -309,7 +308,7 @@ And the `Viewer` class doesn't care how recently your weights were generated so 
 ```
 from ModelAssistedLabel.detect import Viewer
 
-# access the last results from the AutoWeights instance
+# access the folder of results from the AutoWeights instance
 results_folder = aw.last_results_path
 
 # I'm choosing to use the best weight.
@@ -535,7 +534,7 @@ for result in results:
 
 #check if weights were generated
 if aw is not None and os.path.exists(aw.last_results_path):
-  print(f"Moving yolov5 results folder {aw.last_results_path}")
+  print(f"Moving yolov5 results folder: {aw.last_results_path}")
   shutil.move(aw.last_results_path, export_folder)
 else:
   print("No weights to save")
@@ -544,19 +543,31 @@ else:
     No weights to save
 
 
+At this point I would have uploaded this set of image/label pairs to Roboflow for correction and annotation. As the model grows more accurate, I would alter camera position or lighting until the model started stumbling again. I want to be keeping the model on its toes!
+
+To be transparent, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) that better suited my needs.
+
+I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! 
+
 ## Wrap up
 
-With the class wrappers built around Ultralytic's YOLOv5 libraries, models can now be programmically generated. Even with the time and resource constrainst of Colab Pro, I was still comfortably able to train a YOLOv5 model on 841 images for 2000 epochs (weights are available under `./pre-trained weights/841 rowing images.pt`)
+My original goal of "smartifying" my rowing machine is closer than ever. 
 
-And with that model, I can achive my original goal (under certain conditions)! If I employ blackout curtains and carefully adjust the lamps lighting the room, I can reliably read the LCD display.
+It is possible to parse workout information (thought currently, I only have access to a maximum of 4 digits). I wonder if the model could keep up if there were 20+ digits to capture.
 
-You can see the sensitivity to environmental conditions in these training sets under `Image Repo/unlabeled/`
-* `21-3-22 rowing (200) 7:50-12:50`
-* `21-3-22 rowing (200) 1:53-7:00`
-* `21-3-18 rowing 8-12 `
+I know that lighting and camera position have an effect on accuracy. Here's how I'm holding my computer steady as I modify the lighting: [standing](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [floor 1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [floor 2](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
+
+Here are 3 runs captured under different lighting conditions:
+* `21-3-22 rowing (200) 7:50-12:50` (direct lighting from one light source)
+* `21-3-22 rowing (200) 1:53-7:00` (direct lighting from one light source with glare)
+* `21-3-18 rowing 8-12 ` (direct light and ambient lamps turned on)
+{% include note.html content='All unlabeled images were taken inside a blacked-out room. The are stored in `Image Repo/unlabeled/`' %}
 
 
 
-(Later on, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) as a curiousity. However, I labeled dozens upon dozens of images with Roboflow and would recommend their free annotation service.)
 
+
+### Parting Questions
+
+My labeled images are disorderly. There's data from other rowing machines and from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
 
