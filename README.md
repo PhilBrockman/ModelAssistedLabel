@@ -438,16 +438,30 @@ for result in results:
   predictions = result["predictions"]
   with open(os.path.join(export_folder, "labels", f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
+```
 
-#check if weights were generated
-if aw is not None and os.path.exists(aw.last_results_path):
-  print(f"Moving yolov5 results folder: {aw.last_results_path}")
-  shutil.move(aw.last_results_path, export_folder)
-else:
+Lastly, if results need to get saved, make sure they get saved.
+
+```
+moved = False #set a flag
+
+try: 
+  if os.path.exists(aw.last_results_path):
+    # `aw` exists and it has been executed 
+    print(f"Moving yolov5 results folder: {aw.last_results_path}")
+    shutil.move(aw.last_results_path, export_folder)
+
+    #flip the flag
+    moved = True
+except NameError:
+  pass
+
+if not(moved):
+  # either the AutoWeigts didn't pan out or it wasn't used
   print("No weights to save")
 ```
 
-    Moving yolov5 results folder: yolov5/runs/train/seven segment digits - 1/
+    No weights to save
 
 
 I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
