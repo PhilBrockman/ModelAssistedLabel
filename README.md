@@ -6,7 +6,7 @@
 
 ## Background
 
-My exercise equipment doesn’t connect to a network. But I still want the "smart workout" experience when I'm using a "dumb" rowing machine.
+My exercise equipment doesn’t connect to a network. But I still want the "smart workout experience" when I'm using a "dumb" rowing machine.
 
 Maybe if I point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout. 
 
@@ -14,22 +14,25 @@ First question -- just a tiny one -- how do you do that?
 
 After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.
 
-As I labeled image after image, I fantasized passing my work off to a YOLOv5 model. As I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, I build wrappers around `detect.py` and `train.py`. I determine that my fantasy could be a reality.
+I labeled image after image, I envision passing my work off to a YOLOv5 model. As I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, I build wrappers around `detect.py` and `train.py`. I determine that my vision could be a reality.
 
-This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
-{% include note.html content='`./Image Repo/labeled/` contains a folder that holds all 841 labeled images.' %}
-* `Final Roboflow Export (841)` (841 labeled image dataset)
-{% include note.html content='All images inside `./Image Repo/unlabeled` were taken inside a blacked-out room. Further, the lighting within each directory remains constant.' %}
-* `21-3-22 rowing (200) 7:50-12:50` (200 images with direct lighting from one light source)
-* `21-3-22 rowing (200) 1:53-7:00` (200 images with direct lighting from one light source and intermittent glare)
-* `21-3-18 rowing 8-12 ` (200 images with direct light and ambient lamps turned on)
+This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I also provide labeled and unlabeled images to demonstrate the tools.
+{% include note.html content='`Image Repo/labeled/` contains a folder that holds all 841 labeled images, while images inside `Image Repo/unlabeled/` were taken inside a blacked-out room.' %}
+* `./Image Repo/labeled/Final Roboflow Export (841)` 
+ - 841 labeled image dataset)
+* `./Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50`
+ - 200 images with direct lighting from one light source
+* `./Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00` 
+ - 200 images with direct lighting from one light source and intermittent glare
+* `./Image Repo/unlabeled/21-3-18 rowing 8-12 ` 
+ - 200 images with direct light and ambient lamps turned on
 
 
 
 
 ## Getting Started
 
-{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
+{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb) (and enable GPU)' %}
 
 ```
 # clone this repository

@@ -44,19 +44,30 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>My exercise equipment doesn’t connect to a network. But I still want the "smart workout" experience when I'm using a "dumb" rowing machine.</p>
+<p>My exercise equipment doesn’t connect to a network. But I still want the "smart workout experience" when I'm using a "dumb" rowing machine.</p>
 <p>Maybe if I point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout.</p>
 <p>First question -- just a tiny one -- how do you do that?</p>
 <p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.</p>
-<p>As I labeled image after image, I fantasized passing my work off to a YOLOv5 model. As I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project, I build wrappers around <code>detect.py</code> and <code>train.py</code>. I determine that my fantasy could be a reality.</p>
-<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
-{% include note.html content='<code>./Image Repo/labeled/</code> contains a folder that holds all 841 labeled images.' %}</p>
+<p>I labeled image after image, I envision passing my work off to a YOLOv5 model. As I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project, I build wrappers around <code>detect.py</code> and <code>train.py</code>. I determine that my vision could be a reality.</p>
+<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I also provide labeled and unlabeled images to demonstrate the tools.
+{% include note.html content='<code>Image Repo/labeled/</code> contains a folder that holds all 841 labeled images, while images inside <code>Image Repo/unlabeled/</code> were taken inside a blacked-out room.' %}</p>
 <ul>
-<li><code>Final Roboflow Export (841)</code> (841 labeled image dataset)
-{% include note.html content='All images inside <code>./Image Repo/unlabeled</code> were taken inside a blacked-out room. Further, the lighting within each directory remains constant.' %}</li>
-<li><code>21-3-22 rowing (200) 7:50-12:50</code> (200 images with direct lighting from one light source)</li>
-<li><code>21-3-22 rowing (200) 1:53-7:00</code> (200 images with direct lighting from one light source and intermittent glare)</li>
-<li><code>21-3-18 rowing 8-12</code> (200 images with direct light and ambient lamps turned on)</li>
+<li><code>./Image Repo/labeled/Final Roboflow Export (841)</code> <ul>
+<li>841 labeled image dataset)</li>
+</ul>
+</li>
+<li><code>./Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50</code><ul>
+<li>200 images with direct lighting from one light source</li>
+</ul>
+</li>
+<li><code>./Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00</code> <ul>
+<li>200 images with direct lighting from one light source and intermittent glare</li>
+</ul>
+</li>
+<li><code>./Image Repo/unlabeled/21-3-18 rowing 8-12</code> <ul>
+<li>200 images with direct light and ambient lamps turned on</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -70,7 +81,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a>' %}</p>
+<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a> (and enable GPU)' %}</p>
 
 </div>
 </div>
