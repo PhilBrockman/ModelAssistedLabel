@@ -44,15 +44,13 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>My exercise equipment, despite even being electronic, doesn’t connect to a network.</p>
-<p>But if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout.</p>
+<p>My exercise equipment, despite even being electronic, doesn’t connect to a network. But I still want the "smart workout" experience.</p>
+<p>Maybe if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout.</p>
 <p>First question, just a tiny one, how do you do that?</p>
-<p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They helped provide a hands-on and accessible experience in machine learning.</p>
-<p>Unfortunately, I didn't have much luck with existing models being able to readily parse digits. Instead, I decided to start building my own dataset.</p>
-<p>I shouldn't have been caught off-guard by the tedium of manually annotating images. As my mind starts to drift, I wonder if I’m a reCAPTCHA interface that’s gained sentience, and I break through. If I label enough digits, I can train a YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions.</p>
+<p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They helped provide a hands-on and accessible experience in machine learning. But unfortunately, I didn't have much luck parsing my digital screens with available models/datasets. Instead, I decided to start building my own dataset.</p>
+<p>I realize that if I label enough digits, I can train a weak(er) YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions. I would later learn that this bootstrapping of annotation is called machine-assisted labeling.</p>
 <p>The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project and build wrappers around the essential functions in <code>detect.py</code> and <code>train.py</code>.</p>
-<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.</p>
-<p>I use the <code>Viewer</code> class to 
+<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I would typically only use the cells under "labing a new set of images" and "exporting annotated images" once my weights have been generated. 
 {% include note.html content='In <code>./Image Repo</code> I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}</p>
 
 </div>
@@ -189,6 +187,13 @@ Checking out files: 100% (2381/2381), done.
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Building the folder structure.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -203,6 +208,12 @@ Checking out files: 100% (2381/2381), done.
 <span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
+<span class="c1"># make the export folder</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
+
+<span class="c1"># make the images and labels subfolders</span>
+<span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -226,6 +237,13 @@ Checking out files: 100% (2381/2381), done.
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -233,11 +251,32 @@ Checking out files: 100% (2381/2381), done.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">class_idx</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
+</pre></div>
 
-<span class="c1"># make the images and labels subfolders</span>
-<span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
-  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Store the class labels with index 0 on line 1, index 1 on line 2, and so on.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;label_map.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">label_map</span><span class="p">:</span>
+  <span class="n">label_map</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">class_idx</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -416,6 +455,7 @@ trainer_template
 
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">clear_output</span>  <span class="c1"># to display images</span>
 <span class="kn">from</span> <span class="nn">utils.google_utils</span> <span class="kn">import</span> <span class="n">gdrive_download</span>  <span class="c1"># to download models/datasets</span>
+
 <span class="o">%</span><span class="k">cd</span> ..
 </pre></div>
 
@@ -493,31 +533,27 @@ moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.</p>
-
+<h2 id="Generating-Weights">Generating Weights<a class="anchor-link" href="#Generating-Weights"> </a></h2>
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">class_idx</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Processing-input">Processing input<a class="anchor-link" href="#Processing-input"> </a></h2>
+<p>At some point, a model needs to be trained. The Ultralytics repo likely has more flexiblity than I'm granting, but I use custom classes to arrange my folders and files in a consistent manner.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Preparing-Filesystem">Preparing Filesystem<a class="anchor-link" href="#Preparing-Filesystem"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>Generation</code> class helps convert an unordered folder of images and labels into a format compatible with YOLOv5. By default, the train/valid/test split is set to 70%/20%/10%.</p>
+
 </div>
 </div>
 </div>
@@ -563,6 +599,13 @@ moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Backups are built into this system. As an intermediate step, the split must be written to disk in <code>g.out_dir</code>.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -701,14 +744,14 @@ File:  data.yaml
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Generate-Weights">Generate Weights<a class="anchor-link" href="#Generate-Weights"> </a></h2>
+<h3 id="Running-train.py">Running <code>train.py</code><a class="anchor-link" href="#Running-train.py"> </a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With the images written to disk, we can run the Ultralytics training algorithm. I loved watching the progress fly by in real time on the original <code>train.py</code>. Fortunately, the Ultralytics folk write the results file to disk so the model's training data is still accessible!
-{% include note.html content='this output has already been calculated and stored in <code>pre-trained/results</code>.' %}</p>
+{% include note.html content='this output has already been calculated and stored in <code>pre-trained/results</code> for convenience.' %}</p>
 
 </div>
 </div>
@@ -895,7 +938,13 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Labeling-a-new-set-of-images">Labeling a new set of images<a class="anchor-link" href="#Labeling-a-new-set-of-images"> </a></h2>
+<h2 id="Machine-assisted-Labeling">Machine-assisted Labeling<a class="anchor-link" href="#Machine-assisted-Labeling"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Labeling-a-new-set-of-images">Labeling a new set of images<a class="anchor-link" href="#Labeling-a-new-set-of-images"> </a></h3>
 </div>
 </div>
 </div>
@@ -1014,35 +1063,10 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exporting-annotated-images">Exporting annotated images<a class="anchor-link" href="#Exporting-annotated-images"> </a></h2>
+<h3 id="Exporting-annotated-images">Exporting annotated images<a class="anchor-link" href="#Exporting-annotated-images"> </a></h3>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Store the class labels with index 0 on line 1, index 1 on line 2, and so on.</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;label_map.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">label_map</span><span class="p">:</span>
-  <span class="n">label_map</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">class_idx</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Ensure that image/label pairs have a common root filename</p>
@@ -1104,9 +1128,8 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point I would have uploaded this set of image/label pairs to Roboflow for correction and annotation. As the model grows more accurate, I would alter camera position or lighting until the model started stumbling again. I want to be keeping the model on its toes!</p>
-<p>To be transparent, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> that better suited my needs.</p>
-<p>I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service!</p>
+<p>The images are ready for human verification. As the model grows more accurate, I would alter camera position or lighting until the model starts to stumble again.</p>
+<p>I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed <a href="https://github.com/PhilBrockman/autobbox">an annotator</a> in React that better suited my physical needs.</p>
 
 </div>
 </div>
@@ -1129,7 +1152,7 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Lingering-Questions">Lingering Questions<a class="anchor-link" href="#Lingering-Questions"> </a></h3><p>My labeled images are disorderly. There's data from other rowing machines and from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind <em>stranger</em>'s github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
+<h3 id="Lingering-Questions">Lingering Questions<a class="anchor-link" href="#Lingering-Questions"> </a></h3><p>My dataset of 841 images is eclectic. There's images from other rowing machines and others from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind stranger's github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
 
 </div>
 </div>

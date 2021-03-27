@@ -6,23 +6,19 @@
 
 ## Background
 
-My exercise equipment, despite even being electronic, doesn’t connect to a network.
+My exercise equipment, despite even being electronic, doesn’t connect to a network. But I still want the "smart workout" experience.
 
-But if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout. 
+Maybe if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout. 
 
 First question, just a tiny one, how do you do that?  
 
-After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They helped provide a hands-on and accessible experience in machine learning.
+After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They helped provide a hands-on and accessible experience in machine learning. But unfortunately, I didn't have much luck parsing my digital screens with available models/datasets. Instead, I decided to start building my own dataset.
 
-Unfortunately, I didn't have much luck with existing models being able to readily parse digits. Instead, I decided to start building my own dataset.
-
-I shouldn't have been caught off-guard by the tedium of manually annotating images. As my mind starts to drift, I wonder if I’m a reCAPTCHA interface that’s gained sentience, and I break through. If I label enough digits, I can train a YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions. 
+I realize that if I label enough digits, I can train a weak(er) YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions. I would later learn that this bootstrapping of annotation is called machine-assisted labeling.
 
 The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project and build wrappers around the essential functions in `detect.py` and `train.py`.
 
-This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
-
-I use the `Viewer` class to 
+This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I would typically only use the cells under "labing a new set of images" and "exporting annotated images" once my weights have been generated. 
 {% include note.html content='In `./Image Repo` I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}
 
 
@@ -83,6 +79,8 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
     - `class labels.txt` to preserve the identity of the classes
 
 
+Building the folder structure.
+
 ```
 from ModelAssistedLabel.config import Defaults
 import os
@@ -91,18 +89,28 @@ project_name = "seven segment digits - "
 export_folder = Defaults._itername(project_name)
 
 print(export_folder)
-```
-
-    seven segment digits - 1
-
-
-```
 # make the export folder
 os.mkdir(export_folder)
 
 # make the images and labels subfolders
 for resource_folder in ["images", "labels"]:
   os.mkdir(os.path.join(export_folder, resource_folder))
+```
+
+    seven segment digits - 1
+
+
+The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
+
+```
+class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+```
+
+Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
+
+```
+with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
+  label_map.writelines("\n".join(class_idx))
 ```
 
 ## Configure defaults
@@ -160,6 +168,7 @@ import torch
 
 from IPython.display import Image, clear_output  # to display images
 from utils.google_utils import gdrive_download  # to download models/datasets
+
 %cd ..
 ```
 
@@ -188,13 +197,14 @@ else:
     moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 
 
-The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
+## Generating Weights
 
-```
-class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-```
 
-## Processing input
+At some point, a model needs to be trained. The Ultralytics repo likely has more flexiblity than I'm granting, but I use custom classes to arrange my folders and files in a consistent manner.
+
+### Preparing Filesystem
+
+The `Generation` class helps convert an unordered folder of images and labels into a format compatible with YOLOv5. By default, the train/valid/test split is set to 70%/20%/10%.
 
 ```
 from ModelAssistedLabel.fileManagement import Generation
@@ -214,6 +224,9 @@ g.get_split()
 
     [{'train': 589}, {'valid': 169}, {'test': 83}]
 
+
+
+Backups are built into this system. As an intermediate step, the split must be written to disk in `g.out_dir`.
 
 
 ```
@@ -270,10 +283,10 @@ aw.traverse_resources()
     File:  data.yaml
 
 
-## Generate Weights
+### Running `train.py`
 
 With the images written to disk, we can run the Ultralytics training algorithm. I loved watching the progress fly by in real time on the original `train.py`. Fortunately, the Ultralytics folk write the results file to disk so the model's training data is still accessible!
-{% include note.html content='this output has already been calculated and stored in `pre-trained/results`.' %}
+{% include note.html content='this output has already been calculated and stored in `pre-trained/results` for convenience.' %}
 
 ```
 %%time
@@ -342,7 +355,9 @@ results[-5:]
 
 
 
-## Labeling a new set of images
+## Machine-assisted Labeling
+
+### Labeling a new set of images
 
 And the `Viewer` class doesn't care how recently your weights were generated so you can plug in existing weights.
 
@@ -386,14 +401,7 @@ for image in images:
   results.append(v.predict_for(image))
 ```
 
-## Exporting annotated images
-
-Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
-
-```
-with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
-  label_map.writelines("\n".join(class_idx))
-```
+### Exporting annotated images
 
 Ensure that image/label pairs have a common root filename
 
@@ -425,11 +433,9 @@ else:
     Moving yolov5 results folder: yolov5/runs/train/seven segment digits - 1/
 
 
-At this point I would have uploaded this set of image/label pairs to Roboflow for correction and annotation. As the model grows more accurate, I would alter camera position or lighting until the model started stumbling again. I want to be keeping the model on its toes!
+The images are ready for human verification. As the model grows more accurate, I would alter camera position or lighting until the model starts to stumble again. 
 
-To be transparent, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) that better suited my needs.
-
-I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! 
+I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
 
 ## Wrap up
 
@@ -451,5 +457,5 @@ Here are 3 runs captured under different lighting conditions:
 
 ### Lingering Questions
 
-My labeled images are disorderly. There's data from other rowing machines and from [a kind *stranger*'s github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
+My dataset of 841 images is eclectic. There's images from other rowing machines and others from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
 
