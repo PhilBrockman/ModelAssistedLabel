@@ -190,7 +190,7 @@ datadump="tmp/"
 aw = AutoWeights(name=export_folder, out_dir=datadump)
 
 # create train/valid/test split from a bag of labeled images (recusively seek out images/labels)
-aw.initialize_images_from_bag(labeled_images)
+aw.initialize_images_from_bag(bag_of_images_and_labels = labeled_images)
 
 # see the sizes of the train/valid/test groups
 aw.traverse_resources()

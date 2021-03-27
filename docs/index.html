@@ -503,7 +503,7 @@ moving to /content/drive/MyDrive/Coding/ModelAssistedLabel/
 <span class="n">aw</span> <span class="o">=</span> <span class="n">AutoWeights</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">out_dir</span><span class="o">=</span><span class="n">datadump</span><span class="p">)</span>
 
 <span class="c1"># create train/valid/test split from a bag of labeled images (recusively seek out images/labels)</span>
-<span class="n">aw</span><span class="o">.</span><span class="n">initialize_images_from_bag</span><span class="p">(</span><span class="n">labeled_images</span><span class="p">)</span>
+<span class="n">aw</span><span class="o">.</span><span class="n">initialize_images_from_bag</span><span class="p">(</span><span class="n">bag_of_images_and_labels</span> <span class="o">=</span> <span class="n">labeled_images</span><span class="p">)</span>
 
 <span class="c1"># see the sizes of the train/valid/test groups</span>
 <span class="n">aw</span><span class="o">.</span><span class="n">traverse_resources</span><span class="p">()</span>
