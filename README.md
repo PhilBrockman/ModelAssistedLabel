@@ -6,20 +6,23 @@
 
 ## Background
 
-My exercise equipment, despite even being electronic, doesn’t connect to a network. But I still want the "smart workout" experience.
+My exercise equipment doesn’t connect to a network. But I still want the "smart workout" experience when I'm using a "dumb" rowing machine.
 
-Maybe if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout. 
+Maybe if I point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout. 
 
-First question, just a tiny one, how do you do that?  
+First question -- just a tiny one -- how do you do that?  
 
-After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They helped provide a hands-on and accessible experience in machine learning. But unfortunately, I didn't have much luck parsing my digital screens with available models/datasets. Instead, I decided to start building my own dataset.
+After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.
 
-I realize that if I label enough digits, I can train a weak(er) YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions. I would later learn that this bootstrapping of annotation is called machine-assisted labeling.
+As I labeled image after image, I fantasized passing my work off to a YOLOv5 model. As I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, I build wrappers around `detect.py` and `train.py`. I determine that my fantasy could be a reality.
 
-The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project and build wrappers around the essential functions in `detect.py` and `train.py`.
-
-This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I would typically only use the cells under "labing a new set of images" and "exporting annotated images" once my weights have been generated. 
-{% include note.html content='In `./Image Repo` I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}
+This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
+{% include note.html content='`./Image Repo/labeled/` contains a folder that holds all 841 labeled images.' %}
+* `Final Roboflow Export (841)` (841 labeled image dataset)
+{% include note.html content='All images inside `./Image Repo/unlabeled` were taken inside a blacked-out room. Further, the lighting within each directory remains constant.' %}
+* `21-3-22 rowing (200) 7:50-12:50` (200 images with direct lighting from one light source)
+* `21-3-22 rowing (200) 1:53-7:00` (200 images with direct lighting from one light source and intermittent glare)
+* `21-3-18 rowing 8-12 ` (200 images with direct light and ambient lamps turned on)
 
 
 
@@ -64,8 +67,8 @@ labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
   - **unlabeled images**
 
 ```
-# these images need to be labeled
-unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
+# these images need to be annotated
+unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
 ```
 
 ### Expected Output
@@ -79,7 +82,7 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00"
     - `class labels.txt` to preserve the identity of the classes
 
 
-Building the folder structure.
+Build the folder structure.
 
 ```
 from ModelAssistedLabel.config import Defaults
@@ -100,7 +103,7 @@ for resource_folder in ["images", "labels"]:
     seven segment digits - 1
 
 
-The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
+The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than a human-readable name. Consequently, the identities of each class index must be supplied.
 
 ```
 class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
@@ -115,7 +118,7 @@ with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
 
 ### Configure Defaults
 
-Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
+Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes! (changes are written to the `config_file`
 
 ```
 d = Defaults()
@@ -145,7 +148,7 @@ Speciy the absolute path of the root directory.
 d.root = "/content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/"
 ```
 
-Save any changes and enter root directory
+Save changes and enter root directory
 
 ```
 d.save()
@@ -200,7 +203,7 @@ else:
 ## Generating Weights
 
 
-At some point, a model needs to be trained. The Ultralytics repo likely has more flexiblity than I'm granting, but I use custom classes to arrange my folders and files in a consistent manner.
+At some point, a model needs to be trained. I use `Generation` and `AutoWeights` to manage files relevant to the training process. 
 
 ### Preparing Filesystem
 
@@ -332,34 +335,11 @@ os.listdir(aw.last_results_path + "/weights")
 
 
 
-View the last couple lines 
-
-```
-with open(aw.last_results_path + "results.txt") as results_file:
-  results = results_file.readlines()
-print("Epoch   gpu_mem       box       obj       cls     total    labels  img_size")
-results[-5:]
-```
-
-    Epoch   gpu_mem       box       obj       cls     total    labels  img_size
-
-
-
-
-
-    [' 1995/1999      1.8G   0.02351   0.01559  0.006725   0.04583       125       416    0.9915    0.9908    0.9929    0.8725   0.02014   0.01494  0.004582\n',
-     ' 1996/1999      1.8G   0.02363   0.01608  0.006827   0.04654       150       416    0.9915    0.9909     0.993    0.8726   0.02014   0.01495  0.004582\n',
-     ' 1997/1999      1.8G    0.0242   0.01487  0.007266   0.04633       161       416    0.9914    0.9909     0.993    0.8725   0.02014   0.01494  0.004582\n',
-     ' 1998/1999      1.8G   0.02356   0.01581  0.006952   0.04632       102       416    0.9915    0.9909     0.993    0.8726   0.02014   0.01493  0.004582\n',
-     ' 1999/1999      1.8G   0.02305   0.01591  0.006753   0.04571       185       416    0.9915    0.9909    0.9929    0.8722   0.02014   0.01492  0.004582\n']
-
-
-
 ## Machine-assisted Labeling
 
 ### Labeling a New Set of Images
 
-And the `Viewer` class doesn't care how recently your weights were generated so you can plug in existing weights.
+The `Viewer` class needs weights and class labels to operate.
 
 ```
 from ModelAssistedLabel.detect import Viewer
@@ -377,9 +357,9 @@ v = Viewer(weight_path, class_idx)
     Fusing layers... 
 
 
-Selects all images in the unlabeled folder and let's us look through the computer's eyes at the images.
+Let's us look through the computer's eyes at the images.
 
-Note that the model has trouble in images with glare on the LCD. For more clear screens, instead set `unlabeled_images="21-3-22 rowing (200) 7:50-12:50"`
+With the existing dataset, the model performs best under direct lighting.
 
 ```
 %matplotlib inline 
@@ -388,12 +368,15 @@ import random, glob
 images = glob.glob(f"./{unlabeled_images}/*.jpg")
 
 for image in random.sample(images,5):
+  print(image)
   v.plot_for(image)
 ```
 
 
     Output hidden; open in https://colab.research.google.com to view.
 
+
+In this small sample, the model performs quite well. Nonetheless, manual review of all images is needed to remove overlapping predictions, categorization errors, and absent boxes.
 
 ```
 results = []
@@ -403,7 +386,7 @@ for image in images:
 
 ### Exporting Annotated Images
 
-Ensure that image/label pairs have a common root filename
+Ensure that image/label pairs have a common root filename and collect relevant files in a single folder.
 
 ```
 import random, PIL, shutil
@@ -433,23 +416,13 @@ else:
     Moving yolov5 results folder: yolov5/runs/train/seven segment digits - 1/
 
 
-The images are ready for human verification. As the model grows more accurate, I would alter camera position or lighting until the model starts to stumble again. 
-
 I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
 
 ## Wrap Up
 
-My original goal of "smartifying" my rowing machine is closer than ever. 
+I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!
 
-It is possible to parse workout information (thought currently, I only have access to a maximum of 4 digits). I wonder if the model could keep up if there were 20+ digits to capture.
-
-I know that lighting and camera position have an effect on accuracy. Here's how I'm holding my computer steady as I modify the lighting: [standing](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [floor 1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [floor 2](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
-
-Here are 3 runs captured under different lighting conditions:
-* `21-3-22 rowing (200) 7:50-12:50` (direct lighting from one light source)
-* `21-3-22 rowing (200) 1:53-7:00` (direct lighting from one light source with glare)
-* `21-3-18 rowing 8-12 ` (direct light and ambient lamps turned on)
-{% include note.html content='All unlabeled images were taken inside a blacked-out room. The are stored in `Image Repo/unlabeled/`' %}
+I see two main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).
 
 
 
@@ -458,6 +431,14 @@ Here are 3 runs captured under different lighting conditions:
 ### Lingering Questions
 
 My dataset of 841 images is eclectic. There's images from other rowing machines and others from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
+
+
+### Recording from Laptop
+
+This is how I'm currently fixing the position my laptop while recording: [standing](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [floor 1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [floor 2](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
+
+I use the `_capture.ipynb` notebook to capture images on a bit of a delay to prevent repeat images from cluttering the dataset. For me, it was much easier to get recording working from a local notebook than from a Colab notebook but YMMV.
+
 
 
 ### About Me
