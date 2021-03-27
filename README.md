@@ -22,12 +22,7 @@ The pieces come together.  I can focus on writing code while I use Roboflow to s
 
 This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
 
-I need two inputs:
-* Either:
-  + a set of YOLOv5 weights 
-  + or a repository of ".jpg" images and ".txt" labels.
-* And:
-  + a folder with unlabeled images
+I use the `Viewer` class to 
 {% include note.html content='In `./Image Repo` I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}
 
 
@@ -162,6 +157,12 @@ from utils.google_utils import gdrive_download  # to download models/datasets
     [?25h/content/drive/My Drive/Coding/ModelAssistedLabel
 
 
+The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
+
+```
+class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+```
+
 Make sure GPU is enabled.
 
 ```
@@ -180,15 +181,19 @@ else:
 
 ```
 from ModelAssistedLabel.fileManagement import Generation
-datadump = "path/to/anywhere"
+
+backup_dir = "archive/Generation/zips"
 
 g = Generation(repo=labeled_images, 
-               out_dir=datadump,
+               out_dir=backup_dir,
                verbose=True)
 
 g.set_split()
 g.get_split()
-zipped = g.write_split_to_disk(descriptor="<01_split_all>")
+```
+
+```
+zipped = g.write_split_to_disk(descriptor=export_folder)
 ```
 
 Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `Autoweights` class both organizes data and create weights. Running an "initialize" command makes changes to the disk.
@@ -309,12 +314,6 @@ results[-5:]
 
 ## Labeling a new set of images
 
-The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.
-
-```
-class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-```
-
 And the `Viewer` class doesn't care how recently your weights were generated so you can plug in existing weights.
 
 ```
@@ -349,21 +348,21 @@ for image in random.sample(images,5):
 
 
 
-![png](docs/images/output_46_1.png)
+![png](docs/images/output_47_1.png)
 
 
     image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/189.jpg: >>> [{'predictions': ['5 0.439453 0.251389 0.0210938 0.0833333 0.881868', '9 0.414453 0.249306 0.0226563 0.0847222 0.882727', '4 0.489844 0.258333 0.021875 0.0833333 0.904524']}]
 
 
 
-![png](docs/images/output_46_3.png)
+![png](docs/images/output_47_3.png)
 
 
     image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00/165.jpg: >>> [{'predictions': ['7 0.490625 0.260417 0.021875 0.0819444 0.686349', '9 0.464844 0.257639 0.0234375 0.0819444 0.766056', '9 0.414453 0.249306 0.0226563 0.0847222 0.892554', '5 0.439844 0.252083 0.021875 0.0847222 0.896628']}]
 
 
 
-![png](docs/images/output_46_5.png)
+![png](docs/images/output_47_5.png)
 
 
 ```
@@ -579,7 +578,7 @@ Here are 3 runs captured under different lighting conditions:
 
 
 
-### Parting Questions
+### Lingering Questions
 
-My labeled images are disorderly. There's data from other rowing machines and from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
+My labeled images are disorderly. There's data from other rowing machines and from [a kind *stranger*'s github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
 

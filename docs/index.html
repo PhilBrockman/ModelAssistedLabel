@@ -52,19 +52,8 @@ nb_path: "index.ipynb"
 <p>I shouldn't have been caught off-guard by the tedium of manually annotating images. As my mind starts to drift, I wonder if I’m a reCAPTCHA interface that’s gained sentience, and I break through. If I label enough digits, I can train a YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions.</p>
 <p>The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project and build wrappers around the essential functions in <code>detect.py</code> and <code>train.py</code>.</p>
 <p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.</p>
-<p>I need two inputs:</p>
-<ul>
-<li>Either:<ul>
-<li>a set of YOLOv5 weights </li>
-<li>or a repository of ".jpg" images and ".txt" labels.</li>
-</ul>
-</li>
-<li>And:<ul>
-<li>a folder with unlabeled images
-{% include note.html content='In <code>./Image Repo</code> I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}</li>
-</ul>
-</li>
-</ul>
+<p>I use the <code>Viewer</code> class to 
+{% include note.html content='In <code>./Image Repo</code> I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}</p>
 
 </div>
 </div>
@@ -433,6 +422,30 @@ trainer_template
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">class_idx</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Make sure GPU is enabled.</p>
 
 </div>
@@ -488,15 +501,32 @@ moving to /content/drive/MyDrive/Coding/ModelAssistedLabel/
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.fileManagement</span> <span class="kn">import</span> <span class="n">Generation</span>
-<span class="n">datadump</span> <span class="o">=</span> <span class="s2">&quot;path/to/anywhere&quot;</span>
+
+<span class="n">backup_dir</span> <span class="o">=</span> <span class="s2">&quot;archive/Generation/zips&quot;</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">labeled_images</span><span class="p">,</span> 
-               <span class="n">out_dir</span><span class="o">=</span><span class="n">datadump</span><span class="p">,</span>
+               <span class="n">out_dir</span><span class="o">=</span><span class="n">backup_dir</span><span class="p">,</span>
                <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">g</span><span class="o">.</span><span class="n">set_split</span><span class="p">()</span>
 <span class="n">g</span><span class="o">.</span><span class="n">get_split</span><span class="p">()</span>
-<span class="n">zipped</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">write_split_to_disk</span><span class="p">(</span><span class="n">descriptor</span><span class="o">=</span><span class="s2">&quot;&lt;01_split_all&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">zipped</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">write_split_to_disk</span><span class="p">(</span><span class="n">descriptor</span><span class="o">=</span><span class="n">export_folder</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -797,30 +827,6 @@ Wall time: 3h 46min 43s
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">class_idx</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And the <code>Viewer</code> class doesn't care how recently your weights were generated so you can plug in existing weights.</p>
@@ -1255,7 +1261,7 @@ image 1/1 /content/drive/MyDrive/Coding/ModelAssistedLabel/Image Repo/unlabeled/
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Parting-Questions">Parting Questions<a class="anchor-link" href="#Parting-Questions"> </a></h3><p>My labeled images are disorderly. There's data from other rowing machines and from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind stranger's github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
+<h3 id="Lingering-Questions">Lingering Questions<a class="anchor-link" href="#Lingering-Questions"> </a></h3><p>My labeled images are disorderly. There's data from other rowing machines and from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind <em>stranger</em>'s github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
 
 </div>
 </div>
