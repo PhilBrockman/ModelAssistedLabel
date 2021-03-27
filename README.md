@@ -296,7 +296,7 @@ aw.generate_weights(epochs=2000, data_yaml=d.trainer_template)
 
     TypeError                                 Traceback (most recent call last)
 
-    <ipython-input-32-044047f7d798> in <module>()
+    <ipython-input-59-044047f7d798> in <module>()
     ----> 1 get_ipython().run_cell_magic('time', '', '\naw.generate_weights(epochs=2000, data_yaml=d.trainer_template)')
     
 
