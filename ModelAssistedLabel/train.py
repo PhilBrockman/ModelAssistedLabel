@@ -87,7 +87,7 @@ class AutoWeights():
       if os.path.isdir(d):
         self.__traverse_resources__(d, level=0)
       else:
-        print("File: ", os.path.exists("data.yaml"))
+        print("File: ", d)
 
   def __traverse_resources__(self, dir, level):
     "Iterate through the levels of each of the resource paths"
@@ -165,25 +165,6 @@ class AutoWeights():
 
     #removed the folder that was taken out of the zip
     shutil.rmtree("unzipped")
-
-  def initialize_images_from_bag(self, bag_of_images_and_labels):
-    """Converts a folder than contains images and labels to a format acceptable
-    by the Ultralytics.
-
-    Args:
-      bag_of_images_and_labels
-    """
-
-    g = Generation(repo=bag_of_images_and_labels,
-                  out_dir=self.out_dir,
-                  data_yaml=self.data_yaml,
-                  verbose=self.verbose)
-    g.set_split(split_ratio=self.custom_split, MAX_SIZE=self.MAX_SIZE)
-    g.get_split()
-    zipped = g.write_split_to_disk(descriptor=self.name)
-    self.initialize_images_from_zip(zipped)
-    os.system(f'rm -f -r "{zipped}"')
-    self.g = g
 
   def __cleanup__(self):
     """
