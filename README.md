@@ -219,7 +219,7 @@ Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
 
 ```
 with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
-  label_map.writelines("\n".join(class_idx))
+  label_map.writelines("\n".join(d.get_class_names()))
 ```
 
 ## Generating Weights
@@ -385,7 +385,7 @@ results_folder = aw.last_results_path
 weight_path = results_folder + "/weights/best.pt"
 
 # Viewer needs a set of weights and an array of labels for the detected object types
-v = Viewer(weight_path, class_idx)
+v = Viewer(weight_path, Defaults().get_class_names())
 ```
 
     Fusing layers... 

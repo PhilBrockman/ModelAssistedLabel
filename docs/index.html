@@ -583,7 +583,7 @@ Resolving deltas: 100% (3776/3776), done.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;label_map.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">label_map</span><span class="p">:</span>
-  <span class="n">label_map</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">class_idx</span><span class="p">))</span>
+  <span class="n">label_map</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get_class_names</span><span class="p">()))</span>
 </pre></div>
 
     </div>
@@ -1014,7 +1014,7 @@ Wall time: 4h 57min 26s
 <span class="n">weight_path</span> <span class="o">=</span> <span class="n">results_folder</span> <span class="o">+</span> <span class="s2">&quot;/weights/best.pt&quot;</span>
 
 <span class="c1"># Viewer needs a set of weights and an array of labels for the detected object types</span>
-<span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">(</span><span class="n">weight_path</span><span class="p">,</span> <span class="n">class_idx</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">(</span><span class="n">weight_path</span><span class="p">,</span> <span class="n">Defaults</span><span class="p">()</span><span class="o">.</span><span class="n">get_class_names</span><span class="p">())</span>
 </pre></div>
 
     </div>
