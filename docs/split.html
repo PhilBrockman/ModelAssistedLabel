@@ -49,8 +49,23 @@ nb_path: "01_split.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>moving to /content/drive/MyDrive/Coding/ModelAssistedLabel/
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-2-493e1b049efd&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> ModelAssistedLabel<span class="ansi-blue-fg">.</span>config <span class="ansi-green-fg">import</span> Defaults
+<span class="ansi-green-intense-fg ansi-bold">      2</span> Defaults<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>to_root<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;ModelAssistedLabel&#39;
+
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span><span class="ansi-green-fg">
+NOTE: If your import is failing due to a missing package, you can
+manually install dependencies using either !pip or !apt.
+
+To view examples of installing some common dependencies, click the
+&#34;Open Examples&#34; button below.
+</span><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 </pre>
 </div>
 </div>
@@ -104,7 +119,7 @@ nb_path: "01_split.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="ModelAssistedLabel/fileManagement.py#L79" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>, <strong><code>out_dir</code></strong>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>resource_dirs</code></strong>=<em><code>['train', 'valid', 'test']</code></em>)</p>
+<h2 id="Generation" class="doc_header"><code>class</code> <code>Generation</code><a href="ModelAssistedLabel/fileManagement.py#L78" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Generation</code>(<strong><code>repo</code></strong>, <strong><code>out_dir</code></strong>, <strong><code>data_yaml</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>, <strong><code>resource_dirs</code></strong>=<em><code>['train', 'valid', 'test']</code></em>)</p>
 </blockquote>
 <p>Container and organizer of photos for a given repository. This class "softly"
 organizes the files upon the setting of the <code>split</code> attribute via <code>set_split</code>.</p>
@@ -184,12 +199,17 @@ relevant data will be zipped in <code>out_dir</code></p>
 
 <div class="output_area">
 
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-3-41c884a14518&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> custom_split <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">&#34;train&#34;</span><span class="ansi-blue-fg">:</span> <span class="ansi-cyan-fg">.5</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;valid&#34;</span><span class="ansi-blue-fg">:</span> <span class="ansi-cyan-fg">.3</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;test&#34;</span><span class="ansi-blue-fg">:</span> <span class="ansi-cyan-fg">.2</span><span class="ansi-blue-fg">}</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>g<span class="ansi-blue-fg">.</span>set_split<span class="ansi-blue-fg">(</span>split_ratio<span class="ansi-blue-fg">=</span>custom_split<span class="ansi-blue-fg">,</span> MAX_SIZE<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">20</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> g<span class="ansi-blue-fg">.</span>get_split<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[{&#39;train&#39;: 10}, {&#39;valid&#39;: 6}, {&#39;test&#39;: 4}]</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;g&#39; is not defined</pre>
 </div>
-
 </div>
 
 </div>
@@ -217,22 +237,6 @@ relevant data will be zipped in <code>out_dir</code></p>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[{&#39;train&#39;: 589}, {&#39;valid&#39;: 169}, {&#39;test&#39;: 83}]</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 

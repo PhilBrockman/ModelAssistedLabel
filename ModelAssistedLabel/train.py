@@ -103,7 +103,7 @@ class AutoWeights():
       print("\t"*level, ">", len(os.listdir(dir)),"files")
 
 
-  def generate_weights(self, epochs, rm_local_files=False):
+  def generate_weights(self, epochs, yaml_data, rm_local_files=False):
     """
     Creates a `Trainer` object and trains for a given amount of time.
 
@@ -115,7 +115,7 @@ class AutoWeights():
     Returns:
       path to the output folder of train.py
     """
-    t = Trainer(self.name)
+    t = Trainer(yaml_data=yaml_data, name=self.name)
     t.train(epochs)
 
     most_recent = max(glob.glob(os.path.join("yolov5/runs/train/", '*/')), key=os.path.getmtime)

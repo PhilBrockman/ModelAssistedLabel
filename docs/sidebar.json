@@ -4,6 +4,7 @@
     "Configuration": "config.html",
     "Abstracting File Management": "split.html",
     "Training Models": "train.html",
-    "Detecting Objects": "detect.html"
+    "Detecting Objects": "detect.html",
+    "Setup": "tutorial.html"
   }
 }
