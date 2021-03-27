@@ -3,7 +3,6 @@
 __all__ = ['Trainer', 'AutoWeights']
 
 # Cell
-from .config import Defaults
 import os
 
 class Trainer():
@@ -11,28 +10,25 @@ class Trainer():
 
   Write the backbone of the model to file and then run YOLOv5's train file."""
 
-  def __init__(self, name, yaml_file = "models/custom_yolov5s.yaml"):
-    """
-    sets the current directory to the project's root as defined in Defaults.
+  def __init__(self, yaml_data, name, yaml_file = "models/custom_yolov5s.yaml"):
+    """ Constructs the Trainer class and defines the `yaml_file` location
 
     Args:
       name: identifier for results
-      yaml_file: path to write the file
     """
-    os.chdir(Defaults().root)
     self.yaml_file = yaml_file
     self.name = name
-    self.template = Defaults().trainer_template
+    self.yaml_data = yaml_data
 
-  def write_yaml(self):
+  def write_yaml(self, data, prefix="yolov5/"):
     """
     Records YOLOv5 architecture
     """
-    yaml = f"yolov5/{self.yaml_file}"
+    yaml = prefix+self.yaml_file
     if os.path.exists(yaml):
       os.remove(yaml)
-    f = open(yaml,"w")
-    f.writelines(self.template)
+    f = open(yaml,"w+")
+    f.writelines(data)
     f.close()
 
   def train(self, epochs):
@@ -42,9 +38,8 @@ class Trainer():
     Args:
       epochs: number of iterations
     """
-    self.write_yaml()
+    self.write_yaml(self.yaml_data)
     os.chdir("yolov5")
-    os.system("pip install -r requirements.txt")
     os.system(f"python train.py --img 416 --batch 16 --epochs {epochs} --data '../data.yaml' --cfg '{self.yaml_file}' --weights '' --name '{self.name}'  --cache")
     os.chdir("..")
 
@@ -89,7 +84,7 @@ class AutoWeights():
       if os.path.isdir(d):
         self.__traverse_resources__(d, level=0)
       else:
-        print("File: ", os.path.exists("data.yaml"))
+        print("File: ", d)
 
   def __traverse_resources__(self, dir, level):
     "Iterate through the levels of each of the resource paths"
@@ -108,7 +103,7 @@ class AutoWeights():
       print("\t"*level, ">", len(os.listdir(dir)),"files")
 
 
-  def generate_weights(self, epochs, rm_local_files=False):
+  def generate_weights(self, epochs, yaml_data, rm_local_files=False):
     """
     Creates a `Trainer` object and trains for a given amount of time.
 
@@ -120,7 +115,7 @@ class AutoWeights():
     Returns:
       path to the output folder of train.py
     """
-    t = Trainer(self.name)
+    t = Trainer(yaml_data=yaml_data, name=self.name)
     t.train(epochs)
 
     most_recent = max(glob.glob(os.path.join("yolov5/runs/train/", '*/')), key=os.path.getmtime)
@@ -167,25 +162,6 @@ class AutoWeights():
 
     #removed the folder that was taken out of the zip
     shutil.rmtree("unzipped")
-
-  def initialize_images_from_bag(self, bag_of_images_and_labels):
-    """Converts a folder than contains images and labels to a format acceptable
-    by the Ultralytics.
-
-    Args:
-      bag_of_images_and_labels
-    """
-
-    g = Generation(repo=bag_of_images_and_labels,
-                  out_dir=self.out_dir,
-                  data_yaml=self.data_yaml,
-                  verbose=self.verbose)
-    g.set_split(split_ratio=self.custom_split, MAX_SIZE=self.MAX_SIZE)
-    g.get_split()
-    zipped = g.write_split_to_disk(descriptor=self.name)
-    self.initialize_images_from_zip(zipped)
-    os.system(f'rm -f -r "{zipped}"')
-    self.g = g
 
   def __cleanup__(self):
     """
