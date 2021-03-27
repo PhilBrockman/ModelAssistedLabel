@@ -287,7 +287,7 @@ os.listdir(aw.last_results_path + "/weights")
 View the last couple lines 
 
 ```
-with open(aw.last_results_path + "/results.txt") as results_file:
+with open(aw.last_results_path + "results.txt") as results_file:
   results = results_file.readlines()
 print("Epoch   gpu_mem       box       obj       cls     total    labels  img_size")
 results[-5:]
