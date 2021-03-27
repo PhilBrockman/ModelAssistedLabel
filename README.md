@@ -113,6 +113,10 @@ for resource_folder in ["images", "labels"]:
 
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes! (changes are written to the `config_file`
 
+```
+d = Defaults()
+```
+
 #### changing a Default value
 
 ```
@@ -198,12 +202,10 @@ names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']"""
 d.save()
 ```
 
-The `Viewer` class is our model assisted labeler. It requires weights and an array of class labels.
+Make sure that the class names are accessible:
 
 ```
-import ast
-class_idx = ast.literal_eval(d.data_yaml.split("\n")[-1].split(":")[1].strip())
-class_idx
+d.get_class_names()
 ```
 
 

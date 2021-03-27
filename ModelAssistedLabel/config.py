@@ -4,7 +4,7 @@ __all__ = ['Defaults']
 
 # Cell
 
-import json, os, shutil
+import json, os, shutil, ast
 
 class Defaults:
   """
@@ -28,6 +28,10 @@ class Defaults:
     assert self.root
     print(f"moving to {self.root}")
     os.chdir(self.root)
+
+  def get_class_names(self):
+    "Returns:  the array of names from self.data_yaml"
+    return ast.literal_eval(self.data_yaml.split("\n")[-1].split(":")[1].strip())
 
   def _itername(pre, post=""):
     """If function terminates, returns the lowest conflict-free file path
