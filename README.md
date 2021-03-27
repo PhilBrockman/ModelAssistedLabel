@@ -158,8 +158,6 @@ d.to_root()
 
 #### cloning YOLOv5
 
-I borrow the instructions to set up the Ultralytics repo from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5). (If I'd be allowed one undo on this project, I wish I would have intially forked this project from that tutorial.)
-
 ```
 # clone YOLOv5 repository
 !git clone https://github.com/ultralytics/yolov5  # clone repo
@@ -472,18 +470,18 @@ I have uncovered a camera and lighting positioning that allows for my model to r
 
 I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).
 
-The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. A lot of the frustrations stemming from file mangement could be lightening by revisiting the way `Defaults.data_yaml` is constructed - perhaps it would be better to simply store the names of classes instead.
+The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way `Defaults.data_yaml` is constructed - perhaps it would be better to simply store the names of classes instead.
 
 
 
 ### Note on the Dataset
 
-This dataset of 841 images was not carefully curated. There's images from a different rowing machine and also from  [this](https://github.com/SachaIZADI/Seven-Segment-OCR) repo. Some scenes are illuminated with sunlight. Others have been cropped to include only the LCD. Larger digits are underrepresented.
+This dataset of 841 images is a mishmash. There's images from a different rowing machine and also from  [this](https://github.com/SachaIZADI/Seven-Segment-OCR) repo. Some scenes are illuminated with sunlight. Others have been cropped to include only the LCD. Digits like 7, 8, and 9 are underrepresented.
 
 
 ### Recording from Laptop
 
-This is how I'm currently fixing the position my black-shelled laptop while recording: [pic1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [pic2](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [pic3](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
+This is my setup for how I'm currently fixing the position my black-shelled laptop while recording: [pic1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [pic2](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [pic3](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
 
 I use the `_capture.ipynb` notebook to capture images on a bit of a delay to prevent repeat images from cluttering the dataset. For me, it was much easier to get recording working from a local notebook than from a Colab notebook but YMMV.
 
