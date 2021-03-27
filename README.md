@@ -14,18 +14,21 @@ First question -- just a tiny one -- how do you do that?
 
 After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.
 
-I labeled image after image, I envision passing my work off to a YOLOv5 model. As I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, I build wrappers around `detect.py` and `train.py`. I determine that my vision could be a reality.
+As I labeled image after image, I envision passing my work off to a YOLOv5 model. I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, I build wrappers around `detect.py` and `train.py`. I determine that my vision could be a reality.
 
 This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I also provide labeled and unlabeled images to demonstrate the tools.
-{% include note.html content='`Image Repo/labeled/` contains a folder that holds all 841 labeled images, while images inside `Image Repo/unlabeled/` were taken inside a blacked-out room.' %}
-* `./Image Repo/labeled/Final Roboflow Export (841)` 
- - 841 labeled image dataset)
-* `./Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50`
- - 200 images with direct lighting from one light source
-* `./Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00` 
- - 200 images with direct lighting from one light source and intermittent glare
-* `./Image Repo/unlabeled/21-3-18 rowing 8-12 ` 
- - 200 images with direct light and ambient lamps turned on
+
+* `Image Repo/`
+ - `labeled/`
+    + `Final Roboflow Export (841)/` 
+      + 841 labeled image dataset
+ - `unlabeled/`
+    + `21-3-22 rowing (200) 7:50-12:50/`
+      - 200 images with direct lighting from one light source
+    + `21-3-22 rowing (200) 1:53-7:00/` 
+      - 200 images with direct lighting from one light source and intermittent glare
+    + `21-3-18 rowing 8-12/` 
+      - 200 images with direct light and ambient lamps turned on
 
 
 
@@ -76,16 +79,16 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
 
 ### Expected Output
 
-* **Folder** that contains: 
+* Folder that contains: 
     - `images/`
       + a copy of every image in **Unlabeled Data**
     - `labels/`
       + result of running object detection on each image
-    - a results folder produced by Ultralytic's `train.py` on the **Labeled Data** (if not using pre-trained weights)
     - `class labels.txt` to preserve the identity of the classes
+    - (if not using pre-trained weights) a results folder produced by Ultralytic's `train.py` on the **Labeled Data** 
 
 
-Build the folder structure.
+Start by building the folder structure for the output.
 
 ```
 from ModelAssistedLabel.config import Defaults
@@ -106,25 +109,17 @@ for resource_folder in ["images", "labels"]:
     seven segment digits - 1
 
 
-The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than a human-readable name. Consequently, the identities of each class index must be supplied.
-
-```
-class_idx = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-```
-
-Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
-
-```
-with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
-  label_map.writelines("\n".join(class_idx))
-```
-
 ### Configure Defaults
 
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes! (changes are written to the `config_file`
 
 ```
 d = Defaults()
+```
+
+#### changing a Default value
+
+```
 print(" -- Defined Keys: --")
 print("\n".join([x for x in d.__dict__.keys()]))
 ```
@@ -161,6 +156,8 @@ d.to_root()
     moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 
 
+#### cloning YOLOv5
+
 I borrow the instructions to set up the Ultralytics repo from [the Roboflow tutorial]( https://models.roboflow.com/object-detection/yolov5). (If I'd be allowed one undo on this project, I wish I would have intially forked this project from that tutorial.)
 
 ```
@@ -189,6 +186,45 @@ from utils.google_utils import gdrive_download  # to download models/datasets
     /content/drive/My Drive/vision.philbrockman.com/ModelAssistedLabel
 
 
+#### define class map
+
+
+I have `nc = 10` classes and their `names` are all string types.
+
+
+```
+d.data_yaml = """train: ../train/images
+val: ../valid/images
+
+nc: 10
+names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']"""
+
+d.save()
+```
+
+Make sure that the class names are accessible:
+
+```
+d.get_class_names()
+```
+
+
+
+
+    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+
+
+Store the class labels with index 0 on line 1, index 1 on line 2, and so on.
+
+```
+with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
+  label_map.writelines("\n".join(d.get_class_names()))
+```
+
+## Generating Weights
+
+
 Make sure GPU is enabled.
 
 ```
@@ -202,11 +238,6 @@ else:
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
     moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 
-
-## Generating Weights
-
-
-At some point, a model needs to be trained. I use `Generation` and `AutoWeights` to manage files relevant to the training process. 
 
 ### Preparing Filesystem
 
@@ -354,7 +385,7 @@ results_folder = aw.last_results_path
 weight_path = results_folder + "/weights/best.pt"
 
 # Viewer needs a set of weights and an array of labels for the detected object types
-v = Viewer(weight_path, class_idx)
+v = Viewer(weight_path, Defaults().get_class_names())
 ```
 
     Fusing layers... 
@@ -407,16 +438,30 @@ for result in results:
   predictions = result["predictions"]
   with open(os.path.join(export_folder, "labels", f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
+```
 
-#check if weights were generated
-if aw is not None and os.path.exists(aw.last_results_path):
-  print(f"Moving yolov5 results folder: {aw.last_results_path}")
-  shutil.move(aw.last_results_path, export_folder)
-else:
+Lastly, if results need to get saved, make sure they get saved.
+
+```
+moved = False #set a flag
+
+try: 
+  if os.path.exists(aw.last_results_path):
+    # `aw` exists and it has been executed 
+    print(f"Moving yolov5 results: {aw.last_results_path}")
+    shutil.move(aw.last_results_path, export_folder)
+
+    #flip the flag
+    moved = True
+except NameError:
+  pass
+
+if not(moved):
+  # either the AutoWeigts didn't pan out or it wasn't used
   print("No weights to save")
 ```
 
-    Moving yolov5 results folder: yolov5/runs/train/seven segment digits - 1/
+    No weights to save
 
 
 I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
@@ -425,20 +470,20 @@ I labeled dozens upon dozens and dozens of images with Roboflow and would recomm
 
 I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!
 
-I see two main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).
+I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).
+
+The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. A lot of the frustrations stemming from file mangement could be lightening by revisiting the way `Defaults.data_yaml` is constructed - perhaps it would be better to simply store the names of classes instead.
 
 
 
+### Note on the Dataset
 
-
-### Lingering Questions
-
-My dataset of 841 images is eclectic. There's images from other rowing machines and others from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
+This dataset of 841 images was not carefully curated. There's images from a different rowing machine and also from  [this](https://github.com/SachaIZADI/Seven-Segment-OCR) repo. Some scenes are illuminated with sunlight. Others have been cropped to include only the LCD. Larger digits are underrepresented.
 
 
 ### Recording from Laptop
 
-This is how I'm currently fixing the position my laptop while recording: [standing](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [floor 1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [floor 2](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
+This is how I'm currently fixing the position my black-shelled laptop while recording: [pic1](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg), [pic2](https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg), [pic3](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true).
 
 I use the `_capture.ipynb` notebook to capture images on a bit of a delay to prevent repeat images from cluttering the dataset. For me, it was much easier to get recording working from a local notebook than from a Colab notebook but YMMV.
 
