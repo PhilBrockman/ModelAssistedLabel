@@ -44,14 +44,20 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>My exercise equipment, despite even being electronic, doesn’t connect to a network. But I still want the "smart workout" experience.</p>
-<p>Maybe if I instead point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of the machine’s analog readout.</p>
-<p>First question, just a tiny one, how do you do that?</p>
-<p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They helped provide a hands-on and accessible experience in machine learning. But unfortunately, I didn't have much luck parsing my digital screens with available models/datasets. Instead, I decided to start building my own dataset.</p>
-<p>I realize that if I label enough digits, I can train a weak(er) YOLO model to tell me what it sees. I can then take that information and pre-label my images with those predictions. I would later learn that this bootstrapping of annotation is called machine-assisted labeling.</p>
-<p>The pieces come together.  I can focus on writing code while I use Roboflow to sort, generate, and deliver my images. I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project and build wrappers around the essential functions in <code>detect.py</code> and <code>train.py</code>.</p>
-<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I would typically only use the cells under "labing a new set of images" and "exporting annotated images" once my weights have been generated. 
-{% include note.html content='In <code>./Image Repo</code> I provide access to 841 labeled images (lumped in one folder) and 600 unlabeled images (seperated into three sets of 200 images - lighting condition is the same within each run, but differs between runs). ' %}</p>
+<p>My exercise equipment doesn’t connect to a network. But I still want the "smart workout" experience when I'm using a "dumb" rowing machine.</p>
+<p>Maybe if I point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout.</p>
+<p>First question -- just a tiny one -- how do you do that?</p>
+<p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.</p>
+<p>As I labeled image after image, I fantasized passing my work off to a YOLOv5 model. As I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project, I build wrappers around <code>detect.py</code> and <code>train.py</code>. I determine that my fantasy could be a reality.</p>
+<p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction.
+{% include note.html content='<code>./Image Repo/labeled/</code> contains a folder that holds all 841 labeled images.' %}</p>
+<ul>
+<li><code>Final Roboflow Export (841)</code> (841 labeled image dataset)
+{% include note.html content='All images inside <code>./Image Repo/unlabeled</code> were taken inside a blacked-out room. Further, the lighting within each directory remains constant.' %}</li>
+<li><code>21-3-22 rowing (200) 7:50-12:50</code> (200 images with direct lighting from one light source)</li>
+<li><code>21-3-22 rowing (200) 1:53-7:00</code> (200 images with direct lighting from one light source and intermittent glare)</li>
+<li><code>21-3-18 rowing 8-12</code> (200 images with direct light and ambient lamps turned on)</li>
+</ul>
 
 </div>
 </div>
@@ -156,7 +162,7 @@ Checking out files: 100% (2381/2381), done.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unlabeled_images</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 1:53-7:00&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unlabeled_images</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50&quot;</span>
 </pre></div>
 
     </div>
@@ -189,7 +195,7 @@ Checking out files: 100% (2381/2381), done.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Building the folder structure.</p>
+<p>Build the folder structure.</p>
 
 </div>
 </div>
@@ -239,7 +245,7 @@ Checking out files: 100% (2381/2381), done.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than the human-readable name. Consequently, the identities of each class index must be supplied.</p>
+<p>The names of my classes are digits. Under the hood, the YOLOv5 model is working of the index of the class, rather than a human-readable name. Consequently, the identities of each class index must be supplied.</p>
 
 </div>
 </div>
@@ -294,7 +300,7 @@ Checking out files: 100% (2381/2381), done.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Several values are stored by the <code>Defaults</code> class. Any value can be overridden (and new values can be added. Make sure to <code>save()</code> any changes!</p>
+<p>Several values are stored by the <code>Defaults</code> class. Any value can be overridden (and new values can be added. Make sure to <code>save()</code> any changes! (changes are written to the <code>config_file</code></p>
 
 </div>
 </div>
@@ -395,7 +401,7 @@ trainer_template
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Save any changes and enter root directory</p>
+<p>Save changes and enter root directory</p>
 
 </div>
 </div>
@@ -539,7 +545,7 @@ moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At some point, a model needs to be trained. The Ultralytics repo likely has more flexiblity than I'm granting, but I use custom classes to arrange my folders and files in a consistent manner.</p>
+<p>At some point, a model needs to be trained. I use <code>Generation</code> and <code>AutoWeights</code> to manage files relevant to the training process.</p>
 
 </div>
 </div>
@@ -883,61 +889,6 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>View the last couple lines</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span> <span class="o">+</span> <span class="s2">&quot;results.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">results_file</span><span class="p">:</span>
-  <span class="n">results</span> <span class="o">=</span> <span class="n">results_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epoch   gpu_mem       box       obj       cls     total    labels  img_size&quot;</span><span class="p">)</span>
-<span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Epoch   gpu_mem       box       obj       cls     total    labels  img_size
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39; 1995/1999      1.8G   0.02351   0.01559  0.006725   0.04583       125       416    0.9915    0.9908    0.9929    0.8725   0.02014   0.01494  0.004582\n&#39;,
- &#39; 1996/1999      1.8G   0.02363   0.01608  0.006827   0.04654       150       416    0.9915    0.9909     0.993    0.8726   0.02014   0.01495  0.004582\n&#39;,
- &#39; 1997/1999      1.8G    0.0242   0.01487  0.007266   0.04633       161       416    0.9914    0.9909     0.993    0.8725   0.02014   0.01494  0.004582\n&#39;,
- &#39; 1998/1999      1.8G   0.02356   0.01581  0.006952   0.04632       102       416    0.9915    0.9909     0.993    0.8726   0.02014   0.01493  0.004582\n&#39;,
- &#39; 1999/1999      1.8G   0.02305   0.01591  0.006753   0.04571       185       416    0.9915    0.9909    0.9929    0.8722   0.02014   0.01492  0.004582\n&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Machine-assisted-Labeling">Machine-assisted Labeling<a class="anchor-link" href="#Machine-assisted-Labeling"> </a></h2>
 </div>
 </div>
@@ -950,7 +901,7 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And the <code>Viewer</code> class doesn't care how recently your weights were generated so you can plug in existing weights.</p>
+<p>The <code>Viewer</code> class needs weights and class labels to operate.</p>
 
 </div>
 </div>
@@ -997,8 +948,8 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Selects all images in the unlabeled folder and let's us look through the computer's eyes at the images.</p>
-<p>Note that the model has trouble in images with glare on the LCD. For more clear screens, instead set <code>unlabeled_images="21-3-22 rowing (200) 7:50-12:50"</code></p>
+<p>Let's us look through the computer's eyes at the images.</p>
+<p>With the existing dataset, the model performs best under direct lighting.</p>
 
 </div>
 </div>
@@ -1016,6 +967,7 @@ Wall time: 4h 57min 26s
 <span class="n">images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./</span><span class="si">{</span><span class="n">unlabeled_images</span><span class="si">}</span><span class="s2">/*.jpg&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
   <span class="n">v</span><span class="o">.</span><span class="n">plot_for</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </pre></div>
 
@@ -1042,6 +994,13 @@ Wall time: 4h 57min 26s
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this small sample, the model performs quite well. Nonetheless, manual review of all images is needed to remove overlapping predictions, categorization errors, and absent boxes.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1069,7 +1028,7 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ensure that image/label pairs have a common root filename</p>
+<p>Ensure that image/label pairs have a common root filename and collect relevant files in a single folder.</p>
 
 </div>
 </div>
@@ -1128,7 +1087,6 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The images are ready for human verification. As the model grows more accurate, I would alter camera position or lighting until the model starts to stumble again.</p>
 <p>I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed <a href="https://github.com/PhilBrockman/autobbox">an annotator</a> in React that better suited my physical needs.</p>
 
 </div>
@@ -1136,16 +1094,8 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Wrap-Up">Wrap Up<a class="anchor-link" href="#Wrap-Up"> </a></h2><p>My original goal of "smartifying" my rowing machine is closer than ever.</p>
-<p>It is possible to parse workout information (thought currently, I only have access to a maximum of 4 digits). I wonder if the model could keep up if there were 20+ digits to capture.</p>
-<p>I know that lighting and camera position have an effect on accuracy. Here's how I'm holding my computer steady as I modify the lighting: <a href="https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg">standing</a>, <a href="https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg">floor 1</a>, <a href="https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true">floor 2</a>.</p>
-<p>Here are 3 runs captured under different lighting conditions:</p>
-<ul>
-<li><code>21-3-22 rowing (200) 7:50-12:50</code> (direct lighting from one light source)</li>
-<li><code>21-3-22 rowing (200) 1:53-7:00</code> (direct lighting from one light source with glare)</li>
-<li><code>21-3-18 rowing 8-12</code> (direct light and ambient lamps turned on)
-{% include note.html content='All unlabeled images were taken inside a blacked-out room. The are stored in <code>Image Repo/unlabeled/</code>' %}</li>
-</ul>
+<h2 id="Wrap-Up">Wrap Up<a class="anchor-link" href="#Wrap-Up"> </a></h2><p>I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!</p>
+<p>I see two main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).</p>
 
 </div>
 </div>
@@ -1153,6 +1103,14 @@ Wall time: 4h 57min 26s
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Lingering-Questions">Lingering Questions<a class="anchor-link" href="#Lingering-Questions"> </a></h3><p>My dataset of 841 images is eclectic. There's images from other rowing machines and others from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind stranger's github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Recording-from-Laptop">Recording from Laptop<a class="anchor-link" href="#Recording-from-Laptop"> </a></h3><p>This is how I'm currently fixing the position my laptop while recording: <a href="https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-laptop-mount.jpg">standing</a>, <a href="https://raw.githubusercontent.com/PhilBrockman/ModelAssistedLabel/master/DIY-computer-capture.jpg">floor 1</a>, <a href="https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/DIY-capture.jpeg?raw=true">floor 2</a>.</p>
+<p>I use the <code>_capture.ipynb</code> notebook to capture images on a bit of a delay to prevent repeat images from cluttering the dataset. For me, it was much easier to get recording working from a local notebook than from a Colab notebook but YMMV.</p>
 
 </div>
 </div>
