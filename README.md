@@ -113,7 +113,7 @@ with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
   label_map.writelines("\n".join(class_idx))
 ```
 
-## Configure defaults
+### Configure defaults
 
 Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes!
 
@@ -458,4 +458,10 @@ Here are 3 runs captured under different lighting conditions:
 ### Lingering Questions
 
 My dataset of 841 images is eclectic. There's images from other rowing machines and others from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
+
+
+### About Me
+
+I am finishing my fourth year as a public school teacher in Kentucky. This summer, I am moving to the Bay Area to pursue a career in tech. When I’m not coding, I enjoy playing violin! Reach me at phil.brockman@gmail.com.
+
 
