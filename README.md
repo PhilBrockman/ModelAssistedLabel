@@ -355,7 +355,9 @@ results[-5:]
 
 
 
-## Labeling a new set of images
+## Machine-assisted Labeling
+
+### Labeling a new set of images
 
 And the `Viewer` class doesn't care how recently your weights were generated so you can plug in existing weights.
 
@@ -399,7 +401,7 @@ for image in images:
   results.append(v.predict_for(image))
 ```
 
-## Exporting annotated images
+### Exporting annotated images
 
 Ensure that image/label pairs have a common root filename
 
@@ -431,11 +433,9 @@ else:
     Moving yolov5 results folder: yolov5/runs/train/seven segment digits - 1/
 
 
-At this point I would have uploaded this set of image/label pairs to Roboflow for correction and annotation. As the model grows more accurate, I would alter camera position or lighting until the model started stumbling again. I want to be keeping the model on its toes!
+The images are ready for human verification. As the model grows more accurate, I would alter camera position or lighting until the model starts to stumble again. 
 
-To be transparent, I developed a [custom React annotator](https://github.com/PhilBrockman/autobbox) that better suited my needs.
-
-I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! 
+I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
 
 ## Wrap up
 
@@ -457,5 +457,5 @@ Here are 3 runs captured under different lighting conditions:
 
 ### Lingering Questions
 
-My labeled images are disorderly. There's data from other rowing machines and from [a kind *stranger*'s github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
+My dataset of 841 images is eclectic. There's images from other rowing machines and others from [a kind stranger's github repo](https://github.com/SachaIZADI/Seven-Segment-OCR). Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust? 
 

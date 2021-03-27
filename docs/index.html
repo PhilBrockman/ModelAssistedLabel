@@ -938,7 +938,13 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Labeling-a-new-set-of-images">Labeling a new set of images<a class="anchor-link" href="#Labeling-a-new-set-of-images"> </a></h2>
+<h2 id="Machine-assisted-Labeling">Machine-assisted Labeling<a class="anchor-link" href="#Machine-assisted-Labeling"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Labeling-a-new-set-of-images">Labeling a new set of images<a class="anchor-link" href="#Labeling-a-new-set-of-images"> </a></h3>
 </div>
 </div>
 </div>
@@ -1057,7 +1063,7 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exporting-annotated-images">Exporting annotated images<a class="anchor-link" href="#Exporting-annotated-images"> </a></h2>
+<h3 id="Exporting-annotated-images">Exporting annotated images<a class="anchor-link" href="#Exporting-annotated-images"> </a></h3>
 </div>
 </div>
 </div>
@@ -1122,9 +1128,8 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point I would have uploaded this set of image/label pairs to Roboflow for correction and annotation. As the model grows more accurate, I would alter camera position or lighting until the model started stumbling again. I want to be keeping the model on its toes!</p>
-<p>To be transparent, I developed a <a href="https://github.com/PhilBrockman/autobbox">custom React annotator</a> that better suited my needs.</p>
-<p>I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service!</p>
+<p>The images are ready for human verification. As the model grows more accurate, I would alter camera position or lighting until the model starts to stumble again.</p>
+<p>I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed <a href="https://github.com/PhilBrockman/autobbox">an annotator</a> in React that better suited my physical needs.</p>
 
 </div>
 </div>
@@ -1147,7 +1152,7 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Lingering-Questions">Lingering Questions<a class="anchor-link" href="#Lingering-Questions"> </a></h3><p>My labeled images are disorderly. There's data from other rowing machines and from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind <em>stranger</em>'s github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
+<h3 id="Lingering-Questions">Lingering Questions<a class="anchor-link" href="#Lingering-Questions"> </a></h3><p>My dataset of 841 images is eclectic. There's images from other rowing machines and others from <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">a kind stranger's github repo</a>. Some images have been cropped to only include the display. Did having varied data slow me down overall? Or did it make the models more robust?</p>
 
 </div>
 </div>
