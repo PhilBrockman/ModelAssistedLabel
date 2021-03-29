@@ -470,7 +470,7 @@ I have uncovered a camera and lighting positioning that allows for my model to r
 
 I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).
 
-The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way `Defaults.data_yaml` is constructed - perhaps it would be better to simply store the names of classes instead.
+The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way `Defaults.data_yaml` is constructed.
 
 
 
