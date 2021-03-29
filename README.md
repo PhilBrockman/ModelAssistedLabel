@@ -35,7 +35,7 @@ This repository contains the tools that let me "pre-label" my images before send
 
 ## Getting Started
 
-{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
+{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb) (and enable CPU)' %}
 
 ```
 project_name = "seven segment digits - "
@@ -105,20 +105,15 @@ Start by building the folder structure for the output.
 from ModelAssistedLabel.config import Defaults
 import os
 
-def mk_MAL_dirs(root_project_name):
-  "Builds the expected output folder for a given project"
-  export_folder = Defaults._itername(root_project_name)
+export_folder = Defaults._itername(root_project_name)
 
-  # make the export folder
-  os.mkdir(export_folder)
+# make the export folder
+os.mkdir(export_folder)
 
-  # make the images and labels subfolders
-  for resource_folder in ["images", "labels"]:
-    os.mkdir(os.path.join(export_folder, resource_folder))
+# make the images and labels subfolders
+for resource_folder in ["images", "labels"]:
+  os.mkdir(os.path.join(export_folder, resource_folder))
 
-  return export_folder
-
-export_folder = mk_MAL_dirs(project_name)
 export_folder
 ```
 
@@ -345,10 +340,10 @@ With the images written to disk, we can run the Ultralytics training algorithm. 
 {% include note.html content='this output has already been calculated and stored in `pre-trained/results` for convenience.' %}
 
 ```
+%%time
+
 "Uncomment this cell to skip training."
 # results_folder="pre-trained/results" 
-
-%%time
 
 try:
   #using pretrained results
@@ -437,6 +432,15 @@ for image in random.sample(images,5):
     Output hidden; open in https://colab.research.google.com to view.
 
 
+Make predictions for all images.
+
+```
+results = []
+
+for image in images:
+  results.append(v.predict_for(image))
+```
+
 #### Predictions Spot Check
 
 In all 600 unlabeled images, the screen has 4 digits.
@@ -459,7 +463,7 @@ ax.set_title(label = "Number of predictions per image")
 
 
 
-![png](docs/images/output_63_1.png)
+![png](docs/images/output_65_1.png)
 
 
 At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.

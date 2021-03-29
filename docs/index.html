@@ -89,7 +89,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a>' %}</p>
+<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a> (and enable CPU)' %}</p>
 
 </div>
 </div>
@@ -277,20 +277,15 @@ Checking out files: 100% (2807/2807), done.
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.config</span> <span class="kn">import</span> <span class="n">Defaults</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="k">def</span> <span class="nf">mk_MAL_dirs</span><span class="p">(</span><span class="n">root_project_name</span><span class="p">):</span>
-  <span class="s2">&quot;Builds the expected output folder for a given project&quot;</span>
-  <span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">root_project_name</span><span class="p">)</span>
+<span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">root_project_name</span><span class="p">)</span>
 
-  <span class="c1"># make the export folder</span>
-  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
+<span class="c1"># make the export folder</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
 
-  <span class="c1"># make the images and labels subfolders</span>
-  <span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
+<span class="c1"># make the images and labels subfolders</span>
+<span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
 
-  <span class="k">return</span> <span class="n">export_folder</span>
-
-<span class="n">export_folder</span> <span class="o">=</span> <span class="n">mk_MAL_dirs</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
 <span class="n">export_folder</span>
 </pre></div>
 
@@ -909,10 +904,10 @@ train/images
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="s2">&quot;Uncomment this cell to skip training.&quot;</span>
-<span class="c1"># results_folder=&quot;pre-trained/results&quot; </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
 
-<span class="o">%%</span><span class="k">time</span>
+&quot;Uncomment this cell to skip training.&quot;
+# results_folder=&quot;pre-trained/results&quot; 
 
 try:
   #using pretrained results
@@ -1136,6 +1131,33 @@ Wall time: 4h 57min 26s
 
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Make predictions for all images.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+  <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">predict_for</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
