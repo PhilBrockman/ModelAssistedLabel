@@ -105,7 +105,7 @@ Start by building the folder structure for the output.
 from ModelAssistedLabel.config import Defaults
 import os
 
-export_folder = Defaults._itername(root_project_name)
+export_folder = Defaults._itername(project_name)
 
 # make the export folder
 os.mkdir(export_folder)
