@@ -498,7 +498,7 @@ Lastly, if results need to get saved, make sure they get saved.
 moved = False #set a flag
 
 try: 
-  if os.path.exists(aw.last_results_path):
+  if aw and 'last_results_path' in aw.__dict__ and os.path.exists(aw.last_results_path):
     # `aw` exists and it has been executed 
     print(f"Moving yolov5 results: {aw.last_results_path}")
     shutil.move(aw.last_results_path, export_folder)
@@ -506,6 +506,7 @@ try:
     #flip the flag
     moved = True
 except NameError:
+  #no results attempted
   pass
 
 if not(moved):
