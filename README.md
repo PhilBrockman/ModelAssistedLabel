@@ -1,5 +1,5 @@
-# Model-asisted Labeling with YOLOv5
-> custom image set annotation with a model's help
+# Model-assisted Labeling with YOLOv5
+
 
 
 ![base64 splash](https://github.com/PhilBrockman/ModelAssistedLabel/blob/master/modelassistedlabel%20splash.jpg?raw=true)
@@ -8,7 +8,7 @@
 
 My exercise equipment doesn’t connect to a network. But I still want the "smart workout experience" when I'm using a "dumb" rowing machine.
 
-Maybe if I point my webcam at the equipment’s LCD output, I can make my computer identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout. 
+If I maybe point my webcam at the equipment’s LCD output, I can make my computer interpret the digits. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout. 
 
 First question -- just a tiny one -- how do you do that?  
 
@@ -38,20 +38,31 @@ This repository contains the tools that let me "pre-label" my images before send
 {% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb) (and enable GPU)' %}
 
 ```
-# clone this repository
+project_name = "seven segment digits - "
+```
+
+I back up the input files after writing them to disk just in case something breaks.
+
+```
+backup_dir = "archive/Generation/zips"
+```
+
+Grab my code.
+
+```
 !git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 %cd "ModelAssistedLabel"
 ```
 
     Cloning into 'ModelAssistedLabel'...
-    remote: Enumerating objects: 463, done.[K
-    remote: Counting objects: 100% (463/463), done.[K
-    remote: Compressing objects: 100% (146/146), done.[K
-    remote: Total 4440 (delta 332), reused 439 (delta 312), pack-reused 3977[K
-    Receiving objects: 100% (4440/4440), 210.50 MiB | 13.74 MiB/s, done.
-    Resolving deltas: 100% (1355/1355), done.
-    Checking out files: 100% (2381/2381), done.
-    /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel
+    remote: Enumerating objects: 1023, done.[K
+    remote: Counting objects: 100% (1023/1023), done.[K
+    remote: Compressing objects: 100% (626/626), done.[K
+    remote: Total 5000 (delta 455), reused 907 (delta 359), pack-reused 3977[K
+    Receiving objects: 100% (5000/5000), 252.34 MiB | 32.54 MiB/s, done.
+    Resolving deltas: 100% (1478/1478), done.
+    Checking out files: 100% (2807/2807), done.
+    /content/ModelAssistedLabel
 
 
 ### Expected Inputs
@@ -94,19 +105,28 @@ Start by building the folder structure for the output.
 from ModelAssistedLabel.config import Defaults
 import os
 
-project_name = "seven segment digits - "
-export_folder = Defaults._itername(project_name)
+def mk_MAL_dirs(root_project_name):
+  "Builds the expected output folder for a given project"
+  export_folder = Defaults._itername(root_project_name)
 
-print(export_folder)
-# make the export folder
-os.mkdir(export_folder)
+  # make the export folder
+  os.mkdir(export_folder)
 
-# make the images and labels subfolders
-for resource_folder in ["images", "labels"]:
-  os.mkdir(os.path.join(export_folder, resource_folder))
+  # make the images and labels subfolders
+  for resource_folder in ["images", "labels"]:
+    os.mkdir(os.path.join(export_folder, resource_folder))
+
+  return export_folder
+
+export_folder = mk_MAL_dirs(project_name)
+export_folder
 ```
 
-    seven segment digits - 1
+
+
+
+    'seven segment digits - 1'
+
 
 
 ### Configure Defaults
@@ -139,11 +159,11 @@ Speciy the absolute path of the root directory.
 !pwd
 ```
 
-    /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel
+    /content/ModelAssistedLabel
 
 
 ```
-d.root = "/content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/"
+d.root = "/content/ModelAssistedLabel/"
 ```
 
 Save changes and enter root directory
@@ -153,7 +173,7 @@ d.save()
 d.to_root()
 ```
 
-    moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
+    moving to /content/ModelAssistedLabel/
 
 
 #### cloning YOLOv5
@@ -174,20 +194,23 @@ from utils.google_utils import gdrive_download  # to download models/datasets
 ```
 
     Cloning into 'yolov5'...
-    remote: Enumerating objects: 7, done.[K
-    remote: Counting objects: 100% (7/7), done.[K
-    remote: Compressing objects: 100% (7/7), done.[K
-    remote: Total 5532 (delta 1), reused 0 (delta 0), pack-reused 5525
-    Receiving objects: 100% (5532/5532), 8.15 MiB | 7.60 MiB/s, done.
-    Resolving deltas: 100% (3776/3776), done.
-    /content/drive/My Drive/vision.philbrockman.com/ModelAssistedLabel/yolov5
-    /content/drive/My Drive/vision.philbrockman.com/ModelAssistedLabel
+    remote: Enumerating objects: 26, done.[K
+    remote: Counting objects: 100% (26/26), done.[K
+    remote: Compressing objects: 100% (25/25), done.[K
+    remote: Total 5595 (delta 7), reused 10 (delta 1), pack-reused 5569[K
+    Receiving objects: 100% (5595/5595), 8.46 MiB | 33.32 MiB/s, done.
+    Resolving deltas: 100% (3815/3815), done.
+    /content/ModelAssistedLabel/yolov5
+    [K     |████████████████████████████████| 645kB 8.0MB/s 
+    [?25h/content/ModelAssistedLabel
 
 
 #### define class map
 
 
-I have `nc = 10` classes and their `names` are all string types.
+(`data_yaml` value was pulled from Roboflow tutorial)
+
+I have `nc = 10` classes and their `names` are all string types. 
 
 
 ```
@@ -244,8 +267,6 @@ The `Generation` class helps convert an unordered folder of images and labels in
 ```
 from ModelAssistedLabel.fileManagement import Generation
 
-backup_dir = "archive/Generation/zips"
-
 g = Generation(repo=labeled_images, 
                out_dir=backup_dir,
                verbose=True)
@@ -270,14 +291,14 @@ zipped = g.write_split_to_disk(descriptor=export_folder)
 
     
     dirs ['./train', './valid', './test']
-    yaml archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/data.yaml
+    yaml archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/data.yaml
     subdir train
-    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03
+    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
     subdir valid
-    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03
+    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
     subdir test
-    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03
-    os.listdir ['train', 'valid', 'test', 'data.yaml']
+    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
+    os.listdir ['test', 'data.yaml', 'valid', 'train']
 
 
 Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `Autoweights` class both organizes data and create weights. Running an "initialize" command makes changes to the disk.
@@ -291,10 +312,10 @@ aw = AutoWeights(name=export_folder, out_dir=backup_dir)
 aw.initialize_images_from_zip(zipped)
 ```
 
-    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/train' .
-    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/valid' .
-    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/test' .
-    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/data.yaml' .
+    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/test' .
+    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/data.yaml' .
+    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/valid' .
+    mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/train' .
 
 
 Peep on the sizes of the train/valid/test groups.
@@ -303,19 +324,19 @@ Peep on the sizes of the train/valid/test groups.
 aw.traverse_resources()
 ```
 
-    train/images
-    	 > 589 files
-    train/labels
-    	 > 589 files
-    valid/images
-    	 > 169 files
-    valid/labels
-    	 > 169 files
-    test/images
-    	 > 83 files
     test/labels
     	 > 83 files
+    test/images
+    	 > 83 files
     File:  data.yaml
+    valid/labels
+    	 > 169 files
+    valid/images
+    	 > 169 files
+    train/labels
+    	 > 589 files
+    train/images
+    	 > 589 files
 
 
 ### Running `train.py`
@@ -408,13 +429,35 @@ for image in random.sample(images,5):
     Output hidden; open in https://colab.research.google.com to view.
 
 
-In this small sample, the model performs quite well. Nonetheless, manual review of all images is needed to remove overlapping predictions, categorization errors, and absent boxes.
+In this small sample, the model performs quite adequately. 
+
+
+#### predictions spot-check
+
+Keep in mind that every image in the current batch should have exactly 4 image predictions, lets take a look at the numbers of predictions being made:
 
 ```
-results = []
-for image in images:
-  results.append(v.predict_for(image))
+ax = pd.Series([len(x["predictions"]) for x in results]).hist()
+ax.grid(False)
+ax.set_title(label = "Number of predictions per image")
 ```
+
+
+
+
+    <matplotlib.axis.Ticker at 0x7f8b7d53b150>
+
+
+
+
+![png](docs/images/output_64_1.png)
+
+
+At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.
+
+There are a couple of possible entry points to a programitic solution: the `Detector` class has an `iou_threshold` attribute (read about [Intersection Over Union](https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/)) that can be fiddled with. 
+
+Further, the `results` array stores the confidence of predictions - confidence may play a role in detecting extraneous predictions.
 
 ### Exporting Annotated Images
 
@@ -459,10 +502,25 @@ if not(moved):
   print("No weights to save")
 ```
 
-    No weights to save
+    Moving yolov5 results: yolov5/runs/train/seven segment digits - 1/
+
+
+```
+export_folder
+```
+
+
+
+
+    'seven segment digits - 1'
+
 
 
 I labeled dozens upon dozens and dozens of images with Roboflow and would recommend their free annotation service! However, to be transparent, I developed [an annotator](https://github.com/PhilBrockman/autobbox) in React that better suited my physical needs.
+
+## Building up an Image Set
+
+Keep in mind the `Generation` class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, `Generation`'s constructor function will find them.
 
 ## Wrap Up
 
@@ -474,10 +532,9 @@ The third area of development is refactoring. I made a decision early on to hard
 
 
 
-### Note on the Dataset
+### Note on the Image Set
 
 This dataset of 841 images is a mishmash. There's images from a different rowing machine and also from  [this](https://github.com/SachaIZADI/Seven-Segment-OCR) repo. Some scenes are illuminated with sunlight. Others have been cropped to include only the LCD. Digits like 7, 8, and 9 are underrepresented.
-
 
 ### Recording from Laptop
 

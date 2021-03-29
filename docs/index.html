@@ -1,13 +1,13 @@
 ---
 
-title: Model-asisted Labeling with YOLOv5
+title: Model-assisted Labeling with YOLOv5
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "custom image set annotation with a model's help"
-description: "custom image set annotation with a model's help"
+
+
 nb_path: "index.ipynb"
 ---
 <!--
@@ -45,7 +45,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My exercise equipment doesn’t connect to a network. But I still want the "smart workout experience" when I'm using a "dumb" rowing machine.</p>
-<p>Maybe if I point my webcam at the equipment’s LCD output, I can make my computer identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout.</p>
+<p>If I maybe point my webcam at the equipment’s LCD output, I can make my computer interpret the digits. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout.</p>
 <p>First question -- just a tiny one -- how do you do that?</p>
 <p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.</p>
 <p>As I labeled digits on image after image, tedium tore at me. I envisioned using the YOLOv5 model predictions as "pre-labels". I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project, and I build wrappers around <code>detect.py</code> and <code>train.py</code>. I determine that my vision could be a reality.</p>
@@ -101,6 +101,54 @@ nb_path: "index.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;seven segment digits - &quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I back up the input files after writing them to disk just in case something breaks.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">backup_dir</span> <span class="o">=</span> <span class="s2">&quot;archive/Generation/zips&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Grab my code.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git clone https://github.com/PhilBrockman/ModelAssistedLabel.git
 <span class="o">%</span><span class="k">cd</span> &quot;ModelAssistedLabel&quot;
 </pre></div>
@@ -116,14 +164,14 @@ nb_path: "index.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Cloning into &#39;ModelAssistedLabel&#39;...
-remote: Enumerating objects: 463, done.
-remote: Counting objects: 100% (463/463), done.
-remote: Compressing objects: 100% (146/146), done.
-remote: Total 4440 (delta 332), reused 439 (delta 312), pack-reused 3977
-Receiving objects: 100% (4440/4440), 210.50 MiB | 13.74 MiB/s, done.
-Resolving deltas: 100% (1355/1355), done.
-Checking out files: 100% (2381/2381), done.
-/content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel
+remote: Enumerating objects: 1023, done.
+remote: Counting objects: 100% (1023/1023), done.
+remote: Compressing objects: 100% (626/626), done.
+remote: Total 5000 (delta 455), reused 907 (delta 359), pack-reused 3977
+Receiving objects: 100% (5000/5000), 252.34 MiB | 32.54 MiB/s, done.
+Resolving deltas: 100% (1478/1478), done.
+Checking out files: 100% (2807/2807), done.
+/content/ModelAssistedLabel
 </pre>
 </div>
 </div>
@@ -229,16 +277,21 @@ Checking out files: 100% (2381/2381), done.
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.config</span> <span class="kn">import</span> <span class="n">Defaults</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;seven segment digits - &quot;</span>
-<span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">mk_MAL_dirs</span><span class="p">(</span><span class="n">root_project_name</span><span class="p">):</span>
+  <span class="s2">&quot;Builds the expected output folder for a given project&quot;</span>
+  <span class="n">export_folder</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="n">root_project_name</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
-<span class="c1"># make the export folder</span>
-<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
+  <span class="c1"># make the export folder</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">export_folder</span><span class="p">)</span>
 
-<span class="c1"># make the images and labels subfolders</span>
-<span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
-  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
+  <span class="c1"># make the images and labels subfolders</span>
+  <span class="k">for</span> <span class="n">resource_folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="n">resource_folder</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="n">export_folder</span>
+
+<span class="n">export_folder</span> <span class="o">=</span> <span class="n">mk_MAL_dirs</span><span class="p">(</span><span class="n">project_name</span><span class="p">)</span>
+<span class="n">export_folder</span>
 </pre></div>
 
     </div>
@@ -250,10 +303,12 @@ Checking out files: 100% (2381/2381), done.
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>seven segment digits - 1
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;seven segment digits - 1&#39;</pre>
 </div>
+
 </div>
 
 </div>
@@ -363,7 +418,7 @@ trainer_template
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel
+<pre>/content/ModelAssistedLabel
 </pre>
 </div>
 </div>
@@ -381,7 +436,7 @@ trainer_template
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;/content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;/content/ModelAssistedLabel/&quot;</span>
 </pre></div>
 
     </div>
@@ -419,7 +474,7 @@ trainer_template
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
+<pre>moving to /content/ModelAssistedLabel/
 </pre>
 </div>
 </div>
@@ -467,14 +522,15 @@ trainer_template
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Cloning into &#39;yolov5&#39;...
-remote: Enumerating objects: 7, done.
-remote: Counting objects: 100% (7/7), done.
-remote: Compressing objects: 100% (7/7), done.
-remote: Total 5532 (delta 1), reused 0 (delta 0), pack-reused 5525
-Receiving objects: 100% (5532/5532), 8.15 MiB | 7.60 MiB/s, done.
-Resolving deltas: 100% (3776/3776), done.
-/content/drive/My Drive/vision.philbrockman.com/ModelAssistedLabel/yolov5
-/content/drive/My Drive/vision.philbrockman.com/ModelAssistedLabel
+remote: Enumerating objects: 26, done.
+remote: Counting objects: 100% (26/26), done.
+remote: Compressing objects: 100% (25/25), done.
+remote: Total 5595 (delta 7), reused 10 (delta 1), pack-reused 5569
+Receiving objects: 100% (5595/5595), 8.46 MiB | 33.32 MiB/s, done.
+Resolving deltas: 100% (3815/3815), done.
+/content/ModelAssistedLabel/yolov5
+     |████████████████████████████████| 645kB 8.0MB/s 
+/content/ModelAssistedLabel
 </pre>
 </div>
 </div>
@@ -493,6 +549,7 @@ Resolving deltas: 100% (3776/3776), done.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>(<code>data_yaml</code> value was pulled from Roboflow tutorial)</p>
 <p>I have <code>nc = 10</code> classes and their <code>names</code> are all string types.</p>
 
 </div>
@@ -657,8 +714,6 @@ moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ModelAssistedLabel.fileManagement</span> <span class="kn">import</span> <span class="n">Generation</span>
 
-<span class="n">backup_dir</span> <span class="o">=</span> <span class="s2">&quot;archive/Generation/zips&quot;</span>
-
 <span class="n">g</span> <span class="o">=</span> <span class="n">Generation</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">labeled_images</span><span class="p">,</span> 
                <span class="n">out_dir</span><span class="o">=</span><span class="n">backup_dir</span><span class="p">,</span>
                <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -719,14 +774,14 @@ moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 dirs [&#39;./train&#39;, &#39;./valid&#39;, &#39;./test&#39;]
-yaml archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/data.yaml
+yaml archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/data.yaml
 subdir train
-	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03
+	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
 subdir valid
-	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03
+	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
 subdir test
-	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03
-os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39;]
+	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
+os.listdir [&#39;test&#39;, &#39;data.yaml&#39;, &#39;valid&#39;, &#39;train&#39;]
 </pre>
 </div>
 </div>
@@ -769,10 +824,10 @@ os.listdir [&#39;train&#39;, &#39;valid&#39;, &#39;test&#39;, &#39;data.yaml&#39
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/train&#39; .
-mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/valid&#39; .
-mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/test&#39; .
-mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-27 05-46-03/data.yaml&#39; .
+<pre>mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/test&#39; .
+mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/data.yaml&#39; .
+mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/valid&#39; .
+mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/train&#39; .
 </pre>
 </div>
 </div>
@@ -810,19 +865,19 @@ mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segmen
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>train/images
-	 &gt; 589 files
-train/labels
-	 &gt; 589 files
-valid/images
-	 &gt; 169 files
-valid/labels
-	 &gt; 169 files
+<pre>test/labels
+	 &gt; 83 files
 test/images
 	 &gt; 83 files
-test/labels
-	 &gt; 83 files
 File:  data.yaml
+valid/labels
+	 &gt; 169 files
+valid/images
+	 &gt; 169 files
+train/labels
+	 &gt; 589 files
+train/images
+	 &gt; 589 files
 </pre>
 </div>
 </div>
@@ -1081,7 +1136,20 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this small sample, the model performs quite well. Nonetheless, manual review of all images is needed to remove overlapping predictions, categorization errors, and absent boxes.</p>
+<p>In this small sample, the model performs quite adequately.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="predictions-spot-check">predictions spot-check<a class="anchor-link" href="#predictions-spot-check"> </a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Keep in mind that every image in the current batch should have exactly 4 image predictions, lets take a look at the numbers of predictions being made:</p>
 
 </div>
 </div>
@@ -1093,18 +1161,55 @@ Wall time: 4h 57min 26s
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
-  <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">predict_for</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Number of predictions per image&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axis.Ticker at 0x7f8b7d53b150&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.</p>
+<p>There are a couple of possible entry points to a programitic solution: the <code>Detector</code> class has an <code>iou_threshold</code> attribute (read about <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">Intersection Over Union</a>) that can be fiddled with.</p>
+<p>Further, the <code>results</code> array stores the confidence of predictions - confidence may play a role in detecting extraneous predictions.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Exporting-Annotated-Images">Exporting Annotated Images<a class="anchor-link" href="#Exporting-Annotated-Images"> </a></h3>
@@ -1191,9 +1296,42 @@ Wall time: 4h 57min 26s
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>No weights to save
+<pre>Moving yolov5 results: yolov5/runs/train/seven segment digits - 1/
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">export_folder</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;seven segment digits - 1&#39;</pre>
+</div>
+
 </div>
 
 </div>
@@ -1211,6 +1349,19 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Building-up-an-Image-Set">Building up an Image Set<a class="anchor-link" href="#Building-up-an-Image-Set"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Keep in mind the <code>Generation</code> class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, <code>Generation</code>'s constructor function will find them.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Wrap-Up">Wrap Up<a class="anchor-link" href="#Wrap-Up"> </a></h2><p>I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!</p>
 <p>I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).</p>
 <p>The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way <code>Defaults.data_yaml</code> is constructed.</p>
@@ -1220,7 +1371,7 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Note-on-the-Dataset">Note on the Dataset<a class="anchor-link" href="#Note-on-the-Dataset"> </a></h3><p>This dataset of 841 images is a mishmash. There's images from a different rowing machine and also from  <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">this</a> repo. Some scenes are illuminated with sunlight. Others have been cropped to include only the LCD. Digits like 7, 8, and 9 are underrepresented.</p>
+<h3 id="Note-on-the-Image-Set">Note on the Image Set<a class="anchor-link" href="#Note-on-the-Image-Set"> </a></h3><p>This dataset of 841 images is a mishmash. There's images from a different rowing machine and also from  <a href="https://github.com/SachaIZADI/Seven-Segment-OCR">this</a> repo. Some scenes are illuminated with sunlight. Others have been cropped to include only the LCD. Digits like 7, 8, and 9 are underrepresented.</p>
 
 </div>
 </div>
