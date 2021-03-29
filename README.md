@@ -405,9 +405,6 @@ The `Viewer` class needs weights and class labels to operate.
 ```
 from ModelAssistedLabel.detect import Viewer
 
-# access the folder of results from the AutoWeights instance
-results_folder = aw.last_results_path
-
 # I'm choosing to use the best weight.
 weight_path = results_folder + "/weights/best.pt"
 
