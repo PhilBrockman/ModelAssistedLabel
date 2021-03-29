@@ -55,13 +55,13 @@ Grab my code.
 ```
 
     Cloning into 'ModelAssistedLabel'...
-    remote: Enumerating objects: 1023, done.[K
-    remote: Counting objects: 100% (1023/1023), done.[K
-    remote: Compressing objects: 100% (626/626), done.[K
-    remote: Total 5000 (delta 455), reused 907 (delta 359), pack-reused 3977[K
-    Receiving objects: 100% (5000/5000), 252.34 MiB | 32.54 MiB/s, done.
-    Resolving deltas: 100% (1478/1478), done.
-    Checking out files: 100% (2807/2807), done.
+    remote: Enumerating objects: 692, done.[K
+    remote: Counting objects: 100% (692/692), done.[K
+    remote: Compressing objects: 100% (567/567), done.[K
+    remote: Total 5062 (delta 219), reused 540 (delta 92), pack-reused 4370[K
+    Receiving objects: 100% (5062/5062), 249.25 MiB | 24.42 MiB/s, done.
+    Resolving deltas: 100% (1544/1544), done.
+    Checking out files: 100% (2810/2810), done.
     /content/ModelAssistedLabel
 
 
@@ -189,14 +189,12 @@ from utils.google_utils import gdrive_download  # to download models/datasets
 ```
 
     Cloning into 'yolov5'...
-    remote: Enumerating objects: 26, done.[K
-    remote: Counting objects: 100% (26/26), done.[K
-    remote: Compressing objects: 100% (25/25), done.[K
-    remote: Total 5595 (delta 7), reused 10 (delta 1), pack-reused 5569[K
-    Receiving objects: 100% (5595/5595), 8.46 MiB | 33.32 MiB/s, done.
-    Resolving deltas: 100% (3815/3815), done.
+    remote: Enumerating objects: 5595, done.[K
+    remote: Total 5595 (delta 0), reused 0 (delta 0), pack-reused 5595[K
+    Receiving objects: 100% (5595/5595), 8.18 MiB | 10.09 MiB/s, done.
+    Resolving deltas: 100% (3820/3820), done.
     /content/ModelAssistedLabel/yolov5
-    [K     |████████████████████████████████| 645kB 8.0MB/s 
+    [K     |████████████████████████████████| 645kB 13.1MB/s 
     [?25h/content/ModelAssistedLabel
 
 
@@ -285,16 +283,7 @@ zipped = g.write_split_to_disk(descriptor=export_folder)
 ```
 
     
-    dirs ['./train', './valid', './test']
-    yaml archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/data.yaml
-    subdir train
-    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
-    subdir valid
-    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
-    subdir test
-    	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
-    os.listdir ['test', 'data.yaml', 'valid', 'train']
-
+    (530) copying: Image Repo/labeled/Final Roboflow Export (841)/images/save_dirrtake-18_jpg_cropped-jpg_jpg.rf.544f587e3b03dece8735b939fddc6fa5.jpg
 
 Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `AutoWeights` class both organizes data and create weights.
 
@@ -505,8 +494,7 @@ try:
     print(f"Moving yolov5 results: {aw.last_results_path}")
     shutil.move(aw.last_results_path, export_folder)
 
-    #flip the flag
-    moved = True
+    moved = True # flip the flag
 except NameError:
   #no results attempted
   pass
@@ -534,13 +522,11 @@ I labeled dozens upon dozens and dozens of images with Roboflow and would recomm
 
 ## Building up an Image Set
 
-Keep in mind the `Generation` class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, `Generation`'s constructor function will find them.
-
-And every time `Generation` calls a `split_to_disk` that split is archived in `backup_dir`
+The `Generation` class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, `Generation`'s constructor function will find them.
 
 ## Wrap Up
 
-I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!
+I have uncovered a camera and lighting positioning that allows for my model to read the LCD with fidelty. I'm using object detection as a form of OCR and it's working!
 
 I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).
 

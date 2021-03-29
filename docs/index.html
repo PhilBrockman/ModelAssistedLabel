@@ -164,13 +164,13 @@ nb_path: "index.ipynb"
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Cloning into &#39;ModelAssistedLabel&#39;...
-remote: Enumerating objects: 1023, done.
-remote: Counting objects: 100% (1023/1023), done.
-remote: Compressing objects: 100% (626/626), done.
-remote: Total 5000 (delta 455), reused 907 (delta 359), pack-reused 3977
-Receiving objects: 100% (5000/5000), 252.34 MiB | 32.54 MiB/s, done.
-Resolving deltas: 100% (1478/1478), done.
-Checking out files: 100% (2807/2807), done.
+remote: Enumerating objects: 692, done.
+remote: Counting objects: 100% (692/692), done.
+remote: Compressing objects: 100% (567/567), done.
+remote: Total 5062 (delta 219), reused 540 (delta 92), pack-reused 4370
+Receiving objects: 100% (5062/5062), 249.25 MiB | 24.42 MiB/s, done.
+Resolving deltas: 100% (1544/1544), done.
+Checking out files: 100% (2810/2810), done.
 /content/ModelAssistedLabel
 </pre>
 </div>
@@ -517,14 +517,12 @@ trainer_template
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Cloning into &#39;yolov5&#39;...
-remote: Enumerating objects: 26, done.
-remote: Counting objects: 100% (26/26), done.
-remote: Compressing objects: 100% (25/25), done.
-remote: Total 5595 (delta 7), reused 10 (delta 1), pack-reused 5569
-Receiving objects: 100% (5595/5595), 8.46 MiB | 33.32 MiB/s, done.
-Resolving deltas: 100% (3815/3815), done.
+remote: Enumerating objects: 5595, done.
+remote: Total 5595 (delta 0), reused 0 (delta 0), pack-reused 5595
+Receiving objects: 100% (5595/5595), 8.18 MiB | 10.09 MiB/s, done.
+Resolving deltas: 100% (3820/3820), done.
 /content/ModelAssistedLabel/yolov5
-     |████████████████████████████████| 645kB 8.0MB/s 
+     |████████████████████████████████| 645kB 13.1MB/s 
 /content/ModelAssistedLabel
 </pre>
 </div>
@@ -768,16 +766,7 @@ Resolving deltas: 100% (3815/3815), done.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-dirs [&#39;./train&#39;, &#39;./valid&#39;, &#39;./test&#39;]
-yaml archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/data.yaml
-subdir train
-	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
-subdir valid
-	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
-subdir test
-	outdir archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41
-os.listdir [&#39;test&#39;, &#39;data.yaml&#39;, &#39;valid&#39;, &#39;train&#39;]
-</pre>
+(530) copying: Image Repo/labeled/Final Roboflow Export (841)/images/save_dirrtake-18_jpg_cropped-jpg_jpg.rf.544f587e3b03dece8735b939fddc6fa5.jpg</pre>
 </div>
 </div>
 
@@ -1303,8 +1292,7 @@ Wall time: 4h 57min 26s
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving yolov5 results: </span><span class="si">{</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">aw</span><span class="o">.</span><span class="n">last_results_path</span><span class="p">,</span> <span class="n">export_folder</span><span class="p">)</span>
 
-    <span class="c1">#flip the flag</span>
-    <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># flip the flag</span>
 <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
   <span class="c1">#no results attempted</span>
   <span class="k">pass</span>
@@ -1383,15 +1371,14 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Keep in mind the <code>Generation</code> class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, <code>Generation</code>'s constructor function will find them.</p>
-<p>And every time <code>Generation</code> calls a <code>split_to_disk</code> that split is archived in <code>backup_dir</code></p>
+<p>The <code>Generation</code> class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, <code>Generation</code>'s constructor function will find them.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Wrap-Up">Wrap Up<a class="anchor-link" href="#Wrap-Up"> </a></h2><p>I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!</p>
+<h2 id="Wrap-Up">Wrap Up<a class="anchor-link" href="#Wrap-Up"> </a></h2><p>I have uncovered a camera and lighting positioning that allows for my model to read the LCD with fidelty. I'm using object detection as a form of OCR and it's working!</p>
 <p>I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).</p>
 <p>The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way <code>Defaults.data_yaml</code> is constructed.</p>
 
