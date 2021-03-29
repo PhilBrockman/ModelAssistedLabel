@@ -914,7 +914,12 @@ try:
   results_folder
 except NameError:
   #let the model train and find something else to do for a few hours
-  aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
+  aw.generate_weights(epochs=1, yaml_data=Defaults().trainer_template)
+
+  # access the folder of results from the AutoWeights instance
+  results_folder = aw.last_results_path
+
+print(&quot;Results: &quot;, results_folder)
 </pre></div>
 
     </div>
@@ -1304,7 +1309,7 @@ Wall time: 4h 57min 26s
     <span class="c1">#flip the flag</span>
     <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
-  <span class="c1">#no results atte</span>
+  <span class="c1">#no results attempted</span>
   <span class="k">pass</span>
 
 <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">moved</span><span class="p">):</span>

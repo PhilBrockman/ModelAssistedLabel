@@ -350,7 +350,12 @@ try:
   results_folder
 except NameError:
   #let the model train and find something else to do for a few hours
-  aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
+  aw.generate_weights(epochs=1, yaml_data=Defaults().trainer_template)
+
+  # access the folder of results from the AutoWeights instance
+  results_folder = aw.last_results_path
+
+print("Results: ", results_folder)
 ```
 
     CPU times: user 1min 3s, sys: 10.8 s, total: 1min 14s
