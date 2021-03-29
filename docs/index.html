@@ -45,10 +45,10 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My exercise equipment doesn’t connect to a network. But I still want the "smart workout experience" when I'm using a "dumb" rowing machine.</p>
-<p>Maybe if I point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout.</p>
+<p>Maybe if I point my webcam at the equipment’s LCD output, I can make my computer identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout.</p>
 <p>First question -- just a tiny one -- how do you do that?</p>
 <p>After wading through several guides, I found <a href="https://models.roboflow.com/object-detection/yolov5">Roboflow's YOLOv5 tutorial</a>. They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.</p>
-<p>As I labeled image after image, I envision passing my work off to a YOLOv5 model. I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project, I build wrappers around <code>detect.py</code> and <code>train.py</code>. I determine that my vision could be a reality.</p>
+<p>As I labeled digits on image after image, tedium tore at me. I envisioned using the YOLOv5 model predictions as "pre-labels". I sleuth through <a href="https://github.com/ultralytics/yolov5">Ultralytic's</a> original project, and I build wrappers around <code>detect.py</code> and <code>train.py</code>. I determine that my vision could be a reality.</p>
 <p>This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I also provide labeled and unlabeled images to demonstrate the tools.</p>
 <ul>
 <li><code>Image Repo/</code><ul>
@@ -155,7 +155,7 @@ Checking out files: 100% (2381/2381), done.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">labeled_images</span>   <span class="o">=</span> <span class="s2">&quot;Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">labeled_images</span> <span class="o">=</span> <span class="s2">&quot;Image Repo/labeled/Final Roboflow Export (841)&quot;</span>
 </pre></div>
 
     </div>
@@ -1213,7 +1213,7 @@ Wall time: 4h 57min 26s
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Wrap-Up">Wrap Up<a class="anchor-link" href="#Wrap-Up"> </a></h2><p>I have uncovered a camera and lighting positioning that allows for my model to read the LCD at with high fidelty. I'm using object detection as a form of OCR and it's working!</p>
 <p>I see three main areas for development with this project. The first would be bolstering the dataset (and staying in the machine learning space). The second would be logic interpreting parsed data (building the "smart" software).</p>
-<p>The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way <code>Defaults.data_yaml</code> is constructed - perhaps it would be better to simply store the names of classes instead.</p>
+<p>The third area of development is refactoring. I made a decision early on to hard to hardcode the path to training and validation images. It's worth revisiting the way <code>Defaults.data_yaml</code> is constructed.</p>
 
 </div>
 </div>
