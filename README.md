@@ -35,7 +35,7 @@ This repository contains the tools that let me "pre-label" my images before send
 
 ## Getting Started
 
-{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb) (and enable GPU)' %}
+{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb)' %}
 
 ```
 project_name = "seven segment digits - "
@@ -65,7 +65,7 @@ Grab my code.
     /content/ModelAssistedLabel
 
 
-### Expected Inputs
+### Inputs
 
 -  **labeled images**
     + All of the images and labels must be in a common folder (subfolders allowed).
@@ -84,11 +84,11 @@ labeled_images = "Image Repo/labeled/Final Roboflow Export (841)"
   - **unlabeled images**
 
 ```
-# these images need to be annotated
+# this run of 200 images needs to be annotated
 unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
 ```
 
-### Expected Output
+### Output
 
 * Folder that contains: 
     - `images/`
@@ -96,7 +96,7 @@ unlabeled_images = "Image Repo/unlabeled/21-3-22 rowing (200) 7:50-12:50"
     - `labels/`
       + result of running object detection on each image
     - `class labels.txt` to preserve the identity of the classes
-    - (if not using pre-trained weights) a results folder produced by Ultralytic's `train.py` on the **Labeled Data** 
+    - (if training detected) a results folder produced by Ultralytic's `train.py` on the **Labeled Data** 
 
 
 Start by building the folder structure for the output.
@@ -131,13 +131,13 @@ export_folder
 
 ### Configure Defaults
 
-Several values are stored by the `Defaults` class. Any value can be overridden (and new values can be added. Make sure to `save()` any changes! (changes are written to the `config_file`
+Several values are stored by the `Defaults` class. Make sure to `save()` any changes!
 
 ```
 d = Defaults()
 ```
 
-#### changing a Default value
+#### Changing a `Default` Value
 
 ```
 print(" -- Defined Keys: --")
@@ -176,7 +176,7 @@ d.to_root()
     moving to /content/ModelAssistedLabel/
 
 
-#### cloning YOLOv5
+#### Cloning YOLOv5
 
 ```
 # clone YOLOv5 repository
@@ -205,7 +205,7 @@ from utils.google_utils import gdrive_download  # to download models/datasets
     [?25h/content/ModelAssistedLabel
 
 
-#### define class map
+#### Define Class Map
 
 
 (`data_yaml` value was pulled from Roboflow tutorial)
@@ -246,18 +246,18 @@ with open(os.path.join(export_folder, "label_map.txt"), "w") as label_map:
 ## Generating Weights
 
 
-Make sure GPU is enabled.
+Check to see the plan for this notebook's lifespan.
 
 ```
 if torch.cuda.is_available():
+  #GPU enabled and ready to train some models
   print('Setup complete. Using torch %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) ))
-  d.to_root() #step up a level
 else:
-   raise Exception("enable GPU")
+    #no GPU access
+    raise Exception("Enable GPU to make predictions or train a model.")
 ```
 
     Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name='Tesla P100-PCIE-16GB', major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
-    moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 
 
 ### Preparing Filesystem
@@ -301,7 +301,7 @@ zipped = g.write_split_to_disk(descriptor=export_folder)
     os.listdir ['test', 'data.yaml', 'valid', 'train']
 
 
-Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `Autoweights` class both organizes data and create weights. Running an "initialize" command makes changes to the disk.
+Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The `AutoWeights` class both organizes data and create weights.
 
 ```
 from ModelAssistedLabel.train import AutoWeights
@@ -318,7 +318,7 @@ aw.initialize_images_from_zip(zipped)
     mv 'unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segment digits - 1 21-03-29 17-47-41/train' .
 
 
-Peep on the sizes of the train/valid/test groups.
+Inspect the sizes of the train/valid/test groups.
 
 ```
 aw.traverse_resources()
@@ -339,15 +339,23 @@ aw.traverse_resources()
     	 > 589 files
 
 
-### Running `train.py`
+### Running `train.py` (GPU)
 
 With the images written to disk, we can run the Ultralytics training algorithm. I loved watching the progress fly by in real time on the original `train.py`. Fortunately, the Ultralytics folk write the results file to disk so the model's training data is still accessible!
 {% include note.html content='this output has already been calculated and stored in `pre-trained/results` for convenience.' %}
 
 ```
+"Uncomment this cell to skip training."
+# results_folder="pre-trained/results" 
+
 %%time
 
-aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
+try:
+  #using pretrained results
+  results_folder
+except NameError:
+  #let the model train and find something else to do for a few hours
+  aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
 ```
 
     CPU times: user 1min 3s, sys: 10.8 s, total: 1min 14s
@@ -361,7 +369,7 @@ aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
 
 
 
-The results folder is stored as an attribute as well, and it has a lot of data stored therein.
+The results folder is stored as an attribute as well, and it has a lot of charts and images stored therein.
 
 ```
 import os
@@ -390,7 +398,7 @@ os.listdir(aw.last_results_path + "/weights")
 
 ## Machine-assisted Labeling
 
-### Labeling a New Set of Images
+### Labeling a New Set of Images (GPU)
 
 The `Viewer` class needs weights and class labels to operate.
 
@@ -418,7 +426,7 @@ With the existing dataset, the model performs best under direct lighting.
 %matplotlib inline 
 import random, glob
 
-images = glob.glob(f"./{unlabeled_images}/*.jpg")
+images = glob.glob(f"{unlabeled_images}/*.jpg")
 
 for image in random.sample(images,5):
   print(image)
@@ -429,14 +437,15 @@ for image in random.sample(images,5):
     Output hidden; open in https://colab.research.google.com to view.
 
 
-In this small sample, the model performs quite adequately. 
+#### Predictions Spot Check
 
+In all 600 unlabeled images, the screen has 4 digits.
 
-#### predictions spot-check
-
-Keep in mind that every image in the current batch should have exactly 4 image predictions, lets take a look at the numbers of predictions being made:
+So lets take a look at the numbers of predictions being made:
 
 ```
+import pandas as pd
+
 ax = pd.Series([len(x["predictions"]) for x in results]).hist()
 ax.grid(False)
 ax.set_title(label = "Number of predictions per image")
@@ -445,19 +454,17 @@ ax.set_title(label = "Number of predictions per image")
 
 
 
-    <matplotlib.axis.Ticker at 0x7f8b7d53b150>
+    Text(0.5, 1.0, 'Number of predictions per image')
 
 
 
 
-![png](docs/images/output_64_1.png)
+![png](docs/images/output_63_1.png)
 
 
 At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.
 
-There are a couple of possible entry points to a programitic solution: the `Detector` class has an `iou_threshold` attribute (read about [Intersection Over Union](https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/)) that can be fiddled with. 
-
-Further, the `results` array stores the confidence of predictions - confidence may play a role in detecting extraneous predictions.
+There are a couple of possible entry points to a programitic solution. The `Detector` class (build on top of Ultralytic's `detect.py`) has an `iou_threshold` attribute (read about [Intersection Over Union](https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/)) that can be fiddled with. Further, in resolving overlapping bounding boxes post-hoc, I would turn to the confidence attribute stored in the `results` array.
 
 ### Exporting Annotated Images
 
@@ -465,17 +472,17 @@ Ensure that image/label pairs have a common root filename and collect relevant f
 
 ```
 import random, PIL, shutil
-salt = lambda: str(random.random())[2:]
+salt = lambda: str(random.random())[2:] 
 
 for result in results:
-  #generate a likely-to-be-unique filename
+  # In case the salt somehow fails to be unique, forcibly generate a unique filename
   shared_root = Defaults._itername(f"{project_name}-{salt()}")
 
-  #save the image to the outfile
+  #save the image to the outfolder
   image = PIL.Image.open(result["image path"])
   image.save(os.path.join(export_folder, "images", f"{shared_root}.jpg"))
 
-  #save the predictions to the outfile
+  #save the predictions to the outfolder
   predictions = result["predictions"]
   with open(os.path.join(export_folder, "labels", f"{shared_root}.txt"), "w") as prediction_file:
     prediction_file.writelines("\n".join([x["yolov5 format"] for x in predictions]))
@@ -521,6 +528,8 @@ I labeled dozens upon dozens and dozens of images with Roboflow and would recomm
 ## Building up an Image Set
 
 Keep in mind the `Generation` class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, `Generation`'s constructor function will find them.
+
+And every time `Generation` calls a `split_to_disk` that split is archived in `backup_dir`
 
 ## Wrap Up
 

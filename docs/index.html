@@ -89,7 +89,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a> (and enable GPU)' %}</p>
+<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a>' %}</p>
 
 </div>
 </div>
@@ -184,7 +184,7 @@ Checking out files: 100% (2807/2807), done.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Expected-Inputs">Expected Inputs<a class="anchor-link" href="#Expected-Inputs"> </a></h3><ul>
+<h3 id="Inputs">Inputs<a class="anchor-link" href="#Inputs"> </a></h3><ul>
 <li><strong>labeled images</strong><ul>
 <li>All of the images and labels must be in a common folder (subfolders allowed).</li>
 <li>Labels must be in <a href="https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885">YOLOv5 format</a>.
@@ -241,7 +241,7 @@ Checking out files: 100% (2807/2807), done.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Expected-Output">Expected Output<a class="anchor-link" href="#Expected-Output"> </a></h3><ul>
+<h3 id="Output">Output<a class="anchor-link" href="#Output"> </a></h3><ul>
 <li>Folder that contains: <ul>
 <li><code>images/</code><ul>
 <li>a copy of every image in <strong>Unlabeled Data</strong></li>
@@ -252,7 +252,7 @@ Checking out files: 100% (2807/2807), done.
 </ul>
 </li>
 <li><code>class labels.txt</code> to preserve the identity of the classes</li>
-<li>(if not using pre-trained weights) a results folder produced by Ultralytic's <code>train.py</code> on the <strong>Labeled Data</strong> </li>
+<li>(if training detected) a results folder produced by Ultralytic's <code>train.py</code> on the <strong>Labeled Data</strong> </li>
 </ul>
 </li>
 </ul>
@@ -325,7 +325,7 @@ Checking out files: 100% (2807/2807), done.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Several values are stored by the <code>Defaults</code> class. Any value can be overridden (and new values can be added. Make sure to <code>save()</code> any changes! (changes are written to the <code>config_file</code></p>
+<p>Several values are stored by the <code>Defaults</code> class. Make sure to <code>save()</code> any changes!</p>
 
 </div>
 </div>
@@ -349,7 +349,7 @@ Checking out files: 100% (2807/2807), done.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="changing-a-Default-value">changing a Default value<a class="anchor-link" href="#changing-a-Default-value"> </a></h4>
+<h4 id="Changing-a-Default-Value">Changing a <code>Default</code> Value<a class="anchor-link" href="#Changing-a-Default-Value"> </a></h4>
 </div>
 </div>
 </div>
@@ -487,7 +487,7 @@ trainer_template
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="cloning-YOLOv5">cloning YOLOv5<a class="anchor-link" href="#cloning-YOLOv5"> </a></h4>
+<h4 id="Cloning-YOLOv5">Cloning YOLOv5<a class="anchor-link" href="#Cloning-YOLOv5"> </a></h4>
 </div>
 </div>
 </div>
@@ -543,7 +543,7 @@ Resolving deltas: 100% (3815/3815), done.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="define-class-map">define class map<a class="anchor-link" href="#define-class-map"> </a></h4>
+<h4 id="Define-Class-Map">Define Class Map<a class="anchor-link" href="#Define-Class-Map"> </a></h4>
 </div>
 </div>
 </div>
@@ -651,7 +651,7 @@ Resolving deltas: 100% (3815/3815), done.
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Make sure GPU is enabled.</p>
+<p>Check to see the plan for this notebook's lifespan.</p>
 
 </div>
 </div>
@@ -664,10 +664,11 @@ Resolving deltas: 100% (3815/3815), done.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+  <span class="c1">#GPU enabled and ready to train some models</span>
   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Setup complete. Using torch </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">))</span>
-  <span class="n">d</span><span class="o">.</span><span class="n">to_root</span><span class="p">()</span> <span class="c1">#step up a level</span>
 <span class="k">else</span><span class="p">:</span>
-   <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;enable GPU&quot;</span><span class="p">)</span>
+    <span class="c1">#no GPU access</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Enable GPU to make predictions or train a model.&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -681,7 +682,6 @@ Resolving deltas: 100% (3815/3815), done.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Setup complete. Using torch 1.8.0+cu101 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
-moving to /content/drive/MyDrive/vision.philbrockman.com/ModelAssistedLabel/
 </pre>
 </div>
 </div>
@@ -794,7 +794,7 @@ os.listdir [&#39;test&#39;, &#39;data.yaml&#39;, &#39;valid&#39;, &#39;train&#39
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The <code>Autoweights</code> class both organizes data and create weights. Running an "initialize" command makes changes to the disk.</p>
+<p>Next, the images need to be written in a way so that the Ultralytics repository can understand their content. The <code>AutoWeights</code> class both organizes data and create weights.</p>
 
 </div>
 </div>
@@ -840,7 +840,7 @@ mv &#39;unzipped/archive/Generation/zips/Final Roboflow Export (841)seven segmen
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Peep on the sizes of the train/valid/test groups.</p>
+<p>Inspect the sizes of the train/valid/test groups.</p>
 
 </div>
 </div>
@@ -890,7 +890,7 @@ train/images
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Running-train.py">Running <code>train.py</code><a class="anchor-link" href="#Running-train.py"> </a></h3>
+<h3 id="Running-train.py-(GPU)">Running <code>train.py</code> (GPU)<a class="anchor-link" href="#Running-train.py-(GPU)"> </a></h3>
 </div>
 </div>
 </div>
@@ -909,9 +909,17 @@ train/images
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="s2">&quot;Uncomment this cell to skip training.&quot;</span>
+<span class="c1"># results_folder=&quot;pre-trained/results&quot; </span>
 
-aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
+<span class="o">%%</span><span class="k">time</span>
+
+try:
+  #using pretrained results
+  results_folder
+except NameError:
+  #let the model train and find something else to do for a few hours
+  aw.generate_weights(epochs=2000, yaml_data=Defaults().trainer_template)
 </pre></div>
 
     </div>
@@ -948,7 +956,7 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The results folder is stored as an attribute as well, and it has a lot of data stored therein.</p>
+<p>The results folder is stored as an attribute as well, and it has a lot of charts and images stored therein.</p>
 
 </div>
 </div>
@@ -1035,7 +1043,7 @@ Wall time: 4h 57min 26s
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Labeling-a-New-Set-of-Images">Labeling a New Set of Images<a class="anchor-link" href="#Labeling-a-New-Set-of-Images"> </a></h3>
+<h3 id="Labeling-a-New-Set-of-Images-(GPU)">Labeling a New Set of Images (GPU)<a class="anchor-link" href="#Labeling-a-New-Set-of-Images-(GPU)"> </a></h3>
 </div>
 </div>
 </div>
@@ -1104,7 +1112,7 @@ Wall time: 4h 57min 26s
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline 
 <span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">glob</span>
 
-<span class="n">images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./</span><span class="si">{</span><span class="n">unlabeled_images</span><span class="si">}</span><span class="s2">/*.jpg&quot;</span><span class="p">)</span>
+<span class="n">images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">unlabeled_images</span><span class="si">}</span><span class="s2">/*.jpg&quot;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
@@ -1136,20 +1144,14 @@ Wall time: 4h 57min 26s
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this small sample, the model performs quite adequately.</p>
-
+<h4 id="Predictions-Spot-Check">Predictions Spot Check<a class="anchor-link" href="#Predictions-Spot-Check"> </a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="predictions-spot-check">predictions spot-check<a class="anchor-link" href="#predictions-spot-check"> </a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Keep in mind that every image in the current batch should have exactly 4 image predictions, lets take a look at the numbers of predictions being made:</p>
+<p>In all 600 unlabeled images, the screen has 4 digits.</p>
+<p>So lets take a look at the numbers of predictions being made:</p>
 
 </div>
 </div>
@@ -1161,7 +1163,9 @@ Wall time: 4h 57min 26s
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Number of predictions per image&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1178,7 +1182,7 @@ Wall time: 4h 57min 26s
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axis.Ticker at 0x7f8b7d53b150&gt;</pre>
+<pre>Text(0.5, 1.0, &#39;Number of predictions per image&#39;)</pre>
 </div>
 
 </div>
@@ -1204,8 +1208,7 @@ Wall time: 4h 57min 26s
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.</p>
-<p>There are a couple of possible entry points to a programitic solution: the <code>Detector</code> class has an <code>iou_threshold</code> attribute (read about <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">Intersection Over Union</a>) that can be fiddled with.</p>
-<p>Further, the <code>results</code> array stores the confidence of predictions - confidence may play a role in detecting extraneous predictions.</p>
+<p>There are a couple of possible entry points to a programitic solution. The <code>Detector</code> class (build on top of Ultralytic's <code>detect.py</code>) has an <code>iou_threshold</code> attribute (read about <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">Intersection Over Union</a>) that can be fiddled with. Further, in resolving overlapping bounding boxes post-hoc, I would turn to the confidence attribute stored in the <code>results</code> array.</p>
 
 </div>
 </div>
@@ -1231,17 +1234,17 @@ Wall time: 4h 57min 26s
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">PIL</span><span class="o">,</span> <span class="nn">shutil</span>
-<span class="n">salt</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="n">salt</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())[</span><span class="mi">2</span><span class="p">:]</span> 
 
 <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-  <span class="c1">#generate a likely-to-be-unique filename</span>
+  <span class="c1"># In case the salt somehow fails to be unique, forcibly generate a unique filename</span>
   <span class="n">shared_root</span> <span class="o">=</span> <span class="n">Defaults</span><span class="o">.</span><span class="n">_itername</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">project_name</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">salt</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-  <span class="c1">#save the image to the outfile</span>
+  <span class="c1">#save the image to the outfolder</span>
   <span class="n">image</span> <span class="o">=</span> <span class="n">PIL</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;image path&quot;</span><span class="p">])</span>
   <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shared_root</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">))</span>
 
-  <span class="c1">#save the predictions to the outfile</span>
+  <span class="c1">#save the predictions to the outfolder</span>
   <span class="n">predictions</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span>
   <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">shared_root</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">prediction_file</span><span class="p">:</span>
     <span class="n">prediction_file</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;yolov5 format&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">]))</span>
@@ -1356,6 +1359,7 @@ Wall time: 4h 57min 26s
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Keep in mind the <code>Generation</code> class recursively finds all images and lables. So as long as the newly annotated images and the original Image Set are in the same folder, <code>Generation</code>'s constructor function will find them.</p>
+<p>And every time <code>Generation</code> calls a <code>split_to_disk</code> that split is archived in <code>backup_dir</code></p>
 
 </div>
 </div>
