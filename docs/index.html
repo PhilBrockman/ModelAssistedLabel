@@ -89,7 +89,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a> (and enable CPU)' %}</p>
+<p>{% include tip.html content='<a href="https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb">Open In Colab</a> (and enable GPU)' %}</p>
 
 </div>
 </div>
@@ -1222,6 +1222,7 @@ Wall time: 4h 57min 26s
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.</p>
 <p>There are a couple of possible entry points to a programitic solution. The <code>Detector</code> class (build on top of Ultralytic's <code>detect.py</code>) has an <code>iou_threshold</code> attribute (read about <a href="https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/">Intersection Over Union</a>) that can be fiddled with. Further, in resolving overlapping bounding boxes post-hoc, I would turn to the confidence attribute stored in the <code>results</code> array.</p>
+<p>Until prediction checkups can be run in notebook cells, we'll need to export for inspection regardless.</p>
 
 </div>
 </div>
