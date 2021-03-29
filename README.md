@@ -35,7 +35,7 @@ This repository contains the tools that let me "pre-label" my images before send
 
 ## Getting Started
 
-{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb) (and enable CPU)' %}
+{% include tip.html content='[Open In Colab](https://colab.research.google.com/github/PhilBrockman/ModelAssistedLabel/blob/master/index.ipynb) (and enable GPU)' %}
 
 ```
 project_name = "seven segment digits - "
@@ -460,6 +460,8 @@ ax.set_title(label = "Number of predictions per image")
 At this stage in development, the YOLOv5 model could still be prone to false positives. However, I interpret the above data to suggest that there are overlapping bounding boxes that need to be resolved.
 
 There are a couple of possible entry points to a programitic solution. The `Detector` class (build on top of Ultralytic's `detect.py`) has an `iou_threshold` attribute (read about [Intersection Over Union](https://www.pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/)) that can be fiddled with. Further, in resolving overlapping bounding boxes post-hoc, I would turn to the confidence attribute stored in the `results` array.
+
+Until prediction checkups can be run in notebook cells, we'll need to export for inspection regardless.
 
 ### Exporting Annotated Images
 
