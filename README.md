@@ -8,13 +8,13 @@
 
 My exercise equipment doesn’t connect to a network. But I still want the "smart workout experience" when I'm using a "dumb" rowing machine.
 
-Maybe if I point my webcam at the equipment’s LCD output, I can make a machine learn to identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout. 
+Maybe if I point my webcam at the equipment’s LCD output, I can make my computer identify and interpret useful information. Perfect! I’ll just utilize object detection to determine the location and identity of digits on the machine’s readout. 
 
 First question -- just a tiny one -- how do you do that?  
 
 After wading through several guides, I found [Roboflow's YOLOv5 tutorial]( https://models.roboflow.com/object-detection/yolov5). They provide a hands-on and accessible experience in machine learning. But unfortunately, I couldn't progress immediately on my specific project. Instead, I had to build my own dataset.
 
-As I labeled image after image, I envision passing my work off to a YOLOv5 model. I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, I build wrappers around `detect.py` and `train.py`. I determine that my vision could be a reality.
+As I labeled digits on image after image, tedium tore at me. I envisioned using the YOLOv5 model predictions as "pre-labels". I sleuth through [Ultralytic's](https://github.com/ultralytics/yolov5) original project, and I build wrappers around `detect.py` and `train.py`. I determine that my vision could be a reality.
 
 This repository contains the tools that let me "pre-label" my images before sending them off for human inspection and correction. I also provide labeled and unlabeled images to demonstrate the tools.
 
@@ -67,7 +67,7 @@ This repository contains the tools that let me "pre-label" my images before send
 
 ```
 # these images have already been labeled
-labeled_images   = "Image Repo/labeled/Final Roboflow Export (841)"
+labeled_images = "Image Repo/labeled/Final Roboflow Export (841)"
 ```
 
   - **unlabeled images**
